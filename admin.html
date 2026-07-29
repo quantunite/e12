@@ -18,6 +18,22 @@
 }
 * { margin: 0; padding: 0; box-sizing: border-box; }
 [hidden] { display: none !important; }
+
+/* ---- light mode ---- */
+body.light {
+  --ink: #2b2418; --ink-dim: #6f6250; --ink-faint: #a2947c;
+  --night: #f4efe4; --night-2: #faf6ec; --night-3: #eee7d7;
+  --brass: #a37e2e; --brass-hi: #7d6134; --brass-deep: #c9a25a;
+  --live: #3f7d4b; --err: #a8503e;
+  --line: rgba(125, 97, 52, 0.28); --line-soft: rgba(125, 97, 52, 0.13);
+}
+body.light header { background: rgba(250, 246, 236, 0.9); }
+body.light .btn { color: #fff8e8; }
+body.light .btn.ghost { color: var(--brass-hi); }
+body.light .btn.danger { color: var(--err); }
+body.light .tab-btn.on { color: #fff8e8; }
+body.light .pill.free, body.light .pill.admin, body.light .pill.new, body.light .count.fresh { color: #14100a; }
+body.light .bars .bar i { background: linear-gradient(180deg, var(--brass-deep), var(--brass)); }
 body {
   background: var(--night); color: var(--ink);
   font-family: var(--font-body); font-size: 16px; line-height: 1.6;
@@ -104,6 +120,7 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     <a class="wordmark" href="index.html">E-12 <small>Owner Panel</small></a>
     <div style="display:flex; gap:10px; align-items:center;">
       <span class="muted" id="whoami"></span>
+      <button class="btn ghost small" id="themeBtn" aria-label="Switch between dark and light mode">&#9788;</button>
       <button class="btn ghost small" id="signOut" hidden>Sign out</button>
     </div>
   </div>
@@ -122,6 +139,19 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     <input id="gPass" type="password" autocomplete="current-password">
     <div class="msg" id="gMsg"></div>
     <div class="row"><button class="btn" id="gGo">Sign in</button></div>
+  </div>
+
+  <!-- first-login: create your own password -->
+  <div class="gate-screen" id="setPass" style="display:none;">
+    <span class="tag">First sign in</span>
+    <h2>Create your password</h2>
+    <p class="muted">Welcome. Choose your own password to replace the starter one; you will use it from now on.</p>
+    <label for="npass1">New password</label>
+    <input id="npass1" type="password" autocomplete="new-password">
+    <label for="npass2">Confirm new password</label>
+    <input id="npass2" type="password" autocomplete="new-password">
+    <div class="msg" id="npMsg"></div>
+    <div class="row"><button class="btn" id="npGo">Save password</button></div>
   </div>
 
   <!-- app -->
@@ -280,6 +310,18 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
   var $ = function (id) { return document.getElementById(id); };
   var session = null, editingId = null, trainings = [];
 
+  /* theme toggle, shared preference with the main site */
+  function applyTheme(t) {
+    document.body.classList.toggle("light", t === "light");
+    $("themeBtn").innerHTML = t === "light" ? "&#9789;" : "&#9788;";
+  }
+  try { applyTheme(new URLSearchParams(location.search).get("theme") || localStorage.getItem("e12_theme") || "dark"); } catch (e) {}
+  $("themeBtn").addEventListener("click", function () {
+    var next = document.body.classList.contains("light") ? "dark" : "light";
+    try { localStorage.setItem("e12_theme", next); } catch (e) {}
+    applyTheme(next);
+  });
+
   function esc(s) {
     return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
@@ -297,6 +339,20 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
   $("gPass").addEventListener("keydown", function (ev) { if (ev.key === "Enter") $("gGo").click(); });
   $("signOut").addEventListener("click", function () { sb.auth.signOut(); location.reload(); });
 
+  /* first-login: create your own password */
+  $("npGo").addEventListener("click", async function () {
+    var p1 = $("npass1").value, p2 = $("npass2").value;
+    if (p1.length < 8) { setMsg("npMsg", "Use at least 8 characters.", "err"); return; }
+    if (p1 !== p2) { setMsg("npMsg", "Passwords do not match.", "err"); return; }
+    $("npGo").disabled = true; setMsg("npMsg", "Saving...");
+    var r = await sb.auth.updateUser({ password: p1 });
+    if (r.error) { setMsg("npMsg", r.error.message, "err"); $("npGo").disabled = false; return; }
+    await sb.from("profiles").update({ must_set_password: false }).eq("id", session.user.id);
+    setMsg("npMsg", "Password saved. Loading your panel...", "ok");
+    $("npGo").disabled = false;
+    check();
+  });
+
   async function boot() {
     var r = await sb.auth.getSession();
     session = r.data.session;
@@ -304,10 +360,15 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     check();
   }
   async function check() {
-    if (!session) { $("gate").style.display = ""; $("app").style.display = "none"; $("signOut").hidden = true; return; }
-    var p = await sb.from("profiles").select("role").eq("id", session.user.id).single();
+    if (!session) { $("gate").style.display = ""; $("setPass").style.display = "none"; $("app").style.display = "none"; $("signOut").hidden = true; return; }
+    var p = await sb.from("profiles").select("role,must_set_password").eq("id", session.user.id).single();
     $("whoami").textContent = session.user.email;
     $("signOut").hidden = false;
+    if (p.data && p.data.must_set_password) {
+      $("gate").style.display = "none"; $("app").style.display = "none";
+      $("setPass").style.display = "";
+      return;
+    }
     if (!p.data || p.data.role !== "admin") {
       $("gate").style.display = "";
       $("gateTitle").textContent = "Not authorized";

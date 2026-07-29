@@ -34,6 +34,46 @@
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
 [hidden] { display: none !important; }
+
+/* ---- light mode: the day terminal ---- */
+body.light {
+  --ink: #2b2418;
+  --ink-dim: #6f6250;
+  --ink-faint: #a2947c;
+  --night: #f4efe4;
+  --night-2: #faf6ec;
+  --night-3: #eee7d7;
+  --marble: #e8e0cf;
+  --brass: #a37e2e;
+  --brass-hi: #7d6134;
+  --brass-deep: #c9a25a;
+  --live: #3f7d4b;
+  --line: rgba(125, 97, 52, 0.28);
+  --line-soft: rgba(125, 97, 52, 0.13);
+}
+body.light .floor {
+  background:
+    radial-gradient(120% 55% at 50% 118%, rgba(163, 126, 46, 0.12), transparent 60%),
+    linear-gradient(180deg, #f8f4ea 0%, #f4efe4 40%, #ece4d2 100%);
+}
+body.light header.nav { background: rgba(250, 246, 236, 0.85); }
+body.light .hero-img img { opacity: 0.85; }
+body.light .hero-img::after {
+  background: linear-gradient(180deg, rgba(244,239,228,0.35) 0%, rgba(244,239,228,0.05) 45%, rgba(244,239,228,0.96) 100%);
+}
+body.light .hero h1, body.light .hero .lead { text-shadow: 0 1px 14px rgba(244,239,228,0.6); }
+body.light .hero .tag {
+  color: #6e5420;
+  text-shadow: 0 0 6px rgba(244,239,228,0.95), 0 0 18px rgba(244,239,228,0.9), 0 0 30px rgba(244,239,228,0.8);
+}
+body.light .gate { color: #ecd39a; }
+body.light .lesson .meta h3 { color: #efe6d3; }
+body.light .lesson .badge { color: #d9cdb4; }
+body.light .lesson .badge.free { color: #14100a; }
+body.light .btn { color: #fff8e8; }
+body.light .btn.ghost { color: var(--brass-hi); }
+body.light .tab-btn[aria-selected="true"] { color: #fff8e8; }
+body.light ::selection { background: var(--brass); color: #fff8e8; }
 html { scroll-behavior: smooth; }
 body {
   background: var(--night);
@@ -378,6 +418,7 @@ footer a { color: var(--ink-dim); }
       <button class="tab-btn" role="tab" id="tab-academy" aria-controls="panel-academy" aria-selected="false" data-tab="academy">Academy</button>
     </nav>
     <div class="authbox">
+      <button class="tab-btn" id="themeBtn" aria-label="Switch between dark and light mode" title="Light / dark">&#9788;</button>
       <a class="tab-btn owner-link" id="ownerLink" href="admin.html" hidden>Owner panel</a>
       <button class="tab-btn auth-btn" id="authBtn" hidden>Sign in</button>
     </div>
@@ -642,6 +683,21 @@ var LINKS = {
 };
 
 (function () {
+  /* theme: dark is the house default; choice remembered per device */
+  var themeBtn = document.getElementById("themeBtn");
+  function applyTheme(t) {
+    document.body.classList.toggle("light", t === "light");
+    themeBtn.innerHTML = t === "light" ? "&#9789;" : "&#9788;";
+  }
+  var savedTheme = "dark";
+  try { savedTheme = new URLSearchParams(location.search).get("theme") || localStorage.getItem("e12_theme") || "dark"; } catch (e) {}
+  applyTheme(savedTheme);
+  themeBtn.addEventListener("click", function () {
+    var next = document.body.classList.contains("light") ? "dark" : "light";
+    try { localStorage.setItem("e12_theme", next); } catch (e) {}
+    applyTheme(next);
+  });
+
   var TABS = ["business", "progress", "academy"];
   var toastEl = document.getElementById("toast");
   var toastTimer = null;
@@ -880,21 +936,26 @@ var LINKS = {
     });
   }
 
-  /* ---- lightweight first-party analytics (no cookies, no PII) ---- */
-  try {
-    sb.from("site_events").insert({
-      type: "view",
-      path: location.hash ? location.hash.slice(1) : "home",
-      referrer: (document.referrer || "").slice(0, 300)
-    }).then(function () {});
-  } catch (e) {}
-  document.addEventListener("click", function (ev) {
-    var el = ev.target.closest("[data-link]");
-    if (!el) return;
+  /* ---- lightweight first-party analytics (no cookies, no PII) ----
+     Records ONLY on the real domain so previews and localhost never
+     pollute the numbers. ---- */
+  var isProd = location.hostname === "e1212.com" || location.hostname === "www.e1212.com";
+  if (isProd) {
     try {
-      sb.from("site_events").insert({ type: "click", path: el.getAttribute("data-link") }).then(function () {});
+      sb.from("site_events").insert({
+        type: "view",
+        path: location.hash ? location.hash.slice(1) : "home",
+        referrer: (document.referrer || "").slice(0, 300)
+      }).then(function () {});
     } catch (e) {}
-  }, true);
+    document.addEventListener("click", function (ev) {
+      var el = ev.target.closest("[data-link]");
+      if (!el) return;
+      try {
+        sb.from("site_events").insert({ type: "click", path: el.getAttribute("data-link") }).then(function () {});
+      } catch (e) {}
+    }, true);
+  }
 
   sb.auth.onAuthStateChange(function (_ev, s) {
     session = s;
