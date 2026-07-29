@@ -271,6 +271,69 @@ footer {
 .disclosure { max-width: 640px; margin-top: 18px; font-size: 13px; line-height: 1.7; }
 footer a { color: var(--ink-dim); }
 
+/* ============================ MEMBERS / AUTH ============================ */
+.authbox { display: flex; gap: 8px; align-items: center; }
+.auth-btn, .owner-link { text-decoration: none; }
+.powered {
+  display: inline-block; vertical-align: middle; margin-left: 10px;
+  font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.24em;
+  text-transform: uppercase; color: var(--ink-dim);
+  border: 1px solid var(--line); border-radius: 999px; padding: 4px 10px;
+}
+.modal-wrap {
+  position: fixed; inset: 0; z-index: 90; display: none;
+  align-items: center; justify-content: center;
+  background: rgba(5, 4, 3, 0.72); backdrop-filter: blur(6px);
+}
+.modal-wrap.open { display: flex; }
+.modal {
+  width: min(430px, calc(100vw - 40px));
+  background: var(--night-2); border: 1px solid var(--brass-deep);
+  border-radius: 18px; padding: 34px 32px 30px;
+}
+.modal h3 { font-size: 26px; color: var(--brass-hi); margin: 8px 0 18px; }
+.modal .field { margin-bottom: 14px; }
+.modal label {
+  display: block; font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+.modal input {
+  width: 100%; background: var(--night); border: 1px solid var(--line);
+  border-radius: 10px; color: var(--ink); font-size: 16px;
+  padding: 12px 14px; font-family: var(--font-body);
+}
+.modal input:focus { outline: none; border-color: var(--brass); }
+.modal .msg { min-height: 22px; font-size: 14px; color: var(--ink-dim); margin: 8px 0 4px; }
+.modal .msg.err { color: #d98a7a; }
+.modal .msg.ok { color: var(--live); }
+.modal .row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 8px; }
+.modal .switch-mode {
+  margin-top: 16px; font-size: 14px; color: var(--ink-faint);
+}
+.modal .switch-mode a { color: var(--brass); cursor: pointer; }
+.modal .close-x {
+  float: right; background: none; border: 0; color: var(--ink-faint);
+  font-size: 22px; cursor: pointer; line-height: 1;
+}
+.vplayer {
+  position: fixed; inset: 0; z-index: 95; display: none;
+  align-items: center; justify-content: center;
+  background: rgba(5, 4, 3, 0.9);
+}
+.vplayer.open { display: flex; }
+.vplayer video {
+  width: min(960px, calc(100vw - 40px));
+  max-height: 82vh; border-radius: 14px;
+  border: 1px solid var(--brass-deep); background: #000;
+}
+.vplayer .close-v {
+  position: absolute; top: 24px; right: 30px;
+  background: none; border: 1px solid var(--line); border-radius: 999px;
+  color: var(--ink); font-size: 16px; cursor: pointer; padding: 8px 16px;
+  font-family: var(--font-mono);
+}
+
 /* ============================ TOAST ============================ */
 .toast {
   position: fixed; left: 50%; bottom: 34px; transform: translateX(-50%) translateY(20px);
@@ -313,6 +376,10 @@ footer a { color: var(--ink-dim); }
       <button class="tab-btn" role="tab" id="tab-progress" aria-controls="panel-progress" aria-selected="false" data-tab="progress">Progress</button>
       <button class="tab-btn" role="tab" id="tab-academy" aria-controls="panel-academy" aria-selected="false" data-tab="academy">Academy</button>
     </nav>
+    <div class="authbox">
+      <a class="tab-btn owner-link" id="ownerLink" href="admin.html" hidden>Owner panel</a>
+      <button class="tab-btn auth-btn" id="authBtn" hidden>Sign in</button>
+    </div>
   </div>
 </header>
 
@@ -346,10 +413,11 @@ footer a { color: var(--ink-dim); }
         <article class="card">
           <div class="ph"><span class="gate">Gate 01</span><img src="img/travel-amalfi.jpg" alt="A lantern-lit cliffside village seen from the sea at dusk"></div>
           <div class="body">
-            <h3>Travel</h3>
+            <h3>Travel <span class="powered">Powered by Traverex</span></h3>
             <p>See more of the world for less. Points, miles, and member travel offers,
-              plus the booking habits that make premium trips realistic.</p>
-            <a class="btn" href="#" data-link="travelPartner">Go to travel partner</a>
+              plus the booking habits that make premium trips realistic. E-12 is your
+              guide; the travel itself is provided by Traverex.</p>
+            <a class="btn" href="#" data-link="travelPartner">Go to Traverex</a>
           </div>
         </article>
         <article class="card">
@@ -495,14 +563,69 @@ footer a { color: var(--ink-dim); }
         <a href="#" data-link="contact">Contact</a>
       </div>
     </div>
-    <p class="disclosure">Some links on this site are partner links. E-12 may earn a commission
-      when you book or join through them, at no extra cost to you. E-12 makes no income
-      guarantees of any kind. &copy; 2026 E-12. All rights reserved.</p>
+    <p class="disclosure">E-12 is a guide, not a provider: travel offers are provided by
+      Traverex, and E-12 routes you there. Some links on this site are partner links.
+      E-12 may earn a commission when you book or join through them, at no extra cost to
+      you. E-12 makes no income guarantees of any kind. &copy; 2026 E-12. All rights reserved.</p>
   </div>
 </footer>
 
+<div class="modal-wrap" id="authModal" role="dialog" aria-modal="true" aria-label="Member sign in">
+  <div class="modal">
+    <button class="close-x" id="authClose" aria-label="Close">&times;</button>
+    <span class="tag">E-12 Members</span>
+    <h3 id="authTitle">Sign in</h3>
+    <div class="field">
+      <label for="authEmail">Email</label>
+      <input id="authEmail" type="email" autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="authPass">Password</label>
+      <input id="authPass" type="password" autocomplete="current-password">
+    </div>
+    <div class="msg" id="authMsg"></div>
+    <div class="row">
+      <button class="btn" id="authSubmit">Sign in</button>
+    </div>
+    <div class="switch-mode" id="authSwitch">New here? <a id="authToggle">Create an account</a></div>
+  </div>
+</div>
+
+<div class="modal-wrap" id="leadModal" role="dialog" aria-modal="true" aria-label="Request an invite">
+  <div class="modal">
+    <button class="close-x" id="leadClose" aria-label="Close">&times;</button>
+    <span class="tag">E-12 Membership</span>
+    <h3 id="leadTitle">Request an invite</h3>
+    <p id="leadIntro" style="color: var(--ink-dim); font-size: 15px; margin-bottom: 16px;">
+      Leave your details and we will guide you from here.</p>
+    <div class="field">
+      <label for="leadName">Name</label>
+      <input id="leadName" type="text" autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="leadEmail">Email</label>
+      <input id="leadEmail" type="email" autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="leadPhone">Phone</label>
+      <input id="leadPhone" type="tel" autocomplete="tel">
+    </div>
+    <div class="msg" id="leadMsg"></div>
+    <div class="row">
+      <button class="btn" id="leadSubmit">Send</button>
+    </div>
+  </div>
+</div>
+
+<div class="vplayer" id="vplayer">
+  <button class="close-v" id="vplayerClose">Close</button>
+  <video id="vplayerVideo" controls playsinline></video>
+</div>
+
 <div class="toast" id="toast" role="status"></div>
 
+<script src="js/supabase.js"></script>
+<script src="js/config.js"></script>
 <script>
 /* ------------------------------------------------------------
    PARTNER + SIGNUP LINKS
@@ -587,6 +710,182 @@ var LINKS = {
   window.addEventListener("hashchange", function () {
     var h = location.hash.slice(1);
     if (TABS.indexOf(h) !== -1) showTab(h, false);
+  });
+})();
+
+/* ------------------------------------------------------------
+   MEMBERS LAYER (Supabase). Loads only when js/config.js has
+   real credentials; the page above works fine without it.
+   ------------------------------------------------------------ */
+(function () {
+  if (!window.supabase || !window.E12_CONFIG || !window.E12_CONFIG.url) return;
+  var sb = window.supabase.createClient(window.E12_CONFIG.url, window.E12_CONFIG.key);
+  var $ = function (id) { return document.getElementById(id); };
+  var authBtn = $("authBtn"), ownerLink = $("ownerLink"), modal = $("authModal");
+  var authMsg = $("authMsg"), authTitle = $("authTitle"), authSubmit = $("authSubmit");
+  var vplayer = $("vplayer"), vvideo = $("vplayerVideo");
+  var toastEl = $("toast"), tTimer = null;
+  var session = null, role = null, signupMode = false, trainingsCache = [];
+
+  function toast(m) {
+    toastEl.textContent = m; toastEl.classList.add("show");
+    clearTimeout(tTimer); tTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2600);
+  }
+  function esc(s) {
+    return String(s || "").replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+  function msg(text, cls) { authMsg.textContent = text; authMsg.className = "msg" + (cls ? " " + cls : ""); }
+
+  authBtn.hidden = false;
+
+  function setAuthUI() {
+    authBtn.textContent = session ? "Sign out" : "Sign in";
+    ownerLink.hidden = role !== "admin";
+  }
+  function setMode(signup) {
+    signupMode = signup;
+    authTitle.textContent = signup ? "Create account" : "Sign in";
+    authSubmit.textContent = signup ? "Create account" : "Sign in";
+    $("authSwitch").innerHTML = signup
+      ? 'Already a member? <a id="authToggle">Sign in</a>'
+      : 'New here? <a id="authToggle">Create an account</a>';
+  }
+  function openModal() { modal.classList.add("open"); msg(""); setTimeout(function () { $("authEmail").focus(); }, 60); }
+  function closeModal() { modal.classList.remove("open"); }
+
+  authBtn.addEventListener("click", function () {
+    if (session) { sb.auth.signOut(); toast("Signed out."); } else { openModal(); }
+  });
+  $("authClose").addEventListener("click", closeModal);
+  modal.addEventListener("click", function (ev) { if (ev.target === modal) closeModal(); });
+  modal.addEventListener("click", function (ev) {
+    if (ev.target && ev.target.id === "authToggle") setMode(!signupMode);
+  });
+  authSubmit.addEventListener("click", async function () {
+    var email = $("authEmail").value.trim(), pass = $("authPass").value;
+    if (!email || !pass) { msg("Email and password, please.", "err"); return; }
+    authSubmit.disabled = true; msg(signupMode ? "Creating account..." : "Signing in...");
+    try {
+      if (signupMode) {
+        var r = await sb.auth.signUp({ email: email, password: pass });
+        if (r.error) throw r.error;
+        msg("Account created. Check your email for a confirmation link.", "ok");
+        closeModal();
+        openLead("signup", email, "Welcome to E-12", "One more step: tell us who you are so we can guide your onboarding.");
+      } else {
+        var r2 = await sb.auth.signInWithPassword({ email: email, password: pass });
+        if (r2.error) throw r2.error;
+        closeModal(); toast("Welcome back.");
+      }
+    } catch (e) { msg(e.message || "Something went wrong.", "err"); }
+    authSubmit.disabled = false;
+  });
+  $("authPass").addEventListener("keydown", function (ev) { if (ev.key === "Enter") authSubmit.click(); });
+
+  /* ---- lead capture / onboarding ---- */
+  var leadModal = $("leadModal"), leadSource = "membership";
+  function leadMsgSet(text, cls) {
+    var el = $("leadMsg"); el.textContent = text; el.className = "msg" + (cls ? " " + cls : "");
+  }
+  function openLead(source, email, title, intro) {
+    leadSource = source;
+    if (title) $("leadTitle").textContent = title;
+    if (intro) $("leadIntro").textContent = intro;
+    if (email) $("leadEmail").value = email;
+    leadMsgSet("");
+    leadModal.classList.add("open");
+    setTimeout(function () { $("leadName").focus(); }, 60);
+  }
+  function closeLead() { leadModal.classList.remove("open"); }
+  $("leadClose").addEventListener("click", closeLead);
+  leadModal.addEventListener("click", function (ev) { if (ev.target === leadModal) closeLead(); });
+  $("leadSubmit").addEventListener("click", async function () {
+    var name = $("leadName").value.trim(), email = $("leadEmail").value.trim(), phone = $("leadPhone").value.trim();
+    if (!name || !email) { leadMsgSet("Name and email, please.", "err"); return; }
+    $("leadSubmit").disabled = true; leadMsgSet("Sending...");
+    var r = await sb.from("leads").insert({ name: name, email: email, phone: phone, source: leadSource });
+    $("leadSubmit").disabled = false;
+    if (r.error) { leadMsgSet("Could not send. Try again in a moment.", "err"); return; }
+    leadMsgSet("You are on the list. We will guide you from here.", "ok");
+    setTimeout(closeLead, 1800);
+  });
+  /* membership CTAs open the invite flow when no signup URL is configured */
+  document.addEventListener("click", function (ev) {
+    var el = ev.target.closest('[data-link="membership"]');
+    if (!el) return;
+    var url = LINKS.membership;
+    if (!url || url === "#") {
+      ev.preventDefault(); ev.stopPropagation();
+      openLead("membership", session ? session.user.email : "", "Request an invite", "Leave your details and we will guide you from here.");
+    }
+  }, true);
+
+  async function loadRole() {
+    role = null;
+    if (!session) { setAuthUI(); return; }
+    var r = await sb.from("profiles").select("role").eq("id", session.user.id).single();
+    role = (r.data && r.data.role) || "member";
+    setAuthUI();
+  }
+
+  async function loadLinks() {
+    var r = await sb.from("site_links").select("key,url");
+    if (r.data) r.data.forEach(function (row) { if (row.url) LINKS[row.key] = row.url; });
+  }
+
+  async function playTraining(t) {
+    var src = t.video_url || "";
+    if (!src) { toast("Video coming soon."); return; }
+    if (t.badge === "members" && !session) { openModal(); toast("Members only. Sign in to watch."); return; }
+    if (src.indexOf("sb://") === 0) {
+      var parts = src.slice(5).split("/");
+      var bucket = parts.shift(), path = parts.join("/");
+      var r = await sb.storage.from(bucket).createSignedUrl(path, 3600);
+      if (r.error || !r.data) { toast("Could not load the video. Try signing in again."); return; }
+      src = r.data.signedUrl;
+    }
+    vvideo.src = src; vplayer.classList.add("open"); vvideo.play().catch(function () {});
+  }
+  $("vplayerClose").addEventListener("click", function () {
+    vplayer.classList.remove("open"); vvideo.pause(); vvideo.src = "";
+  });
+
+  async function renderAcademy() {
+    var r = await sb.from("trainings").select("*").eq("published", true).order("sort");
+    if (r.error || !r.data || !r.data.length) return;
+    trainingsCache = r.data;
+    var shelf = document.querySelector("#panel-academy .shelf");
+    if (!shelf) return;
+    shelf.innerHTML = r.data.map(function (t) {
+      var badge = t.badge === "free"
+        ? '<span class="badge free">Free preview</span>'
+        : '<span class="badge">Members</span>';
+      var img = t.image_url || "img/academy-travel.jpg";
+      return '<article class="lesson" data-training-id="' + esc(t.id) + '" tabindex="0" role="button" aria-label="' + esc(t.title) + '">' +
+        '<div class="ph"><img src="' + esc(img) + '" alt="' + esc(t.title) + '"></div>' +
+        '<div class="play" aria-hidden="true"></div>' +
+        '<div class="meta">' + badge + "<h3>" + esc(t.title) + "</h3></div>" +
+        "</article>";
+    }).join("");
+    shelf.querySelectorAll(".lesson").forEach(function (card) {
+      function go() {
+        var t = trainingsCache.find(function (x) { return x.id === card.getAttribute("data-training-id"); });
+        if (t) playTraining(t);
+      }
+      card.addEventListener("click", go);
+      card.addEventListener("keydown", function (ev) { if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); go(); } });
+    });
+  }
+
+  sb.auth.onAuthStateChange(function (_ev, s) {
+    session = s;
+    loadRole().then(renderAcademy);
+  });
+  sb.auth.getSession().then(function (r) {
+    session = r.data.session;
+    loadRole().then(function () { loadLinks(); renderAcademy(); });
   });
 })();
 </script>
