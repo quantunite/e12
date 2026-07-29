@@ -1,0 +1,594 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E-12 - The Members Network</title>
+<meta name="description" content="E-12 is a private members network. Learn in the academy, travel smarter, and build with our partner programs.">
+<style>
+/* ============================================================
+   E-12 - simplified members network page
+   House style carried over from the E-23 concept round:
+   night marble, brass signage light, gate arches.
+   Self-contained: no external requests of any kind.
+   ============================================================ */
+:root {
+  --ink: #efe6d3;
+  --ink-dim: #a2947c;
+  --ink-faint: #6b5f4d;
+  --night: #0b0a08;
+  --night-2: #12100d;
+  --night-3: #191612;
+  --marble: #201c17;
+  --brass: #c9a25a;
+  --brass-hi: #ecd39a;
+  --brass-deep: #7d6134;
+  --live: #7fc98b;
+  --line: rgba(201, 162, 90, 0.18);
+  --line-soft: rgba(201, 162, 90, 0.09);
+  --font-display: "Didot", "Bodoni MT", "Playfair Display", "Georgia Pro", Georgia, "Times New Roman", serif;
+  --font-body: "Georgia Pro", Georgia, "Iowan Old Style", "Times New Roman", serif;
+  --font-mono: "Cascadia Mono", Consolas, "IBM Plex Mono", "SF Mono", Menlo, monospace;
+  --arch: 150px 150px 14px 14px;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--night);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--brass); color: #14100a; }
+a { color: inherit; }
+img { max-width: 100%; display: block; }
+
+/* faint film grain */
+body::after {
+  content: "";
+  position: fixed; inset: 0;
+  pointer-events: none; z-index: 60; opacity: 0.05;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='0.6'/%3E%3C/svg%3E");
+}
+/* quiet marble backdrop */
+.floor {
+  position: fixed; inset: 0; z-index: -2;
+  background:
+    radial-gradient(120% 55% at 50% 118%, rgba(201, 162, 90, 0.10), transparent 60%),
+    linear-gradient(180deg, #080706 0%, #0b0a08 40%, #14110d 100%);
+}
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 28px; }
+.tag {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+/* ============================ NAV ============================ */
+header.nav {
+  position: sticky; top: 0; z-index: 50;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  background: rgba(9, 8, 6, 0.78);
+  border-bottom: 1px solid var(--line-soft);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 16px; padding-bottom: 16px; gap: 18px;
+}
+.wordmark {
+  font-family: var(--font-display);
+  font-size: 26px; letter-spacing: 0.14em;
+  color: var(--brass-hi); text-decoration: none;
+  white-space: nowrap;
+}
+.wordmark small {
+  display: block;
+  font-family: var(--font-mono); font-size: 9px;
+  letter-spacing: 0.4em; color: var(--ink-faint); text-transform: uppercase;
+}
+.tabs { display: flex; gap: 8px; }
+.tab-btn {
+  appearance: none; background: transparent; border: 1px solid var(--line);
+  color: var(--ink-dim); cursor: pointer;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 10px 18px; border-radius: 999px;
+  transition: color .25s, border-color .25s, background .25s;
+}
+.tab-btn:hover { color: var(--brass-hi); border-color: var(--brass-deep); }
+.tab-btn[aria-selected="true"] {
+  color: #14100a; background: var(--brass); border-color: var(--brass);
+}
+
+/* ============================ PANELS ============================ */
+.panel { display: none; animation: fadeUp .5s ease both; }
+.panel.active { display: block; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: none; }
+}
+
+section { padding: 84px 0; border-bottom: 1px solid var(--line-soft); }
+section:last-of-type { border-bottom: 0; }
+h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
+h2 { font-size: clamp(30px, 4vw, 44px); margin: 14px 0 18px; color: var(--brass-hi); }
+.lead { max-width: 640px; color: var(--ink-dim); font-size: 18px; }
+
+/* ============================ HERO ============================ */
+.hero {
+  position: relative; padding: 0; border-bottom: 1px solid var(--line-soft);
+}
+.hero-img { position: absolute; inset: 0; overflow: hidden; }
+.hero-img img { width: 100%; height: 100%; object-fit: cover; opacity: 0.72; }
+.hero-img::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(11,10,8,0.5) 0%, rgba(11,10,8,0.12) 45%, rgba(11,10,8,0.94) 100%);
+}
+.hero-inner {
+  position: relative; z-index: 1;
+  min-height: 74vh;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding-top: 140px; padding-bottom: 90px;
+}
+.hero h1 {
+  font-size: clamp(40px, 6.4vw, 76px);
+  line-height: 1.06; color: var(--ink); max-width: 780px;
+  margin: 18px 0 22px;
+}
+.hero h1 em { font-style: italic; color: var(--brass-hi); }
+.hero .lead { font-size: 19px; }
+.cta-row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 34px; }
+.btn {
+  display: inline-block; text-decoration: none; cursor: pointer;
+  font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  padding: 15px 28px; border-radius: 999px;
+  border: 1px solid var(--brass); color: #14100a; background: var(--brass);
+  transition: background .25s, color .25s, transform .2s;
+}
+.btn:hover { background: var(--brass-hi); transform: translateY(-1px); }
+.btn.ghost { background: transparent; color: var(--brass-hi); }
+.btn.ghost:hover { background: rgba(201,162,90,0.12); }
+.btn[aria-disabled="true"] { opacity: 0.45; cursor: default; }
+
+/* ============================ GATE CARDS ============================ */
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; margin-top: 48px; }
+.card {
+  background: var(--night-2); border: 1px solid var(--line);
+  border-radius: 18px; overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform .3s, border-color .3s;
+}
+.card:hover { transform: translateY(-4px); border-color: var(--brass-deep); }
+.card .ph { position: relative; aspect-ratio: 16 / 10; overflow: hidden; }
+.card .ph img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s ease; }
+.card:hover .ph img { transform: scale(1.04); }
+.card .ph .gate {
+  position: absolute; top: 14px; left: 14px;
+  background: rgba(9,8,6,0.72); border: 1px solid var(--line);
+  border-radius: 999px; padding: 6px 12px;
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--brass-hi);
+}
+.card .body { padding: 24px 24px 26px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.card h3 { font-size: 24px; color: var(--brass-hi); }
+.card p { color: var(--ink-dim); font-size: 15.5px; flex: 1; }
+.card .btn { align-self: flex-start; padding: 12px 20px; font-size: 11px; }
+
+/* ============================ MEMBERSHIP ============================ */
+.member {
+  display: grid; grid-template-columns: 1.05fr 1fr; gap: 54px; align-items: center;
+}
+.member .art img { border-radius: var(--arch); border: 1px solid var(--line); }
+.member ul { list-style: none; margin: 26px 0 30px; display: grid; gap: 14px; }
+.member li { display: flex; gap: 14px; color: var(--ink-dim); font-size: 16.5px; }
+.member li::before {
+  content: "01"; counter-increment: m;
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.2em;
+  color: var(--brass); padding-top: 5px;
+}
+.member ul { counter-reset: m; }
+.member li:nth-child(1)::before { content: "01"; }
+.member li:nth-child(2)::before { content: "02"; }
+.member li:nth-child(3)::before { content: "03"; }
+.member li:nth-child(4)::before { content: "04"; }
+
+/* ============================ PROGRESS / JOURNEY ============================ */
+.steps { display: grid; gap: 34px; margin-top: 50px; }
+.step {
+  display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 40px; align-items: center;
+  background: var(--night-2); border: 1px solid var(--line); border-radius: 18px;
+  padding: 30px;
+}
+.step:nth-child(even) .art { order: 2; }
+.step .art img { border-radius: 14px; border: 1px solid var(--line-soft); }
+.step .k {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: var(--brass);
+}
+.step h3 { font-size: 28px; color: var(--brass-hi); margin: 10px 0 12px; }
+.step p { color: var(--ink-dim); font-size: 16px; }
+.honest {
+  margin-top: 44px; padding: 22px 26px;
+  border: 1px solid var(--line); border-radius: 14px;
+  background: var(--night-3); color: var(--ink-dim); font-size: 15px;
+}
+.honest strong { color: var(--ink); }
+
+/* ============================ ACADEMY ============================ */
+.shelf { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; margin-top: 48px; }
+.lesson {
+  position: relative; border-radius: 18px; overflow: hidden;
+  border: 1px solid var(--line); background: var(--night-2);
+  cursor: pointer; transition: transform .3s, border-color .3s;
+}
+.lesson:hover { transform: translateY(-4px); border-color: var(--brass-deep); }
+.lesson .ph { position: relative; aspect-ratio: 16 / 9; }
+.lesson .ph img { width: 100%; height: 100%; object-fit: cover; }
+.lesson .ph::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(9,8,6,0.85) 100%);
+}
+.lesson .play {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -60%);
+  width: 64px; height: 64px; border-radius: 50%;
+  border: 1px solid var(--brass-hi); background: rgba(9,8,6,0.55);
+  display: grid; place-items: center; z-index: 2;
+  transition: background .25s;
+}
+.lesson:hover .play { background: rgba(201,162,90,0.25); }
+.lesson .play::before {
+  content: ""; margin-left: 4px;
+  border-left: 16px solid var(--brass-hi);
+  border-top: 10px solid transparent; border-bottom: 10px solid transparent;
+}
+.lesson .meta {
+  position: absolute; left: 20px; right: 20px; bottom: 16px; z-index: 2;
+}
+.lesson .meta h3 { font-size: 22px; color: var(--ink); }
+.lesson .badge {
+  display: inline-block; margin-bottom: 8px;
+  font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.28em;
+  text-transform: uppercase; padding: 5px 11px; border-radius: 999px;
+  border: 1px solid var(--line); color: var(--ink-dim); background: rgba(9,8,6,0.6);
+}
+.lesson .badge.free { color: #14100a; background: var(--live); border-color: var(--live); }
+
+/* ============================ FOOTER ============================ */
+footer {
+  border-top: 1px solid var(--line-soft);
+  padding: 54px 0 64px; color: var(--ink-faint); font-size: 14px;
+}
+.foot-grid { display: flex; justify-content: space-between; gap: 30px; flex-wrap: wrap; }
+.disclosure { max-width: 640px; margin-top: 18px; font-size: 13px; line-height: 1.7; }
+footer a { color: var(--ink-dim); }
+
+/* ============================ TOAST ============================ */
+.toast {
+  position: fixed; left: 50%; bottom: 34px; transform: translateX(-50%) translateY(20px);
+  z-index: 80; opacity: 0; pointer-events: none;
+  background: var(--marble); color: var(--brass-hi);
+  border: 1px solid var(--brass-deep); border-radius: 999px;
+  padding: 13px 24px; font-family: var(--font-mono); font-size: 12px;
+  letter-spacing: 0.12em; transition: opacity .3s, transform .3s;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ============================ RESPONSIVE ============================ */
+@media (max-width: 940px) {
+  .cards { grid-template-columns: 1fr; }
+  .member { grid-template-columns: 1fr; }
+  .step, .step:nth-child(even) { grid-template-columns: 1fr; }
+  .step:nth-child(even) .art { order: 0; }
+  .shelf { grid-template-columns: 1fr; }
+  .hero-inner { min-height: 62vh; padding-top: 110px; padding-bottom: 70px; }
+  .hero h1 { font-size: clamp(34px, 10vw, 46px); }
+}
+@media (max-width: 640px) {
+  .nav-inner { flex-direction: column; gap: 12px; padding-top: 14px; padding-bottom: 14px; }
+  .tabs { width: 100%; justify-content: center; flex-wrap: wrap; }
+  .tab-btn { padding: 9px 13px; letter-spacing: 0.12em; font-size: 10.5px; }
+  section { padding: 62px 0; }
+}
+</style>
+</head>
+<body>
+<div class="floor" aria-hidden="true"></div>
+
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a class="wordmark" href="#business" data-tab-link="business">E-12
+      <small>Members Network</small>
+    </a>
+    <nav class="tabs" role="tablist" aria-label="Site sections">
+      <button class="tab-btn" role="tab" id="tab-business" aria-controls="panel-business" aria-selected="true" data-tab="business">Business</button>
+      <button class="tab-btn" role="tab" id="tab-progress" aria-controls="panel-progress" aria-selected="false" data-tab="progress">Progress</button>
+      <button class="tab-btn" role="tab" id="tab-academy" aria-controls="panel-academy" aria-selected="false" data-tab="academy">Academy</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+<!-- ============================ BUSINESS (general page) ============================ -->
+<div class="panel active" id="panel-business" role="tabpanel" aria-labelledby="tab-business">
+
+  <section class="hero">
+    <div class="hero-img"><img src="img/hero-terminal.jpg" alt="A grand terminal hall at night with glowing arched gates"></div>
+    <div class="wrap hero-inner">
+      <span class="tag">E-12 . Private Members Network</span>
+      <h1>Every next level<br>has a <em>gate</em>.</h1>
+      <p class="lead">E-12 is a members network built around real skills. Learn in the academy,
+        travel smarter with member resources, and when you are ready, build alongside us
+        through our partner programs.</p>
+      <div class="cta-row">
+        <a class="btn" href="#membership">Explore membership</a>
+        <button class="btn ghost" data-tab-link="academy">Visit the academy</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="gates">
+    <div class="wrap">
+      <span class="tag">Departures</span>
+      <h2>Choose your gate.</h2>
+      <p class="lead">Each gate is a direction you can take with E-12. Start where you are,
+        and use the partner links to go straight to the offers our members use.</p>
+      <div class="cards">
+        <article class="card">
+          <div class="ph"><span class="gate">Gate 01</span><img src="img/travel-amalfi.jpg" alt="A lantern-lit cliffside village seen from the sea at dusk"></div>
+          <div class="body">
+            <h3>Travel</h3>
+            <p>See more of the world for less. Points, miles, and member travel offers,
+              plus the booking habits that make premium trips realistic.</p>
+            <a class="btn" href="#" data-link="travelPartner">Go to travel partner</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"><span class="gate">Gate 02</span><img src="img/wealth-vault.jpg" alt="A brass vault door at the end of a marble corridor"></div>
+          <div class="body">
+            <h3>Wealth</h3>
+            <p>Bitcoin and long-term thinking, taught plainly. Understand what you own
+              and why before you put a dollar anywhere.</p>
+            <a class="btn" href="#" data-link="wealthPartner">Go to wealth partner</a>
+          </div>
+        </article>
+        <article class="card">
+          <div class="ph"><span class="gate">Boarding soon</span><img src="img/route-map.jpg" alt="A glowing in-flight route map over a dark ocean"></div>
+          <div class="body">
+            <h3>More routes</h3>
+            <p>New gates open as the network grows. Member ideas set the destination list,
+              travel and wealth are only the first two.</p>
+            <a class="btn ghost" href="#" aria-disabled="true">In review</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="membership">
+    <div class="wrap member">
+      <div>
+        <span class="tag">Membership</span>
+        <h2>One membership. Every gate.</h2>
+        <ul>
+          <li>Full access to the E-12 academy library: video trainings on travel, affiliate marketing, and bitcoin basics.</li>
+          <li>Member community: travel alongside people building the same things you are.</li>
+          <li>Partner offers and member pricing, gathered in one place.</li>
+          <li>A clear path from learning to earning through our partner programs, at your pace.</li>
+        </ul>
+        <div class="cta-row">
+          <a class="btn" href="#" data-link="membership">Request an invite</a>
+          <button class="btn ghost" data-tab-link="progress">See the path</button>
+        </div>
+      </div>
+      <div class="art"><img src="img/academy-luxe.jpg" alt="A symmetric first class cabin aisle in warm light"></div>
+    </div>
+  </section>
+
+</div>
+
+<!-- ============================ PROGRESS ============================ -->
+<div class="panel" id="panel-progress" role="tabpanel" aria-labelledby="tab-progress" hidden>
+  <section>
+    <div class="wrap">
+      <span class="tag">The Path</span>
+      <h2>From boarding to arrival.</h2>
+      <p class="lead">E-12 keeps the journey simple. Three stages, in order, with the academy
+        and the community carrying you between them.</p>
+
+      <div class="steps">
+        <article class="step">
+          <div class="art"><img src="img/step-boarding.jpg" alt="An aircraft boarding door seen from the jet bridge in golden light"></div>
+          <div>
+            <span class="k">Stage 01 . Boarding</span>
+            <h3>Join the network.</h3>
+            <p>Become a member, get oriented, and set your first goal. You will know exactly
+              what to watch first and who to ask when you get stuck.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div class="art"><img src="img/step-inflight.jpg" alt="A golden cloudscape seen through an aircraft window"></div>
+          <div>
+            <span class="k">Stage 02 . In flight</span>
+            <h3>Learn the skills.</h3>
+            <p>Work through the academy: travel points and miles, affiliate marketing
+              foundations, and bitcoin basics. Short lessons, plain language, real examples.</p>
+          </div>
+        </article>
+        <article class="step">
+          <div class="art"><img src="img/step-arrival.jpg" alt="City lights seen from a plane window during a night descent"></div>
+          <div>
+            <span class="k">Stage 03 . Arrival</span>
+            <h3>Build with us.</h3>
+            <p>When you are ready, step into our partner programs and share the offers you
+              already use. Membership first, affiliate business second, always in that order.</p>
+          </div>
+        </article>
+      </div>
+
+      <p class="honest"><strong>A straight answer on earnings:</strong> E-12 teaches skills and
+        opens doors, it does not promise income. Results depend on your own effort and
+        consistency, and no earnings are guaranteed or implied.</p>
+    </div>
+  </section>
+</div>
+
+<!-- ============================ ACADEMY ============================ -->
+<div class="panel" id="panel-academy" role="tabpanel" aria-labelledby="tab-academy" hidden>
+  <section>
+    <div class="wrap">
+      <span class="tag">The Academy</span>
+      <h2>Come get some value.</h2>
+      <p class="lead">Video trainings made for people starting from zero. The preview lesson is
+        open to everyone, the full library is part of membership.</p>
+
+      <div class="shelf">
+        <article class="lesson" data-link="academyPreview" tabindex="0" role="button" aria-label="Watch the free preview: Travel points and miles 101">
+          <div class="ph"><img src="img/academy-travel.jpg" alt="A couple overlooking a clifftop infinity pool at dusk"></div>
+          <div class="play" aria-hidden="true"></div>
+          <div class="meta"><span class="badge free">Free preview</span><h3>Travel Points and Miles 101</h3></div>
+        </article>
+        <article class="lesson" data-link="membership" tabindex="0" role="button" aria-label="Members lesson: Affiliate marketing foundations">
+          <div class="ph"><img src="img/academy-affiliate.jpg" alt="A palatial gold hall with arched light portals"></div>
+          <div class="play" aria-hidden="true"></div>
+          <div class="meta"><span class="badge">Members</span><h3>Affiliate Marketing Foundations</h3></div>
+        </article>
+        <article class="lesson" data-link="membership" tabindex="0" role="button" aria-label="Members lesson: Bitcoin, plainly">
+          <div class="ph"><img src="img/academy-bitcoin.jpg" alt="A dark private lounge with a city skyline at night"></div>
+          <div class="play" aria-hidden="true"></div>
+          <div class="meta"><span class="badge">Members</span><h3>Bitcoin, Plainly</h3></div>
+        </article>
+        <article class="lesson" data-link="membership" tabindex="0" role="button" aria-label="Members lesson: Booking business class for less">
+          <div class="ph"><img src="img/academy-luxe.jpg" alt="First class suites with wood tables in warm dusk light"></div>
+          <div class="play" aria-hidden="true"></div>
+          <div class="meta"><span class="badge">Members</span><h3>Booking Business Class for Less</h3></div>
+        </article>
+      </div>
+
+      <div class="cta-row" style="margin-top: 46px;">
+        <a class="btn" href="#" data-link="membership">Unlock the full library</a>
+        <button class="btn ghost" data-tab-link="business">Back to the gates</button>
+      </div>
+    </div>
+  </section>
+</div>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <span class="wordmark" style="font-size: 20px;">E-12</span>
+        <div class="tag" style="margin-top: 6px;">e1212.com</div>
+      </div>
+      <div>
+        <a href="#" data-link="contact">Contact</a>
+      </div>
+    </div>
+    <p class="disclosure">Some links on this site are partner links. E-12 may earn a commission
+      when you book or join through them, at no extra cost to you. E-12 makes no income
+      guarantees of any kind. &copy; 2026 E-12. All rights reserved.</p>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+/* ------------------------------------------------------------
+   PARTNER + SIGNUP LINKS
+   Replace "#" with the real URLs when the client provides them.
+   Any link left as "#" shows a "coming soon" notice on click.
+   ------------------------------------------------------------ */
+var LINKS = {
+  travelPartner:  "#",   /* affiliate: travel offer */
+  wealthPartner:  "#",   /* affiliate: bitcoin / wealth offer */
+  membership:     "#",   /* membership signup / invite form */
+  academyPreview: "#",   /* free preview video */
+  contact:        "#"    /* mailto: or contact form */
+};
+
+(function () {
+  var TABS = ["business", "progress", "academy"];
+  var toastEl = document.getElementById("toast");
+  var toastTimer = null;
+
+  function showTab(name, push) {
+    if (TABS.indexOf(name) === -1) name = "business";
+    TABS.forEach(function (t) {
+      var btn = document.getElementById("tab-" + t);
+      var panel = document.getElementById("panel-" + t);
+      var on = (t === name);
+      btn.setAttribute("aria-selected", on ? "true" : "false");
+      panel.classList.toggle("active", on);
+      if (on) { panel.removeAttribute("hidden"); } else { panel.setAttribute("hidden", ""); }
+    });
+    if (push) {
+      try { history.replaceState(null, "", "#" + name); } catch (e) {}
+    }
+    window.scrollTo({ top: 0, behavior: "instant" in window ? "instant" : "auto" });
+  }
+
+  function toast(msg) {
+    toastEl.textContent = msg;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 2600);
+  }
+
+  /* tab buttons + any element that deep-links to a tab */
+  document.addEventListener("click", function (ev) {
+    var el = ev.target.closest("[data-tab], [data-tab-link]");
+    if (el) {
+      var name = el.getAttribute("data-tab") || el.getAttribute("data-tab-link");
+      ev.preventDefault();
+      showTab(name, true);
+      return;
+    }
+    var linkEl = ev.target.closest("[data-link]");
+    if (linkEl) {
+      var key = linkEl.getAttribute("data-link");
+      var url = LINKS[key];
+      if (!url || url === "#") {
+        ev.preventDefault();
+        toast("This link goes live soon.");
+      } else {
+        ev.preventDefault();
+        window.open(url, "_blank", "noopener");
+      }
+    }
+  });
+
+  /* keyboard access for lesson cards */
+  document.querySelectorAll(".lesson").forEach(function (card) {
+    card.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter" || ev.key === " ") { ev.preventDefault(); card.click(); }
+    });
+  });
+
+  /* hash routing: #business / #progress / #academy, plus #gates/#membership anchors */
+  var initial = (location.hash || "#business").slice(1);
+  if (initial === "gates" || initial === "membership") {
+    showTab("business", false);
+    var target = document.getElementById(initial);
+    if (target) setTimeout(function () { target.scrollIntoView(); }, 60);
+  } else {
+    showTab(initial, false);
+  }
+  window.addEventListener("hashchange", function () {
+    var h = location.hash.slice(1);
+    if (TABS.indexOf(h) !== -1) showTab(h, false);
+  });
+})();
+</script>
+</body>
+</html>
