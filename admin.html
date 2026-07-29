@@ -117,11 +117,12 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
 
 <header>
   <div class="wrap">
-    <a class="wordmark" href="index.html">E-12 <small>Owner Panel</small></a>
+    <a class="wordmark" href="index.html">E-12 <small data-i18n="hdr.sub">Owner Panel</small></a>
     <div style="display:flex; gap:10px; align-items:center;">
       <span class="muted" id="whoami"></span>
+      <button class="btn ghost small" id="langBtn" aria-label="Switch language / Cambiar idioma">ES</button>
       <button class="btn ghost small" id="themeBtn" aria-label="Switch between dark and light mode">&#9788;</button>
-      <button class="btn ghost small" id="signOut" hidden>Sign out</button>
+      <button class="btn ghost small" id="signOut" hidden data-i18n="hdr.signout">Sign out</button>
     </div>
   </div>
 </header>
@@ -130,84 +131,84 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
 
   <!-- gate -->
   <div class="gate-screen" id="gate">
-    <span class="tag">Owner access</span>
-    <h2 id="gateTitle">Sign in</h2>
-    <p class="muted" id="gateNote">This area is for E-12 administrators.</p>
-    <label for="gEmail">Email</label>
+    <span class="tag" data-i18n="gate.tag">Owner access</span>
+    <h2 id="gateTitle" data-i18n="gate.title">Sign in</h2>
+    <p class="muted" id="gateNote" data-i18n="gate.note">This area is for E-12 administrators.</p>
+    <label for="gEmail" data-i18n="gate.email">Email</label>
     <input id="gEmail" type="email" autocomplete="email">
-    <label for="gPass">Password</label>
+    <label for="gPass" data-i18n="gate.pass">Password</label>
     <input id="gPass" type="password" autocomplete="current-password">
     <div class="msg" id="gMsg"></div>
-    <div class="row"><button class="btn" id="gGo">Sign in</button></div>
+    <div class="row"><button class="btn" id="gGo" data-i18n="gate.go">Sign in</button></div>
   </div>
 
   <!-- first-login: create your own password -->
   <div class="gate-screen" id="setPass" style="display:none;">
-    <span class="tag">First sign in</span>
-    <h2>Create your password</h2>
-    <p class="muted">Welcome. Choose your own password to replace the starter one; you will use it from now on.</p>
-    <label for="npass1">New password</label>
+    <span class="tag" data-i18n="np.tag">First sign in</span>
+    <h2 data-i18n="np.title">Create your password</h2>
+    <p class="muted" data-i18n="np.intro">Welcome. Choose your own password to replace the starter one; you will use it from now on.</p>
+    <label for="npass1" data-i18n="np.l1">New password</label>
     <input id="npass1" type="password" autocomplete="new-password">
-    <label for="npass2">Confirm new password</label>
+    <label for="npass2" data-i18n="np.l2">Confirm new password</label>
     <input id="npass2" type="password" autocomplete="new-password">
     <div class="msg" id="npMsg"></div>
-    <div class="row"><button class="btn" id="npGo">Save password</button></div>
+    <div class="row"><button class="btn" id="npGo" data-i18n="np.go">Save password</button></div>
   </div>
 
   <!-- app -->
   <div id="app">
     <div class="tabs">
-      <button class="tab-btn on" data-p="trainings">Trainings</button>
-      <button class="tab-btn" data-p="links">Links</button>
-      <button class="tab-btn" data-p="analytics">Analytics</button>
-      <button class="tab-btn" data-p="leads">Leads <span class="count" id="leadsBadge"></span></button>
-      <button class="tab-btn" data-p="members">Members <span class="count" id="membersBadge"></span></button>
+      <button class="tab-btn on" data-p="trainings" data-i18n="tab.trainings">Trainings</button>
+      <button class="tab-btn" data-p="links" data-i18n="tab.links">Links</button>
+      <button class="tab-btn" data-p="analytics" data-i18n="tab.analytics">Analytics</button>
+      <button class="tab-btn" data-p="leads"><span data-i18n="tab.leads">Leads</span> <span class="count" id="leadsBadge"></span></button>
+      <button class="tab-btn" data-p="members"><span data-i18n="tab.members">Members</span> <span class="count" id="membersBadge"></span></button>
       <button class="tab-btn" data-p="admins">Admins</button>
-      <button class="tab-btn" data-p="help">Help</button>
+      <button class="tab-btn" data-p="help" data-i18n="tab.help">Help</button>
     </div>
 
     <!-- trainings -->
     <div class="panel on" id="p-trainings">
       <div class="card" id="tForm">
-        <span class="tag" id="tFormTag">New training</span>
+        <span class="tag" id="tFormTag" data-i18n="tr.new">New training</span>
         <div class="grid2">
           <div>
-            <label for="tTitle">Title</label>
+            <label for="tTitle" data-i18n="tr.title">Title</label>
             <input id="tTitle" type="text">
-            <label for="tBadge">Access</label>
+            <label for="tBadge" data-i18n="tr.access">Access</label>
             <select id="tBadge">
-              <option value="members">Members only</option>
-              <option value="free">Free preview</option>
+              <option value="members" data-i18n="tr.optMembers">Members only</option>
+              <option value="free" data-i18n="tr.optFree">Free preview</option>
             </select>
-            <label for="tSort">Order (lower shows first)</label>
+            <label for="tSort" data-i18n="tr.order">Order (lower shows first)</label>
             <input id="tSort" type="number" value="100">
           </div>
           <div>
-            <label for="tDesc">Description</label>
+            <label for="tDesc" data-i18n="tr.desc">Description</label>
             <textarea id="tDesc"></textarea>
-            <label for="tImage">Card image (upload, or leave as is)</label>
+            <label for="tImage" data-i18n="tr.image">Card image (upload, or leave as is)</label>
             <input id="tImage" type="file" accept="image/*">
-            <label for="tVideo">Video (upload a file, or paste a link below)</label>
+            <label for="tVideo" data-i18n="tr.video">Video (upload a file, or paste a link below)</label>
             <input id="tVideo" type="file" accept="video/*">
-            <input id="tVideoUrl" type="url" placeholder="YouTube, Vimeo, or direct video link (optional)" style="margin-top:6px;">
-            <div class="muted" style="margin-top:6px;">YouTube and Vimeo links play in an embedded player. Uploads up to about 50 MB;
+            <input id="tVideoUrl" type="url" placeholder="YouTube, Vimeo, or direct video link (optional)" data-i18n-ph="tr.videoPh" style="margin-top:6px;">
+            <div class="muted" style="margin-top:6px;" data-i18n="tr.note">YouTube and Vimeo links play in an embedded player. Uploads up to about 50 MB;
               note: a YouTube link marked Members is only softly gated, since anyone with the link can watch it on YouTube itself.
               For truly private trainings, upload the file instead.</div>
           </div>
         </div>
         <div class="row">
           <label style="margin:0; display:flex; align-items:center; gap:8px; flex-direction:row;">
-            <input type="checkbox" id="tPub" checked style="width:auto;"> Published
+            <input type="checkbox" id="tPub" checked style="width:auto;"> <span data-i18n="tr.pub">Published</span>
           </label>
-          <button class="btn" id="tSave">Save training</button>
-          <button class="btn ghost" id="tCancel" hidden>Cancel edit</button>
+          <button class="btn" id="tSave" data-i18n="tr.save">Save training</button>
+          <button class="btn ghost" id="tCancel" hidden data-i18n="tr.cancel">Cancel edit</button>
         </div>
         <div class="msg" id="tMsg"></div>
       </div>
       <div class="card">
-        <span class="tag">Library</span>
+        <span class="tag" data-i18n="tr.lib">Library</span>
         <table id="tTable">
-          <thead><tr><th></th><th>Title</th><th>Access</th><th>Order</th><th>Video</th><th></th></tr></thead>
+          <thead><tr><th></th><th data-i18n="tr.thTitle">Title</th><th data-i18n="tr.thAccess">Access</th><th data-i18n="tr.thOrder">Order</th><th data-i18n="tr.thVideo">Video</th><th></th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -216,11 +217,11 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     <!-- links -->
     <div class="panel" id="p-links">
       <div class="card">
-        <span class="tag">Partner and site links</span>
-        <p class="muted">These power every button on the site. Travel is your Traverex
+        <span class="tag" data-i18n="lk.tag">Partner and site links</span>
+        <p class="muted" data-i18n="lk.intro">These power every button on the site. Travel is your Traverex
           affiliate link: paste it on the travelPartner row and all travel buttons route there.</p>
         <table id="lTable">
-          <thead><tr><th>Key</th><th>Label</th><th>URL</th><th></th></tr></thead>
+          <thead><tr><th data-i18n="lk.thKey">Key</th><th data-i18n="lk.thLabel">Label</th><th>URL</th><th></th></tr></thead>
           <tbody></tbody>
         </table>
         <div class="msg" id="lMsg"></div>
@@ -230,26 +231,26 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     <!-- analytics -->
     <div class="panel" id="p-analytics">
       <div class="card">
-        <span class="tag">Site analytics</span>
+        <span class="tag" data-i18n="an.tag">Site analytics</span>
         <div class="stat-row">
-          <div class="stat"><div class="k">Views, 7 days</div><div class="v" id="s7"></div></div>
-          <div class="stat"><div class="k">Views, 30 days</div><div class="v" id="s30"></div></div>
-          <div class="stat"><div class="k">Link clicks, 7 days</div><div class="v" id="sc7"></div></div>
-          <div class="stat"><div class="k">Views, all time</div><div class="v" id="sAll"></div></div>
+          <div class="stat"><div class="k" data-i18n="an.s7">Views, 7 days</div><div class="v" id="s7"></div></div>
+          <div class="stat"><div class="k" data-i18n="an.s30">Views, 30 days</div><div class="v" id="s30"></div></div>
+          <div class="stat"><div class="k" data-i18n="an.sc7">Link clicks, 7 days</div><div class="v" id="sc7"></div></div>
+          <div class="stat"><div class="k" data-i18n="an.sAll">Views, all time</div><div class="v" id="sAll"></div></div>
         </div>
       </div>
       <div class="card">
-        <span class="tag">Views per day, last 14 days</span>
+        <span class="tag" data-i18n="an.perDay">Views per day, last 14 days</span>
         <div class="bars" id="viewBars" role="img" aria-label="Daily site views, last 14 days"></div>
       </div>
       <div class="grid2">
         <div class="card">
-          <span class="tag">Clicks by link, 30 days</span>
-          <table id="clickTable"><thead><tr><th>Link</th><th style="text-align:right;">Clicks</th></tr></thead><tbody></tbody></table>
+          <span class="tag" data-i18n="an.byLink">Clicks by link, 30 days</span>
+          <table id="clickTable"><thead><tr><th data-i18n="an.thLink">Link</th><th style="text-align:right;" data-i18n="an.thClicks">Clicks</th></tr></thead><tbody></tbody></table>
         </div>
         <div class="card">
-          <span class="tag">Top referrers, 30 days</span>
-          <table id="refTable"><thead><tr><th>Source</th><th style="text-align:right;">Views</th></tr></thead><tbody></tbody></table>
+          <span class="tag" data-i18n="an.refs">Top referrers, 30 days</span>
+          <table id="refTable"><thead><tr><th data-i18n="an.thSource">Source</th><th style="text-align:right;" data-i18n="an.thViews">Views</th></tr></thead><tbody></tbody></table>
         </div>
       </div>
     </div>
@@ -257,13 +258,13 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     <!-- leads -->
     <div class="panel" id="p-leads">
       <div class="card">
-        <span class="tag">Leads</span>
+        <span class="tag" data-i18n="ld.tag">Leads</span>
         <div class="row" style="margin-top:4px; margin-bottom:8px;">
-          <button class="btn ghost small" id="leadExport">Export CSV</button>
+          <button class="btn ghost small" id="leadExport" data-i18n="ld.export">Export CSV</button>
           <span class="muted" id="leadCount"></span>
         </div>
         <table id="leadTable">
-          <thead><tr><th>When</th><th>Name</th><th>Email</th><th>Phone</th><th>Source</th><th></th></tr></thead>
+          <thead><tr><th data-i18n="ld.thWhen">When</th><th data-i18n="ld.thName">Name</th><th data-i18n="ld.thEmail">Email</th><th data-i18n="ld.thPhone">Phone</th><th data-i18n="ld.thSource">Source</th><th></th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -272,10 +273,10 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     <!-- members -->
     <div class="panel" id="p-members">
       <div class="card">
-        <span class="tag">Members</span>
-        <p class="muted">Everyone with an account. Admins can edit the site; members can watch members-only trainings.</p>
+        <span class="tag" data-i18n="mb.tag">Members</span>
+        <p class="muted" data-i18n="mb.intro">Everyone with an account. Admins can edit the site; members can watch members-only trainings.</p>
         <table id="mTable">
-          <thead><tr><th>Email</th><th>Role</th><th>Joined</th><th></th></tr></thead>
+          <thead><tr><th data-i18n="mb.thEmail">Email</th><th data-i18n="mb.thRole">Role</th><th data-i18n="mb.thJoined">Joined</th><th></th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -284,16 +285,16 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     <!-- help / guide -->
     <div class="panel" id="p-help">
       <div class="card">
-        <span class="tag">Welcome to your panel</span>
-        <h2 style="font-size:26px;">This is your cockpit. Here is how to fly it.</h2>
-        <p class="muted">This guide opens automatically your first time and lives under the
+        <span class="tag" data-i18n="hp.w.tag">Welcome to your panel</span>
+        <h2 style="font-size:26px;" data-i18n="hp.w.h2">This is your cockpit. Here is how to fly it.</h2>
+        <p class="muted" data-i18n="hp.w.p">This guide opens automatically your first time and lives under the
           Help tab whenever you need it. Everything you change here is live on e1212.com
           the moment you save it.</p>
       </div>
       <div class="card">
-        <span class="tag">Start here: 3 things to set up</span>
+        <span class="tag" data-i18n="hp.start.tag">Start here: 3 things to set up</span>
         <table>
-          <tbody>
+          <tbody data-i18n="hp.start.body">
             <tr><td style="width:30px;">1</td><td><strong>Paste your Traverex affiliate link.</strong> Links tab, the travelPartner row. Every travel button on the site routes there the moment you save.</td></tr>
             <tr><td>2</td><td><strong>Add your videos.</strong> Trainings tab. Edit a card and paste a YouTube link (or upload a file). Mark one as Free preview so visitors get a taste.</td></tr>
             <tr><td>3</td><td><strong>Check your leads daily.</strong> Leads tab. Everyone who requests an invite or signs up lands there with their name, email, and phone. A gold count on the tab means something new came in since your last look.</td></tr>
@@ -301,9 +302,9 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
         </table>
       </div>
       <div class="card">
-        <span class="tag">What each tab does</span>
+        <span class="tag" data-i18n="hp.tabs.tag">What each tab does</span>
         <table>
-          <tbody>
+          <tbody data-i18n="hp.tabs.body">
             <tr><td style="width:110px;"><strong>Trainings</strong></td><td>Your academy library. Add, edit, publish, or delete video trainings. "Members only" trainings require a login to watch; "Free preview" is open to everyone. YouTube and Vimeo links play embedded; uploaded files are truly private to members. Lower Order numbers show first.</td></tr>
             <tr><td><strong>Links</strong></td><td>Every button on the site pulls from here: your Traverex link (travelPartner), wealth partner, membership signup, free preview video, and contact. Empty links show visitors a polite "coming soon" note, so nothing ever looks broken.</td></tr>
             <tr><td><strong>Analytics</strong></td><td>Real visitor numbers only: views per day, clicks on each partner link (how many people you sent to Traverex), and where visitors came from. No cookies, nothing shared with third parties.</td></tr>
@@ -314,9 +315,9 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
         </table>
       </div>
       <div class="card">
-        <span class="tag">Good to know</span>
+        <span class="tag" data-i18n="hp.know.tag">Good to know</span>
         <table>
-          <tbody>
+          <tbody data-i18n="hp.know.body">
             <tr><td>The sun/moon button switches light and dark mode; visitors have the same choice, plus an EN/ES language switch on the site.</td></tr>
             <tr><td>You will never get automated emails from this system. The panel badges are your notifications; make checking Leads part of your routine.</td></tr>
             <tr><td>A YouTube link on a "Members" training is only softly protected, since anyone with the raw link can watch it on YouTube. Use unlisted links, or upload the file for real privacy.</td></tr>
@@ -329,15 +330,15 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     <!-- admins -->
     <div class="panel" id="p-admins">
       <div class="card">
-        <span class="tag">Admin emails</span>
-        <p class="muted">Anyone who creates an account with one of these emails becomes an
+        <span class="tag" data-i18n="ad.tag">Admin emails</span>
+        <p class="muted" data-i18n="ad.intro">Anyone who creates an account with one of these emails becomes an
           admin automatically. To promote someone who already has an account, use the Members tab.</p>
         <div class="row">
           <input id="aEmail" type="email" placeholder="email@example.com" style="max-width:320px;">
-          <button class="btn" id="aAdd">Add</button>
+          <button class="btn" id="aAdd" data-i18n="ad.add">Add</button>
         </div>
         <table id="aTable" style="margin-top:14px;">
-          <thead><tr><th>Email</th><th>Added</th><th></th></tr></thead>
+          <thead><tr><th data-i18n="ad.thEmail">Email</th><th data-i18n="ad.thAdded">Added</th><th></th></tr></thead>
           <tbody></tbody>
         </table>
         <div class="msg" id="aMsg"></div>
@@ -357,6 +358,118 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
   var sb = window.supabase.createClient(window.E12_CONFIG.url, window.E12_CONFIG.key);
   var $ = function (id) { return document.getElementById(id); };
   var session = null, editingId = null, trainings = [];
+
+  /* ---- language (EN/ES), shared preference with the main site ---- */
+  var I18N_ES = {
+    "hdr.sub": "Panel del propietario",
+    "hdr.signout": "Salir",
+    "gate.tag": "Acceso de propietario",
+    "gate.title": "Entrar",
+    "gate.note": "Esta &aacute;rea es para administradores de E-12.",
+    "gate.email": "Correo",
+    "gate.pass": "Contrase&ntilde;a",
+    "gate.go": "Entrar",
+    "np.tag": "Primer inicio de sesi&oacute;n",
+    "np.title": "Crea tu contrase&ntilde;a",
+    "np.intro": "Bienvenido. Elige tu propia contrase&ntilde;a para reemplazar la inicial; la usar&aacute;s de ahora en adelante.",
+    "np.l1": "Nueva contrase&ntilde;a",
+    "np.l2": "Confirma la nueva contrase&ntilde;a",
+    "np.go": "Guardar contrase&ntilde;a",
+    "tab.trainings": "Entrenamientos",
+    "tab.links": "Enlaces",
+    "tab.analytics": "Anal&iacute;tica",
+    "tab.leads": "Prospectos",
+    "tab.members": "Miembros",
+    "tab.help": "Ayuda",
+    "tr.new": "Nuevo entrenamiento",
+    "tr.title": "T&iacute;tulo",
+    "tr.access": "Acceso",
+    "tr.optMembers": "Solo miembros",
+    "tr.optFree": "Vista gratis",
+    "tr.order": "Orden (menor sale primero)",
+    "tr.desc": "Descripci&oacute;n",
+    "tr.image": "Imagen de la tarjeta (sube una, o d&eacute;jala como est&aacute;)",
+    "tr.video": "Video (sube un archivo o pega un enlace abajo)",
+    "tr.videoPh": "Enlace de YouTube, Vimeo o video directo (opcional)",
+    "tr.note": "Los enlaces de YouTube y Vimeo se reproducen en un reproductor integrado. Subidas de hasta unos 50 MB; ojo: un enlace de YouTube marcado Solo miembros queda protegido a medias, porque cualquiera con el enlace puede verlo en YouTube. Para entrenamientos realmente privados, sube el archivo.",
+    "tr.pub": "Publicado",
+    "tr.save": "Guardar entrenamiento",
+    "tr.cancel": "Cancelar edici&oacute;n",
+    "tr.lib": "Biblioteca",
+    "tr.thTitle": "T&iacute;tulo",
+    "tr.thAccess": "Acceso",
+    "tr.thOrder": "Orden",
+    "tr.thVideo": "Video",
+    "lk.tag": "Enlaces de socios y del sitio",
+    "lk.intro": "Estos alimentan cada bot&oacute;n del sitio. Viajes es tu enlace de afiliado de Traverex: p&eacute;galo en la fila travelPartner y todos los botones de viaje llevar&aacute;n all&iacute;.",
+    "lk.thKey": "Clave",
+    "lk.thLabel": "Etiqueta",
+    "an.tag": "Anal&iacute;tica del sitio",
+    "an.s7": "Vistas, 7 d&iacute;as",
+    "an.s30": "Vistas, 30 d&iacute;as",
+    "an.sc7": "Clics en enlaces, 7 d&iacute;as",
+    "an.sAll": "Vistas, total",
+    "an.perDay": "Vistas por d&iacute;a, &uacute;ltimos 14 d&iacute;as",
+    "an.byLink": "Clics por enlace, 30 d&iacute;as",
+    "an.thLink": "Enlace",
+    "an.thClicks": "Clics",
+    "an.refs": "Principales fuentes, 30 d&iacute;as",
+    "an.thSource": "Fuente",
+    "an.thViews": "Vistas",
+    "ld.tag": "Prospectos",
+    "ld.export": "Exportar CSV",
+    "ld.thWhen": "Cu&aacute;ndo",
+    "ld.thName": "Nombre",
+    "ld.thEmail": "Correo",
+    "ld.thPhone": "Tel&eacute;fono",
+    "ld.thSource": "Fuente",
+    "mb.tag": "Miembros",
+    "mb.intro": "Todos los que tienen cuenta. Los admins pueden editar el sitio; los miembros pueden ver los entrenamientos exclusivos.",
+    "mb.thEmail": "Correo",
+    "mb.thRole": "Rol",
+    "mb.thJoined": "Ingreso",
+    "ad.tag": "Correos de admins",
+    "ad.intro": "Quien cree una cuenta con uno de estos correos se vuelve admin autom&aacute;ticamente. Para promover a alguien que ya tiene cuenta, usa la pesta&ntilde;a Miembros.",
+    "ad.add": "Agregar",
+    "ad.thEmail": "Correo",
+    "ad.thAdded": "Agregado",
+    "hp.w.tag": "Bienvenido a tu panel",
+    "hp.w.h2": "Esta es tu cabina. As&iacute; se pilota.",
+    "hp.w.p": "Esta gu&iacute;a se abre autom&aacute;ticamente la primera vez y vive en la pesta&ntilde;a Ayuda cuando la necesites. Todo lo que cambies aqu&iacute; queda en vivo en e1212.com en cuanto lo guardas.",
+    "hp.start.tag": "Empieza aqu&iacute;: 3 cosas por configurar",
+    "hp.start.body": "<tr><td style='width:30px;'>1</td><td><strong>Pega tu enlace de afiliado de Traverex.</strong> Pesta&ntilde;a Enlaces, fila travelPartner. Todos los botones de viaje del sitio llevar&aacute;n all&iacute; en cuanto guardes.</td></tr><tr><td>2</td><td><strong>Agrega tus videos.</strong> Pesta&ntilde;a Entrenamientos. Edita una tarjeta y pega un enlace de YouTube (o sube un archivo). Marca uno como Vista gratis para que los visitantes prueben.</td></tr><tr><td>3</td><td><strong>Revisa tus prospectos a diario.</strong> Pesta&ntilde;a Prospectos. Quien pida invitaci&oacute;n o se registre aparece ah&iacute; con su nombre, correo y tel&eacute;fono. Un contador dorado en la pesta&ntilde;a significa que lleg&oacute; algo nuevo desde tu &uacute;ltima visita.</td></tr>",
+    "hp.tabs.tag": "Qu&eacute; hace cada pesta&ntilde;a",
+    "hp.tabs.body": "<tr><td style='width:110px;'><strong>Entrenamientos</strong></td><td>Tu biblioteca de la academia. Agrega, edita, publica o elimina videos. Los de Solo miembros requieren iniciar sesi&oacute;n; Vista gratis est&aacute; abierta a todos. Los enlaces de YouTube y Vimeo se reproducen integrados; los archivos subidos s&iacute; son privados de verdad. Los n&uacute;meros de orden menores salen primero.</td></tr><tr><td><strong>Enlaces</strong></td><td>Cada bot&oacute;n del sitio sale de aqu&iacute;: tu enlace de Traverex (travelPartner), el socio de patrimonio, el registro de membres&iacute;a, el video de vista gratis y el contacto. Los enlaces vac&iacute;os muestran un aviso amable de 'pronto', as&iacute; que nada se ve roto.</td></tr><tr><td><strong>Anal&iacute;tica</strong></td><td>Solo n&uacute;meros reales de visitantes: vistas por d&iacute;a, clics en cada enlace de socio (cu&aacute;nta gente enviaste a Traverex) y de d&oacute;nde llegaron. Sin cookies y sin compartir nada con terceros.</td></tr><tr><td><strong>Prospectos</strong></td><td>Formularios de inter&eacute;s y registros: nombre, correo, tel&eacute;fono y de d&oacute;nde vino cada uno. Exportar CSV te da una hoja de c&aacute;lculo. Eliminar borra uno para siempre.</td></tr><tr><td><strong>Miembros</strong></td><td>Todos los que tienen cuenta. Promueve a alguien a admin (recibe este panel) o reg&eacute;rsalo a miembro. Los registros nuevos llevan una etiqueta dorada de 'nuevo' desde tu &uacute;ltima visita.</td></tr><tr><td><strong>Admins</strong></td><td>Los correos de esta lista se vuelven admins autom&aacute;ticamente al crear su cuenta. Para quien ya tiene cuenta, usa la pesta&ntilde;a Miembros.</td></tr>",
+    "hp.know.tag": "Bueno saberlo",
+    "hp.know.body": "<tr><td>El bot&oacute;n de sol/luna cambia entre modo claro y oscuro; los visitantes tienen la misma opci&oacute;n, m&aacute;s el cambio de idioma EN/ES en el sitio.</td></tr><tr><td>Nunca recibir&aacute;s correos autom&aacute;ticos de este sistema. Los contadores del panel son tus notificaciones; haz de revisar Prospectos parte de tu rutina.</td></tr><tr><td>Un enlace de YouTube en un entrenamiento de Solo miembros queda protegido a medias, porque cualquiera con el enlace puede verlo en YouTube. Usa enlaces ocultos, o sube el archivo para privacidad real.</td></tr><tr><td>&iquest;El sitio ca&iacute;do o algo roto? Eso lo cubre el mantenimiento de emergencia: escribe a admin@atpconsultancy.com.</td></tr>"
+  };
+  var LANG = "en";
+  var T = function (en, es) { return (LANG === "es" && es) ? es : en; };
+  function applyLang(lang) {
+    LANG = lang;
+    document.documentElement.lang = lang;
+    $("langBtn").textContent = lang === "es" ? "EN" : "ES";
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n");
+      if (!el.dataset.enSrc) el.dataset.enSrc = el.innerHTML;
+      el.innerHTML = (lang === "es" && I18N_ES[k]) ? I18N_ES[k] : el.dataset.enSrc;
+    });
+    document.querySelectorAll("[data-i18n-ph]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n-ph");
+      if (!el.dataset.enPh) el.dataset.enPh = el.getAttribute("placeholder") || "";
+      el.setAttribute("placeholder", (lang === "es" && I18N_ES[k]) ? I18N_ES[k].replace(/&[a-z]+;/g, function (e) { var d = document.createElement("i"); d.innerHTML = e; return d.textContent; }) : el.dataset.enPh);
+    });
+  }
+  var savedLang = null;
+  try { savedLang = new URLSearchParams(location.search).get("lang") || localStorage.getItem("e12_lang"); } catch (e) {}
+  if (!savedLang) savedLang = (navigator.language || "").toLowerCase().indexOf("es") === 0 ? "es" : "en";
+  applyLang(savedLang === "es" ? "es" : "en");
+  $("langBtn").addEventListener("click", function () {
+    var next = LANG === "es" ? "en" : "es";
+    try { localStorage.setItem("e12_lang", next); } catch (e) {}
+    applyLang(next);
+    if (session) { loadTrainings(); loadLinks(); loadLeads(); loadMembers(); loadAdmins(); loadAnalytics(); }
+  });
 
   /* theme toggle, shared preference with the main site */
   function applyTheme(t) {
@@ -380,7 +493,7 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
 
   /* ---- gate ---- */
   $("gGo").addEventListener("click", async function () {
-    setMsg("gMsg", "Signing in...");
+    setMsg("gMsg", T("Signing in...", "Entrando..."));
     var r = await sb.auth.signInWithPassword({ email: $("gEmail").value.trim(), password: $("gPass").value });
     if (r.error) { setMsg("gMsg", r.error.message, "err"); return; }
   });
@@ -390,13 +503,13 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
   /* first-login: create your own password */
   $("npGo").addEventListener("click", async function () {
     var p1 = $("npass1").value, p2 = $("npass2").value;
-    if (p1.length < 8) { setMsg("npMsg", "Use at least 8 characters.", "err"); return; }
-    if (p1 !== p2) { setMsg("npMsg", "Passwords do not match.", "err"); return; }
-    $("npGo").disabled = true; setMsg("npMsg", "Saving...");
+    if (p1.length < 8) { setMsg("npMsg", T("Use at least 8 characters.", "Usa al menos 8 caracteres."), "err"); return; }
+    if (p1 !== p2) { setMsg("npMsg", T("Passwords do not match.", "Las contraseñas no coinciden."), "err"); return; }
+    $("npGo").disabled = true; setMsg("npMsg", T("Saving...", "Guardando..."));
     var r = await sb.auth.updateUser({ password: p1 });
     if (r.error) { setMsg("npMsg", r.error.message, "err"); $("npGo").disabled = false; return; }
     await sb.from("profiles").update({ must_set_password: false }).eq("id", session.user.id);
-    setMsg("npMsg", "Password saved. Loading your panel...", "ok");
+    setMsg("npMsg", T("Password saved. Loading your panel...", "Contraseña guardada. Cargando tu panel..."), "ok");
     $("npGo").disabled = false;
     check();
   });
@@ -419,8 +532,8 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     }
     if (!p.data || p.data.role !== "admin") {
       $("gate").style.display = "";
-      $("gateTitle").textContent = "Not authorized";
-      $("gateNote").textContent = "This account is a member, not an administrator.";
+      $("gateTitle").textContent = T("Not authorized", "No autorizado");
+      $("gateNote").textContent = T("This account is a member, not an administrator.", "Esta cuenta es de miembro, no de administrador.");
       $("gEmail").style.display = $("gPass").style.display = $("gGo").style.display = "none";
       document.querySelectorAll("#gate label").forEach(function (l) { l.style.display = "none"; });
       $("app").style.display = "none";
@@ -471,7 +584,7 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     clicks.forEach(function (e) { byKey[e.path] = (byKey[e.path] || 0) + 1; });
     $("clickTable").querySelector("tbody").innerHTML = Object.keys(byKey).sort(function (a, b) { return byKey[b] - byKey[a]; })
       .map(function (k) { return "<tr><td>" + esc(k) + '</td><td style="text-align:right;">' + byKey[k] + "</td></tr>"; })
-      .join("") || '<tr><td class="muted" colspan="2">No link clicks yet.</td></tr>';
+      .join("") || '<tr><td class="muted" colspan="2">' + T("No link clicks yet.", "Aún no hay clics.") + "</td></tr>";
 
     var byRef = {};
     views.forEach(function (e) {
@@ -485,7 +598,7 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     $("refTable").querySelector("tbody").innerHTML = Object.keys(byRef).sort(function (a, b) { return byRef[b] - byRef[a]; })
       .slice(0, 6)
       .map(function (k) { return "<tr><td>" + esc(k) + '</td><td style="text-align:right;">' + byRef[k] + "</td></tr>"; })
-      .join("") || '<tr><td class="muted" colspan="2">No views yet.</td></tr>';
+      .join("") || '<tr><td class="muted" colspan="2">' + T("No views yet.", "Aún no hay vistas.") + "</td></tr>";
   }
 
   /* ---- tabs ---- */
@@ -508,7 +621,7 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
   function setBadge(key, total, freshCount) {
     var badge = $(key + "Badge");
     if (!badge) return;
-    badge.textContent = freshCount > 0 ? total + " (" + freshCount + " new)" : String(total);
+    badge.textContent = freshCount > 0 ? total + " (" + freshCount + " " + T("new", "nuevos") + ")" : String(total);
     badge.classList.toggle("fresh", freshCount > 0);
   }
 
@@ -518,14 +631,15 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     trainings = r.data || [];
     var tb = $("tTable").querySelector("tbody");
     tb.innerHTML = trainings.map(function (t) {
+      var badgeLabel = t.badge === "free" ? T("free", "gratis") : T("members", "miembros");
       return "<tr>" +
         '<td><img class="thumb" src="' + esc(t.image_url || "img/academy-travel.jpg") + '" alt=""></td>' +
-        "<td>" + esc(t.title) + (t.published ? "" : ' <span class="pill">draft</span>') + "</td>" +
-        '<td><span class="pill ' + (t.badge === "free" ? "free" : "") + '">' + esc(t.badge) + "</span></td>" +
+        "<td>" + esc(t.title) + (t.published ? "" : ' <span class="pill">' + T("draft", "borrador") + "</span>") + "</td>" +
+        '<td><span class="pill ' + (t.badge === "free" ? "free" : "") + '">' + badgeLabel + "</span></td>" +
         "<td>" + t.sort + "</td>" +
-        "<td>" + (t.video_url ? "yes" : '<span class="muted">none</span>') + "</td>" +
-        '<td style="white-space:nowrap;"><button class="btn ghost small" data-edit="' + t.id + '">Edit</button> ' +
-        '<button class="btn danger small" data-del="' + t.id + '">Delete</button></td></tr>';
+        "<td>" + (t.video_url ? T("yes", "sí") : '<span class="muted">' + T("none", "ninguno") + "</span>") + "</td>" +
+        '<td style="white-space:nowrap;"><button class="btn ghost small" data-edit="' + t.id + '">' + T("Edit", "Editar") + "</button> " +
+        '<button class="btn danger small" data-del="' + t.id + '">' + T("Delete", "Eliminar") + "</button></td></tr>";
     }).join("");
   }
   $("tTable").addEventListener("click", async function (ev) {
@@ -533,7 +647,7 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     if (ed) {
       var t = trainings.find(function (x) { return x.id === ed; });
       editingId = ed;
-      $("tFormTag").textContent = "Editing: " + t.title;
+      $("tFormTag").textContent = T("Editing: ", "Editando: ") + t.title;
       $("tTitle").value = t.title; $("tDesc").value = t.description;
       $("tBadge").value = t.badge; $("tSort").value = t.sort; $("tPub").checked = t.published;
       $("tVideoUrl").value = t.video_url && t.video_url.indexOf("sb://") !== 0 ? t.video_url : "";
@@ -541,20 +655,20 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
     if (del) {
-      if (!confirm("Delete this training?")) return;
+      if (!confirm(T("Delete this training?", "¿Eliminar este entrenamiento?"))) return;
       await sb.from("trainings").delete().eq("id", del);
       loadTrainings();
     }
   });
   $("tCancel").addEventListener("click", function () {
-    editingId = null; $("tFormTag").textContent = "New training";
+    editingId = null; $("tFormTag").textContent = T("New training", "Nuevo entrenamiento");
     $("tTitle").value = $("tDesc").value = $("tVideoUrl").value = "";
     $("tBadge").value = "members"; $("tSort").value = 100; $("tPub").checked = true;
     $("tImage").value = ""; $("tVideo").value = ""; $("tCancel").hidden = true;
   });
   $("tSave").addEventListener("click", async function () {
     var title = $("tTitle").value.trim();
-    if (!title) { setMsg("tMsg", "A title, at least.", "err"); return; }
+    if (!title) { setMsg("tMsg", T("A title, at least.", "Al menos un título."), "err"); return; }
     $("tSave").disabled = true;
     try {
       var rec = {
@@ -567,7 +681,7 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
       };
       var img = $("tImage").files[0];
       if (img) {
-        setMsg("tMsg", "Uploading image...");
+        setMsg("tMsg", T("Uploading image...", "Subiendo imagen..."));
         var ipath = "training-images/" + crypto.randomUUID() + "-" + img.name.replace(/[^\w.\-]/g, "_");
         var ir = await sb.storage.from("media").upload(ipath, img, { upsert: false });
         if (ir.error) throw ir.error;
@@ -575,7 +689,7 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
       }
       var vid = $("tVideo").files[0];
       if (vid) {
-        setMsg("tMsg", "Uploading video (this can take a while)...");
+        setMsg("tMsg", T("Uploading video (this can take a while)...", "Subiendo video (puede tardar)..."));
         var clean = crypto.randomUUID() + "-" + vid.name.replace(/[^\w.\-]/g, "_");
         if (rec.badge === "free") {
           var vr = await sb.storage.from("media").upload("training-videos/" + clean, vid, { upsert: false });
@@ -594,10 +708,10 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
         : sb.from("trainings").insert(rec);
       var res = await q;
       if (res.error) throw res.error;
-      setMsg("tMsg", editingId ? "Training updated." : "Training added.", "ok");
+      setMsg("tMsg", editingId ? T("Training updated.", "Entrenamiento actualizado.") : T("Training added.", "Entrenamiento agregado."), "ok");
       $("tCancel").click();
       loadTrainings();
-    } catch (e) { setMsg("tMsg", e.message || "Save failed.", "err"); }
+    } catch (e) { setMsg("tMsg", e.message || T("Save failed.", "No se pudo guardar."), "err"); }
     $("tSave").disabled = false;
   });
 
@@ -610,7 +724,7 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
         '<td class="muted">' + esc(l.key) + "</td>" +
         '<td><input type="text" class="l-label" value="' + esc(l.label) + '"></td>' +
         '<td><input type="url" class="l-url" value="' + esc(l.url) + '" placeholder="https://..."></td>' +
-        '<td><button class="btn ghost small l-save">Save</button></td></tr>';
+        '<td><button class="btn ghost small l-save">' + T("Save", "Guardar") + "</button></td></tr>";
     }).join("");
   }
   $("lTable").addEventListener("click", async function (ev) {
@@ -621,7 +735,7 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
       url: tr.querySelector(".l-url").value.trim(),
       updated_at: new Date().toISOString()
     }).eq("key", key);
-    setMsg("lMsg", r.error ? r.error.message : "Saved " + key + ".", r.error ? "err" : "ok");
+    setMsg("lMsg", r.error ? r.error.message : T("Saved ", "Guardado ") + key + ".", r.error ? "err" : "ok");
   });
 
   /* ---- leads ---- */
@@ -629,25 +743,25 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
   async function loadLeads() {
     var r = await sb.from("leads").select("*").order("created_at", { ascending: false });
     leadsCache = r.data || [];
-    $("leadCount").textContent = leadsCache.length + " lead" + (leadsCache.length === 1 ? "" : "s");
+    $("leadCount").textContent = leadsCache.length + " " + (leadsCache.length === 1 ? T("lead", "prospecto") : T("leads", "prospectos"));
     var seen = lastSeen("leads");
     var tb = $("leadTable").querySelector("tbody");
     tb.innerHTML = leadsCache.map(function (l) {
       var fresh = l.created_at > seen;
       return '<tr class="' + (fresh ? "fresh" : "") + '">' +
-        '<td class="muted">' + esc(fmtDate(l.created_at)) + (fresh ? ' <span class="pill new">new</span>' : "") + "</td>" +
+        '<td class="muted">' + esc(fmtDate(l.created_at)) + (fresh ? ' <span class="pill new">' + T("new", "nuevo") + "</span>" : "") + "</td>" +
         "<td>" + esc(l.name) + "</td>" +
         '<td><a href="mailto:' + esc(l.email) + '">' + esc(l.email) + "</a></td>" +
         "<td>" + esc(l.phone) + "</td>" +
         '<td><span class="pill">' + esc(l.source) + "</span></td>" +
-        '<td><button class="btn danger small" data-dlead="' + l.id + '">Delete</button></td></tr>';
+        '<td><button class="btn danger small" data-dlead="' + l.id + '">' + T("Delete", "Eliminar") + "</button></td></tr>";
     }).join("");
     setBadge("leads", leadsCache.length, leadsCache.filter(function (l) { return l.created_at > seen; }).length);
   }
   $("leadTable").addEventListener("click", async function (ev) {
     var id = ev.target.getAttribute("data-dlead");
     if (!id) return;
-    if (!confirm("Delete this lead?")) return;
+    if (!confirm(T("Delete this lead?", "¿Eliminar este prospecto?"))) return;
     await sb.from("leads").delete().eq("id", id);
     loadLeads();
   });
@@ -673,12 +787,12 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
       var self = session && m.id === session.user.id;
       var fresh = !self && m.created_at > seen;
       return '<tr class="' + (fresh ? "fresh" : "") + '">' +
-        "<td>" + esc(m.email) + (self ? ' <span class="muted">(you)</span>' : "") + (fresh ? ' <span class="pill new">new</span>' : "") + "</td>" +
+        "<td>" + esc(m.email) + (self ? ' <span class="muted">' + T("(you)", "(tú)") + "</span>" : "") + (fresh ? ' <span class="pill new">' + T("new", "nuevo") + "</span>" : "") + "</td>" +
         '<td><span class="pill ' + (m.role === "admin" ? "admin" : "") + '">' + esc(m.role) + "</span></td>" +
         '<td class="muted">' + esc(fmtDate(m.created_at)) + "</td>" +
         "<td>" + (self ? "" :
           '<button class="btn ghost small" data-role="' + (m.role === "admin" ? "member" : "admin") + '" data-uid="' + m.id + '">' +
-          (m.role === "admin" ? "Make member" : "Make admin") + "</button>") + "</td></tr>";
+          (m.role === "admin" ? T("Make member", "Hacer miembro") : T("Make admin", "Hacer admin")) + "</button>") + "</td></tr>";
     }).join("");
     var rows = r.data || [];
     setBadge("members", rows.length, rows.filter(function (m) {
@@ -698,14 +812,14 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     var tb = $("aTable").querySelector("tbody");
     tb.innerHTML = (r.data || []).map(function (a) {
       return "<tr><td>" + esc(a.email) + '</td><td class="muted">' + esc(fmtDate(a.added_at)) + "</td>" +
-        '<td><button class="btn danger small" data-demail="' + esc(a.email) + '">Remove</button></td></tr>';
+        '<td><button class="btn danger small" data-demail="' + esc(a.email) + '">' + T("Remove", "Quitar") + "</button></td></tr>";
     }).join("");
   }
   $("aAdd").addEventListener("click", async function () {
     var email = $("aEmail").value.trim().toLowerCase();
     if (!email) return;
     var r = await sb.from("admin_emails").insert({ email: email });
-    setMsg("aMsg", r.error ? r.error.message : "Added. They become admin when they sign up with that email.", r.error ? "err" : "ok");
+    setMsg("aMsg", r.error ? r.error.message : T("Added. They become admin when they sign up with that email.", "Agregado. Será admin cuando se registre con ese correo."), r.error ? "err" : "ok");
     $("aEmail").value = "";
     loadAdmins();
   });
