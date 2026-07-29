@@ -880,6 +880,22 @@ var LINKS = {
     });
   }
 
+  /* ---- lightweight first-party analytics (no cookies, no PII) ---- */
+  try {
+    sb.from("site_events").insert({
+      type: "view",
+      path: location.hash ? location.hash.slice(1) : "home",
+      referrer: (document.referrer || "").slice(0, 300)
+    }).then(function () {});
+  } catch (e) {}
+  document.addEventListener("click", function (ev) {
+    var el = ev.target.closest("[data-link]");
+    if (!el) return;
+    try {
+      sb.from("site_events").insert({ type: "click", path: el.getAttribute("data-link") }).then(function () {});
+    } catch (e) {}
+  }, true);
+
   sb.auth.onAuthStateChange(function (_ev, s) {
     session = s;
     loadRole().then(renderAcademy);

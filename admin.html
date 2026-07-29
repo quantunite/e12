@@ -80,6 +80,15 @@ td { padding: 10px; border-bottom: 1px solid var(--line-soft); vertical-align: m
 .count.fresh { color: #14100a; background: var(--brass-hi); border-radius: 999px; padding: 2px 8px; opacity: 1; }
 tr.fresh td { background: rgba(236, 211, 154, 0.07); }
 tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
+.stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 10px; }
+.stat { background: var(--night-3); border: 1px solid var(--line-soft); border-radius: 10px; padding: 14px 16px; }
+.stat .k { font-family: var(--font-mono); font-size: 9.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); }
+.stat .v { font-family: var(--font-display); font-size: 30px; color: var(--brass-hi); margin-top: 4px; }
+.bars { display: flex; align-items: flex-end; gap: 6px; height: 140px; margin-top: 16px; }
+.bars .bar { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; }
+.bars .bar i { display: block; background: linear-gradient(180deg, var(--brass-hi), var(--brass-deep)); border-radius: 3px 3px 0 0; min-height: 2px; }
+.bars .bar b { font-family: var(--font-mono); font-weight: 400; font-size: 9px; color: var(--ink-faint); text-align: center; margin-top: 6px; }
+@media (max-width: 720px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
 .pill.free { color: #14100a; background: var(--live); border-color: var(--live); }
 .pill.admin { color: #14100a; background: var(--brass); border-color: var(--brass); }
 .thumb { width: 74px; height: 44px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line-soft); }
@@ -120,6 +129,7 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     <div class="tabs">
       <button class="tab-btn on" data-p="trainings">Trainings</button>
       <button class="tab-btn" data-p="links">Links</button>
+      <button class="tab-btn" data-p="analytics">Analytics</button>
       <button class="tab-btn" data-p="leads">Leads <span class="count" id="leadsBadge"></span></button>
       <button class="tab-btn" data-p="members">Members <span class="count" id="membersBadge"></span></button>
       <button class="tab-btn" data-p="admins">Admins</button>
@@ -181,6 +191,33 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
           <tbody></tbody>
         </table>
         <div class="msg" id="lMsg"></div>
+      </div>
+    </div>
+
+    <!-- analytics -->
+    <div class="panel" id="p-analytics">
+      <div class="card">
+        <span class="tag">Site analytics</span>
+        <div class="stat-row">
+          <div class="stat"><div class="k">Views, 7 days</div><div class="v" id="s7"></div></div>
+          <div class="stat"><div class="k">Views, 30 days</div><div class="v" id="s30"></div></div>
+          <div class="stat"><div class="k">Link clicks, 7 days</div><div class="v" id="sc7"></div></div>
+          <div class="stat"><div class="k">Views, all time</div><div class="v" id="sAll"></div></div>
+        </div>
+      </div>
+      <div class="card">
+        <span class="tag">Views per day, last 14 days</span>
+        <div class="bars" id="viewBars" role="img" aria-label="Daily site views, last 14 days"></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <span class="tag">Clicks by link, 30 days</span>
+          <table id="clickTable"><thead><tr><th>Link</th><th style="text-align:right;">Clicks</th></tr></thead><tbody></tbody></table>
+        </div>
+        <div class="card">
+          <span class="tag">Top referrers, 30 days</span>
+          <table id="refTable"><thead><tr><th>Source</th><th style="text-align:right;">Views</th></tr></thead><tbody></tbody></table>
+        </div>
       </div>
     </div>
 
@@ -281,7 +318,58 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
       return;
     }
     $("gate").style.display = "none"; $("app").style.display = "block";
-    loadTrainings(); loadLinks(); loadLeads(); loadMembers(); loadAdmins();
+    loadTrainings(); loadLinks(); loadLeads(); loadMembers(); loadAdmins(); loadAnalytics();
+  }
+
+  /* ---- analytics ---- */
+  async function loadAnalytics() {
+    var since30 = new Date(Date.now() - 30 * 864e5).toISOString();
+    var since7 = new Date(Date.now() - 7 * 864e5).toISOString();
+    var all = await sb.from("site_events").select("id", { count: "exact", head: true }).eq("type", "view");
+    var r = await sb.from("site_events").select("type,path,referrer,created_at").gte("created_at", since30).order("created_at");
+    var ev = r.data || [];
+    var views = ev.filter(function (e) { return e.type === "view"; });
+    var clicks = ev.filter(function (e) { return e.type === "click"; });
+    $("sAll").textContent = all.count != null ? all.count : "-";
+    $("s30").textContent = views.length;
+    $("s7").textContent = views.filter(function (e) { return e.created_at >= since7; }).length;
+    $("sc7").textContent = clicks.filter(function (e) { return e.created_at >= since7; }).length;
+
+    var days = [], counts = {};
+    for (var i = 13; i >= 0; i--) {
+      var d = new Date(Date.now() - i * 864e5);
+      var key = d.toISOString().slice(0, 10);
+      days.push(key); counts[key] = 0;
+    }
+    views.forEach(function (e) {
+      var key = e.created_at.slice(0, 10);
+      if (key in counts) counts[key]++;
+    });
+    var max = Math.max.apply(null, days.map(function (k) { return counts[k]; }).concat([1]));
+    $("viewBars").innerHTML = days.map(function (k) {
+      var n = counts[k];
+      return '<div class="bar" title="' + k + ": " + n + ' views"><i style="height:' + Math.round(n / max * 100) + '%"></i><b>' + parseInt(k.slice(8), 10) + "</b></div>";
+    }).join("");
+
+    var byKey = {};
+    clicks.forEach(function (e) { byKey[e.path] = (byKey[e.path] || 0) + 1; });
+    $("clickTable").querySelector("tbody").innerHTML = Object.keys(byKey).sort(function (a, b) { return byKey[b] - byKey[a]; })
+      .map(function (k) { return "<tr><td>" + esc(k) + '</td><td style="text-align:right;">' + byKey[k] + "</td></tr>"; })
+      .join("") || '<tr><td class="muted" colspan="2">No link clicks yet.</td></tr>';
+
+    var byRef = {};
+    views.forEach(function (e) {
+      var ref = "direct";
+      if (e.referrer) {
+        try { ref = new URL(e.referrer).hostname; } catch (err) { ref = e.referrer.slice(0, 40); }
+        if (ref === "e1212.com" || ref === "www.e1212.com" || ref === "localhost") ref = "direct";
+      }
+      byRef[ref] = (byRef[ref] || 0) + 1;
+    });
+    $("refTable").querySelector("tbody").innerHTML = Object.keys(byRef).sort(function (a, b) { return byRef[b] - byRef[a]; })
+      .slice(0, 6)
+      .map(function (k) { return "<tr><td>" + esc(k) + '</td><td style="text-align:right;">' + byRef[k] + "</td></tr>"; })
+      .join("") || '<tr><td class="muted" colspan="2">No views yet.</td></tr>';
   }
 
   /* ---- tabs ---- */
