@@ -186,10 +186,12 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
             <textarea id="tDesc"></textarea>
             <label for="tImage">Card image (upload, or leave as is)</label>
             <input id="tImage" type="file" accept="image/*">
-            <label for="tVideo">Video (upload a file, or paste a direct link below)</label>
+            <label for="tVideo">Video (upload a file, or paste a link below)</label>
             <input id="tVideo" type="file" accept="video/*">
-            <input id="tVideoUrl" type="url" placeholder="https://... direct video link (optional)" style="margin-top:6px;">
-            <div class="muted" style="margin-top:6px;">Uploads up to about 50 MB. Bigger file? Host it elsewhere and paste the link.</div>
+            <input id="tVideoUrl" type="url" placeholder="YouTube, Vimeo, or direct video link (optional)" style="margin-top:6px;">
+            <div class="muted" style="margin-top:6px;">YouTube and Vimeo links play in an embedded player. Uploads up to about 50 MB;
+              note: a YouTube link marked Members is only softly gated, since anyone with the link can watch it on YouTube itself.
+              For truly private trainings, upload the file instead.</div>
           </div>
         </div>
         <div class="row">

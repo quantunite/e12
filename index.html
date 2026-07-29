@@ -368,6 +368,12 @@ footer a { color: var(--ink-dim); }
   max-height: 82vh; border-radius: 14px;
   border: 1px solid var(--brass-deep); background: #000;
 }
+.vplayer .frame {
+  width: min(960px, calc(100vw - 40px));
+  aspect-ratio: 16 / 9; border-radius: 14px; overflow: hidden;
+  border: 1px solid var(--brass-deep); background: #000;
+}
+.vplayer .frame iframe { width: 100%; height: 100%; border: 0; display: block; }
 .vplayer .close-v {
   position: absolute; top: 24px; right: 30px;
   background: none; border: 1px solid var(--line); border-radius: 999px;
@@ -662,6 +668,7 @@ footer a { color: var(--ink-dim); }
 <div class="vplayer" id="vplayer">
   <button class="close-v" id="vplayerClose">Close</button>
   <video id="vplayerVideo" controls playsinline></video>
+  <div class="frame" id="vplayerFrame" hidden></div>
 </div>
 
 <div class="toast" id="toast" role="status"></div>
@@ -892,10 +899,27 @@ var LINKS = {
     if (r.data) r.data.forEach(function (row) { if (row.url) LINKS[row.key] = row.url; });
   }
 
+  /* YouTube / Vimeo page links become iframe embeds; anything else
+     plays in the native video element. */
+  function embedUrlFor(src) {
+    var m = src.match(/(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/|live\/)|youtu\.be\/)([\w-]{6,})/);
+    if (m) return "https://www.youtube-nocookie.com/embed/" + m[1] + "?autoplay=1&rel=0";
+    var v = src.match(/vimeo\.com\/(?:video\/)?(\d+)/);
+    if (v) return "https://player.vimeo.com/video/" + v[1] + "?autoplay=1";
+    return null;
+  }
+  var vframe = $("vplayerFrame");
   async function playTraining(t) {
     var src = t.video_url || "";
     if (!src) { toast("Video coming soon."); return; }
     if (t.badge === "members" && !session) { openModal(); toast("Members only. Sign in to watch."); return; }
+    var embed = embedUrlFor(src);
+    if (embed) {
+      vvideo.hidden = true; vframe.hidden = false;
+      vframe.innerHTML = '<iframe src="' + embed + '" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+      vplayer.classList.add("open");
+      return;
+    }
     if (src.indexOf("sb://") === 0) {
       var parts = src.slice(5).split("/");
       var bucket = parts.shift(), path = parts.join("/");
@@ -903,10 +927,14 @@ var LINKS = {
       if (r.error || !r.data) { toast("Could not load the video. Try signing in again."); return; }
       src = r.data.signedUrl;
     }
+    vframe.hidden = true; vframe.innerHTML = "";
+    vvideo.hidden = false;
     vvideo.src = src; vplayer.classList.add("open"); vvideo.play().catch(function () {});
   }
   $("vplayerClose").addEventListener("click", function () {
-    vplayer.classList.remove("open"); vvideo.pause(); vvideo.src = "";
+    vplayer.classList.remove("open");
+    vvideo.pause(); vvideo.src = "";
+    vframe.innerHTML = ""; vframe.hidden = true;
   });
 
   async function renderAcademy() {
