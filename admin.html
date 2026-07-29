@@ -163,6 +163,7 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
       <button class="tab-btn" data-p="leads">Leads <span class="count" id="leadsBadge"></span></button>
       <button class="tab-btn" data-p="members">Members <span class="count" id="membersBadge"></span></button>
       <button class="tab-btn" data-p="admins">Admins</button>
+      <button class="tab-btn" data-p="help">Help</button>
     </div>
 
     <!-- trainings -->
@@ -280,6 +281,51 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
       </div>
     </div>
 
+    <!-- help / guide -->
+    <div class="panel" id="p-help">
+      <div class="card">
+        <span class="tag">Welcome to your panel</span>
+        <h2 style="font-size:26px;">This is your cockpit. Here is how to fly it.</h2>
+        <p class="muted">This guide opens automatically your first time and lives under the
+          Help tab whenever you need it. Everything you change here is live on e1212.com
+          the moment you save it.</p>
+      </div>
+      <div class="card">
+        <span class="tag">Start here: 3 things to set up</span>
+        <table>
+          <tbody>
+            <tr><td style="width:30px;">1</td><td><strong>Paste your Traverex affiliate link.</strong> Links tab, the travelPartner row. Every travel button on the site routes there the moment you save.</td></tr>
+            <tr><td>2</td><td><strong>Add your videos.</strong> Trainings tab. Edit a card and paste a YouTube link (or upload a file). Mark one as Free preview so visitors get a taste.</td></tr>
+            <tr><td>3</td><td><strong>Check your leads daily.</strong> Leads tab. Everyone who requests an invite or signs up lands there with their name, email, and phone. A gold count on the tab means something new came in since your last look.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <span class="tag">What each tab does</span>
+        <table>
+          <tbody>
+            <tr><td style="width:110px;"><strong>Trainings</strong></td><td>Your academy library. Add, edit, publish, or delete video trainings. "Members only" trainings require a login to watch; "Free preview" is open to everyone. YouTube and Vimeo links play embedded; uploaded files are truly private to members. Lower Order numbers show first.</td></tr>
+            <tr><td><strong>Links</strong></td><td>Every button on the site pulls from here: your Traverex link (travelPartner), wealth partner, membership signup, free preview video, and contact. Empty links show visitors a polite "coming soon" note, so nothing ever looks broken.</td></tr>
+            <tr><td><strong>Analytics</strong></td><td>Real visitor numbers only: views per day, clicks on each partner link (how many people you sent to Traverex), and where visitors came from. No cookies, nothing shared with third parties.</td></tr>
+            <tr><td><strong>Leads</strong></td><td>Interest forms and signups: name, email, phone, and where each one came from. Export CSV gives you a spreadsheet. Delete removes one permanently.</td></tr>
+            <tr><td><strong>Members</strong></td><td>Everyone with an account. Promote someone to admin (they get this panel) or back to member. New registrants get a gold "new" tag since your last look.</td></tr>
+            <tr><td><strong>Admins</strong></td><td>Emails on this list become admins automatically when they create their account. For people who already have accounts, use the Members tab instead.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <span class="tag">Good to know</span>
+        <table>
+          <tbody>
+            <tr><td>The sun/moon button switches light and dark mode; visitors have the same choice, plus an EN/ES language switch on the site.</td></tr>
+            <tr><td>You will never get automated emails from this system. The panel badges are your notifications; make checking Leads part of your routine.</td></tr>
+            <tr><td>A YouTube link on a "Members" training is only softly protected, since anyone with the raw link can watch it on YouTube. Use unlisted links, or upload the file for real privacy.</td></tr>
+            <tr><td>Site down or something broken? That is covered under emergency maintenance: contact admin@atpconsultancy.com.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <!-- admins -->
     <div class="panel" id="p-admins">
       <div class="card">
@@ -382,6 +428,13 @@ tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
     }
     $("gate").style.display = "none"; $("app").style.display = "block";
     loadTrainings(); loadLinks(); loadLeads(); loadMembers(); loadAdmins(); loadAnalytics();
+    /* first visit: open the guide as onboarding */
+    var helped = null;
+    try { helped = localStorage.getItem("e12_admin_helped"); } catch (e) {}
+    if (!helped) {
+      document.querySelector('.tabs .tab-btn[data-p="help"]').click();
+      try { localStorage.setItem("e12_admin_helped", "1"); } catch (e) {}
+    }
   }
 
   /* ---- analytics ---- */

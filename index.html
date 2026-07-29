@@ -419,11 +419,12 @@ footer a { color: var(--ink-dim); }
       <small>Members Network</small>
     </a>
     <nav class="tabs" role="tablist" aria-label="Site sections">
-      <button class="tab-btn" role="tab" id="tab-business" aria-controls="panel-business" aria-selected="true" data-tab="business">Business</button>
-      <button class="tab-btn" role="tab" id="tab-progress" aria-controls="panel-progress" aria-selected="false" data-tab="progress">Progress</button>
-      <button class="tab-btn" role="tab" id="tab-academy" aria-controls="panel-academy" aria-selected="false" data-tab="academy">Academy</button>
+      <button class="tab-btn" role="tab" id="tab-business" aria-controls="panel-business" aria-selected="true" data-tab="business" data-i18n="nav.business">Business</button>
+      <button class="tab-btn" role="tab" id="tab-progress" aria-controls="panel-progress" aria-selected="false" data-tab="progress" data-i18n="nav.progress">Progress</button>
+      <button class="tab-btn" role="tab" id="tab-academy" aria-controls="panel-academy" aria-selected="false" data-tab="academy" data-i18n="nav.academy">Academy</button>
     </nav>
     <div class="authbox">
+      <button class="tab-btn" id="langBtn" aria-label="Switch language / Cambiar idioma">ES</button>
       <button class="tab-btn" id="themeBtn" aria-label="Switch between dark and light mode" title="Light / dark">&#9788;</button>
       <a class="tab-btn owner-link" id="ownerLink" href="admin.html" hidden>Owner panel</a>
       <button class="tab-btn auth-btn" id="authBtn" hidden>Sign in</button>
@@ -439,51 +440,51 @@ footer a { color: var(--ink-dim); }
   <section class="hero">
     <div class="hero-img"><img src="img/hero-terminal.jpg" alt="A grand terminal hall at night with glowing arched gates"></div>
     <div class="wrap hero-inner">
-      <span class="tag">E-12 . Private Members Network</span>
-      <h1>Every next level<br>has a <em>gate</em>.</h1>
-      <p class="lead">E-12 is a members network built around real skills. Learn in the academy,
+      <span class="tag" data-i18n="hero.tag">E-12 . Private Members Network</span>
+      <h1 data-i18n="hero.h1">Every next level<br>has a <em>gate</em>.</h1>
+      <p class="lead" data-i18n="hero.lead">E-12 is a members network built around real skills. Learn in the academy,
         travel smarter with member resources, and when you are ready, build alongside us
         through our partner programs.</p>
       <div class="cta-row">
-        <a class="btn" href="#membership">Explore membership</a>
-        <button class="btn ghost" data-tab-link="academy">Visit the academy</button>
+        <a class="btn" href="#membership" data-i18n="hero.cta1">Explore membership</a>
+        <button class="btn ghost" data-tab-link="academy" data-i18n="hero.cta2">Visit the academy</button>
       </div>
     </div>
   </section>
 
   <section id="gates">
     <div class="wrap">
-      <span class="tag">Departures</span>
-      <h2>Choose your gate.</h2>
-      <p class="lead">Each gate is a direction you can take with E-12. Start where you are,
+      <span class="tag" data-i18n="gates.tag">Departures</span>
+      <h2 data-i18n="gates.h2">Choose your gate.</h2>
+      <p class="lead" data-i18n="gates.lead">Each gate is a direction you can take with E-12. Start where you are,
         and use the partner links to go straight to the offers our members use.</p>
       <div class="cards">
         <article class="card">
           <div class="ph"><span class="gate">Gate 01</span><img src="img/travel-amalfi.jpg" alt="A lantern-lit cliffside village seen from the sea at dusk"></div>
           <div class="body">
-            <h3>Travel <span class="powered">Powered by Traverex</span></h3>
-            <p>See more of the world for less. Points, miles, and member travel offers,
+            <h3><span data-i18n="card.travel.h3">Travel</span> <span class="powered" data-i18n="card.travel.powered">Powered by Traverex</span></h3>
+            <p data-i18n="card.travel.p">See more of the world for less. Points, miles, and member travel offers,
               plus the booking habits that make premium trips realistic. E-12 is your
               guide; the travel itself is provided by Traverex.</p>
-            <a class="btn" href="#" data-link="travelPartner">Go to Traverex</a>
+            <a class="btn" href="#" data-link="travelPartner" data-i18n="card.travel.btn">Go to Traverex</a>
           </div>
         </article>
         <article class="card">
           <div class="ph"><span class="gate">Gate 02</span><img src="img/wealth-vault.jpg" alt="A brass vault door at the end of a marble corridor"></div>
           <div class="body">
-            <h3>Wealth</h3>
-            <p>Bitcoin and long-term thinking, taught plainly. Understand what you own
+            <h3 data-i18n="card.wealth.h3">Wealth</h3>
+            <p data-i18n="card.wealth.p">Bitcoin and long-term thinking, taught plainly. Understand what you own
               and why before you put a dollar anywhere.</p>
-            <a class="btn" href="#" data-link="wealthPartner">Go to wealth partner</a>
+            <a class="btn" href="#" data-link="wealthPartner" data-i18n="card.wealth.btn">Go to wealth partner</a>
           </div>
         </article>
         <article class="card">
-          <div class="ph"><span class="gate">Boarding soon</span><img src="img/route-map.jpg" alt="A glowing in-flight route map over a dark ocean"></div>
+          <div class="ph"><span class="gate" data-i18n="card.more.chip">Boarding soon</span><img src="img/route-map.jpg" alt="A glowing in-flight route map over a dark ocean"></div>
           <div class="body">
-            <h3>More routes</h3>
-            <p>New gates open as the network grows. Member ideas set the destination list,
+            <h3 data-i18n="card.more.h3">More routes</h3>
+            <p data-i18n="card.more.p">New gates open as the network grows. Member ideas set the destination list,
               travel and wealth are only the first two.</p>
-            <a class="btn ghost" href="#" aria-disabled="true">In review</a>
+            <a class="btn ghost" href="#" aria-disabled="true" data-i18n="card.more.btn">In review</a>
           </div>
         </article>
       </div>
@@ -493,17 +494,17 @@ footer a { color: var(--ink-dim); }
   <section id="membership">
     <div class="wrap member">
       <div>
-        <span class="tag">Membership</span>
-        <h2>One membership. Every gate.</h2>
+        <span class="tag" data-i18n="member.tag">Membership</span>
+        <h2 data-i18n="member.h2">One membership. Every gate.</h2>
         <ul>
-          <li>Full access to the E-12 academy library: video trainings on travel, affiliate marketing, and bitcoin basics.</li>
-          <li>Member community: travel alongside people building the same things you are.</li>
-          <li>Partner offers and member pricing, gathered in one place.</li>
-          <li>A clear path from learning to earning through our partner programs, at your pace.</li>
+          <li data-i18n="member.li1">Full access to the E-12 academy library: video trainings on travel, affiliate marketing, and bitcoin basics.</li>
+          <li data-i18n="member.li2">Member community: travel alongside people building the same things you are.</li>
+          <li data-i18n="member.li3">Partner offers and member pricing, gathered in one place.</li>
+          <li data-i18n="member.li4">A clear path from learning to earning through our partner programs, at your pace.</li>
         </ul>
         <div class="cta-row">
-          <a class="btn" href="#" data-link="membership">Request an invite</a>
-          <button class="btn ghost" data-tab-link="progress">See the path</button>
+          <a class="btn" href="#" data-link="membership" data-i18n="member.cta1">Request an invite</a>
+          <button class="btn ghost" data-tab-link="progress" data-i18n="member.cta2">See the path</button>
         </div>
       </div>
       <div class="art"><img src="img/academy-luxe.jpg" alt="A symmetric first class cabin aisle in warm light"></div>
@@ -516,42 +517,42 @@ footer a { color: var(--ink-dim); }
 <div class="panel" id="panel-progress" role="tabpanel" aria-labelledby="tab-progress" hidden>
   <section>
     <div class="wrap">
-      <span class="tag">The Path</span>
-      <h2>From boarding to arrival.</h2>
-      <p class="lead">E-12 keeps the journey simple. Three stages, in order, with the academy
+      <span class="tag" data-i18n="path.tag">The Path</span>
+      <h2 data-i18n="path.h2">From boarding to arrival.</h2>
+      <p class="lead" data-i18n="path.lead">E-12 keeps the journey simple. Three stages, in order, with the academy
         and the community carrying you between them.</p>
 
       <div class="steps">
         <article class="step">
           <div class="art"><img src="img/step-boarding.jpg" alt="An aircraft boarding door seen from the jet bridge in golden light"></div>
           <div>
-            <span class="k">Stage 01 . Boarding</span>
-            <h3>Join the network.</h3>
-            <p>Become a member, get oriented, and set your first goal. You will know exactly
+            <span class="k" data-i18n="path.s1.k">Stage 01 . Boarding</span>
+            <h3 data-i18n="path.s1.h3">Join the network.</h3>
+            <p data-i18n="path.s1.p">Become a member, get oriented, and set your first goal. You will know exactly
               what to watch first and who to ask when you get stuck.</p>
           </div>
         </article>
         <article class="step">
           <div class="art"><img src="img/step-inflight.jpg" alt="A golden cloudscape seen through an aircraft window"></div>
           <div>
-            <span class="k">Stage 02 . In flight</span>
-            <h3>Learn the skills.</h3>
-            <p>Work through the academy: travel points and miles, affiliate marketing
+            <span class="k" data-i18n="path.s2.k">Stage 02 . In flight</span>
+            <h3 data-i18n="path.s2.h3">Learn the skills.</h3>
+            <p data-i18n="path.s2.p">Work through the academy: travel points and miles, affiliate marketing
               foundations, and bitcoin basics. Short lessons, plain language, real examples.</p>
           </div>
         </article>
         <article class="step">
           <div class="art"><img src="img/step-arrival.jpg" alt="City lights seen from a plane window during a night descent"></div>
           <div>
-            <span class="k">Stage 03 . Arrival</span>
-            <h3>Build with us.</h3>
-            <p>When you are ready, step into our partner programs and share the offers you
+            <span class="k" data-i18n="path.s3.k">Stage 03 . Arrival</span>
+            <h3 data-i18n="path.s3.h3">Build with us.</h3>
+            <p data-i18n="path.s3.p">When you are ready, step into our partner programs and share the offers you
               already use. Membership first, affiliate business second, always in that order.</p>
           </div>
         </article>
       </div>
 
-      <p class="honest"><strong>A straight answer on earnings:</strong> E-12 teaches skills and
+      <p class="honest" data-i18n="path.honest"><strong>A straight answer on earnings:</strong> E-12 teaches skills and
         opens doors, it does not promise income. Results depend on your own effort and
         consistency, and no earnings are guaranteed or implied.</p>
     </div>
@@ -562,9 +563,9 @@ footer a { color: var(--ink-dim); }
 <div class="panel" id="panel-academy" role="tabpanel" aria-labelledby="tab-academy" hidden>
   <section>
     <div class="wrap">
-      <span class="tag">The Academy</span>
-      <h2>Come get some value.</h2>
-      <p class="lead">Video trainings made for people starting from zero. The preview lesson is
+      <span class="tag" data-i18n="acad.tag">The Academy</span>
+      <h2 data-i18n="acad.h2">Come get some value.</h2>
+      <p class="lead" data-i18n="acad.lead">Video trainings made for people starting from zero. The preview lesson is
         open to everyone, the full library is part of membership.</p>
 
       <div class="shelf">
@@ -591,8 +592,8 @@ footer a { color: var(--ink-dim); }
       </div>
 
       <div class="cta-row" style="margin-top: 46px;">
-        <a class="btn" href="#" data-link="membership">Unlock the full library</a>
-        <button class="btn ghost" data-tab-link="business">Back to the gates</button>
+        <a class="btn" href="#" data-link="membership" data-i18n="acad.cta1">Unlock the full library</a>
+        <button class="btn ghost" data-tab-link="business" data-i18n="acad.cta2">Back to the gates</button>
       </div>
     </div>
   </section>
@@ -607,11 +608,12 @@ footer a { color: var(--ink-dim); }
         <span class="wordmark" style="font-size: 20px;">E-12</span>
         <div class="tag" style="margin-top: 6px;">e1212.com</div>
       </div>
-      <div>
-        <a href="#" data-link="contact">Contact</a>
+      <div style="display:flex; gap:18px;">
+        <a href="#" id="tourLink" data-i18n="foot.tour">Site tour</a>
+        <a href="#" data-link="contact" data-i18n="foot.contact">Contact</a>
       </div>
     </div>
-    <p class="disclosure">E-12 is a guide, not a provider: travel offers are provided by
+    <p class="disclosure" data-i18n="foot.disclosure">E-12 is a guide, not a provider: travel offers are provided by
       Traverex, and E-12 routes you there. Some links on this site are partner links.
       E-12 may earn a commission when you book or join through them, at no extra cost to
       you. E-12 makes no income guarantees of any kind. &copy; 2026 E-12. All rights reserved.</p>
@@ -621,14 +623,14 @@ footer a { color: var(--ink-dim); }
 <div class="modal-wrap" id="authModal" role="dialog" aria-modal="true" aria-label="Member sign in">
   <div class="modal">
     <button class="close-x" id="authClose" aria-label="Close">&times;</button>
-    <span class="tag">E-12 Members</span>
+    <span class="tag" data-i18n="auth.tag">E-12 Members</span>
     <h3 id="authTitle">Sign in</h3>
     <div class="field">
-      <label for="authEmail">Email</label>
+      <label for="authEmail" data-i18n="auth.email">Email</label>
       <input id="authEmail" type="email" autocomplete="email">
     </div>
     <div class="field">
-      <label for="authPass">Password</label>
+      <label for="authPass" data-i18n="auth.pass">Password</label>
       <input id="authPass" type="password" autocomplete="current-password">
     </div>
     <div class="msg" id="authMsg"></div>
@@ -642,31 +644,44 @@ footer a { color: var(--ink-dim); }
 <div class="modal-wrap" id="leadModal" role="dialog" aria-modal="true" aria-label="Request an invite">
   <div class="modal">
     <button class="close-x" id="leadClose" aria-label="Close">&times;</button>
-    <span class="tag">E-12 Membership</span>
+    <span class="tag" data-i18n="lead.tag">E-12 Membership</span>
     <h3 id="leadTitle">Request an invite</h3>
     <p id="leadIntro" style="color: var(--ink-dim); font-size: 15px; margin-bottom: 16px;">
       Leave your details and we will guide you from here.</p>
     <div class="field">
-      <label for="leadName">Name</label>
+      <label for="leadName" data-i18n="lead.name">Name</label>
       <input id="leadName" type="text" autocomplete="name">
     </div>
     <div class="field">
-      <label for="leadEmail">Email</label>
+      <label for="leadEmail" data-i18n="lead.email">Email</label>
       <input id="leadEmail" type="email" autocomplete="email">
     </div>
     <div class="field">
-      <label for="leadPhone">Phone</label>
+      <label for="leadPhone" data-i18n="lead.phone">Phone</label>
       <input id="leadPhone" type="tel" autocomplete="tel">
     </div>
     <div class="msg" id="leadMsg"></div>
     <div class="row">
-      <button class="btn" id="leadSubmit">Send</button>
+      <button class="btn" id="leadSubmit" data-i18n="lead.send">Send</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-wrap" id="tourModal" role="dialog" aria-modal="true" aria-label="Site tour">
+  <div class="modal">
+    <button class="close-x" id="tourClose" aria-label="Close">&times;</button>
+    <span class="tag" id="tourStep">1 / 4</span>
+    <h3 id="tourTitle"></h3>
+    <p id="tourBody" style="color: var(--ink-dim); font-size: 15.5px; min-height: 76px;"></p>
+    <div class="row">
+      <button class="btn ghost" id="tourBack">Back</button>
+      <button class="btn" id="tourNext">Next</button>
     </div>
   </div>
 </div>
 
 <div class="vplayer" id="vplayer">
-  <button class="close-v" id="vplayerClose">Close</button>
+  <button class="close-v" id="vplayerClose" data-i18n="player.close">Close</button>
   <video id="vplayerVideo" controls playsinline></video>
   <div class="frame" id="vplayerFrame" hidden></div>
 </div>
@@ -690,6 +705,147 @@ var LINKS = {
 };
 
 (function () {
+  /* ------------------------------------------------------------
+     LANGUAGE (EN/ES). English lives in the markup; Spanish lives
+     here. data-i18n elements swap wholesale; JS strings use
+     window.__e12T(en, es).
+     ------------------------------------------------------------ */
+  var I18N_ES = {
+    "nav.business": "Negocio",
+    "nav.progress": "Progreso",
+    "nav.academy": "Academia",
+    "hero.tag": "E-12 . Red privada de miembros",
+    "hero.h1": "Cada pr&oacute;ximo nivel<br>tiene su <em>puerta</em>.",
+    "hero.lead": "E-12 es una red de miembros construida sobre habilidades reales. Aprende en la academia, viaja mejor con recursos de miembros y, cuando est&eacute;s listo, crece con nosotros a trav&eacute;s de nuestros programas de socios.",
+    "hero.cta1": "Explora la membres&iacute;a",
+    "hero.cta2": "Visita la academia",
+    "gates.tag": "Salidas",
+    "gates.h2": "Elige tu puerta.",
+    "gates.lead": "Cada puerta es una direcci&oacute;n que puedes tomar con E-12. Empieza donde est&aacute;s y usa los enlaces de socios para ir directo a las ofertas que usan nuestros miembros.",
+    "card.travel.h3": "Viajes",
+    "card.travel.powered": "Impulsado por Traverex",
+    "card.travel.p": "Conoce m&aacute;s mundo por menos. Puntos, millas y ofertas de viaje para miembros, m&aacute;s los h&aacute;bitos de reserva que hacen realistas los viajes premium. E-12 es tu gu&iacute;a; los viajes los provee Traverex.",
+    "card.travel.btn": "Ir a Traverex",
+    "card.wealth.h3": "Patrimonio",
+    "card.wealth.p": "Bitcoin y visi&oacute;n de largo plazo, explicados con claridad. Entiende lo que tienes y por qu&eacute; antes de poner un d&oacute;lar en cualquier lugar.",
+    "card.wealth.btn": "Ir al socio de patrimonio",
+    "card.more.chip": "Pr&oacute;ximamente",
+    "card.more.h3": "M&aacute;s rutas",
+    "card.more.p": "Nuevas puertas se abren a medida que crece la red. Las ideas de los miembros definen la lista de destinos; viajes y patrimonio son solo las primeras dos.",
+    "card.more.btn": "En revisi&oacute;n",
+    "member.tag": "Membres&iacute;a",
+    "member.h2": "Una membres&iacute;a. Todas las puertas.",
+    "member.li1": "Acceso completo a la biblioteca de la academia E-12: videos sobre viajes, marketing de afiliados y fundamentos de bitcoin.",
+    "member.li2": "Comunidad de miembros: avanza junto a personas que construyen lo mismo que t&uacute;.",
+    "member.li3": "Ofertas de socios y precios de miembro, reunidos en un solo lugar.",
+    "member.li4": "Un camino claro de aprender a generar a trav&eacute;s de nuestros programas de socios, a tu ritmo.",
+    "member.cta1": "Solicita una invitaci&oacute;n",
+    "member.cta2": "Mira el camino",
+    "path.tag": "El Camino",
+    "path.h2": "Del abordaje al aterrizaje.",
+    "path.lead": "E-12 mantiene el viaje simple. Tres etapas, en orden, con la academia y la comunidad acompa&ntilde;&aacute;ndote entre una y otra.",
+    "path.s1.k": "Etapa 01 . Abordaje",
+    "path.s1.h3": "&Uacute;nete a la red.",
+    "path.s1.p": "Hazte miembro, ori&eacute;ntate y define tu primera meta. Sabr&aacute;s exactamente qu&eacute; ver primero y a qui&eacute;n preguntar si te atascas.",
+    "path.s2.k": "Etapa 02 . En vuelo",
+    "path.s2.h3": "Aprende las habilidades.",
+    "path.s2.p": "Avanza por la academia: puntos y millas, fundamentos de marketing de afiliados y bitcoin b&aacute;sico. Lecciones cortas, lenguaje claro, ejemplos reales.",
+    "path.s3.k": "Etapa 03 . Aterrizaje",
+    "path.s3.h3": "Construye con nosotros.",
+    "path.s3.p": "Cuando est&eacute;s listo, entra a nuestros programas de socios y comparte las ofertas que ya usas. Primero la membres&iacute;a, despu&eacute;s el negocio de afiliados, siempre en ese orden.",
+    "path.honest": "<strong>Una respuesta directa sobre las ganancias:</strong> E-12 ense&ntilde;a habilidades y abre puertas, no promete ingresos. Los resultados dependen de tu esfuerzo y constancia, y ninguna ganancia est&aacute; garantizada ni impl&iacute;cita.",
+    "acad.tag": "La Academia",
+    "acad.h2": "Ven a llevarte valor.",
+    "acad.lead": "Videos hechos para quienes empiezan desde cero. La lecci&oacute;n de vista previa est&aacute; abierta para todos; la biblioteca completa es parte de la membres&iacute;a.",
+    "acad.cta1": "Desbloquea la biblioteca",
+    "acad.cta2": "Volver a las puertas",
+    "foot.tour": "Recorrido",
+    "foot.contact": "Contacto",
+    "foot.disclosure": "E-12 es una gu&iacute;a, no un proveedor: las ofertas de viaje las provee Traverex y E-12 te lleva hasta all&aacute;. Algunos enlaces de este sitio son enlaces de socios. E-12 puede ganar una comisi&oacute;n cuando reservas o te unes a trav&eacute;s de ellos, sin costo extra para ti. E-12 no garantiza ingresos de ning&uacute;n tipo. &copy; 2026 E-12. Todos los derechos reservados.",
+    "auth.tag": "Miembros E-12",
+    "auth.email": "Correo",
+    "auth.pass": "Contrase&ntilde;a",
+    "lead.tag": "Membres&iacute;a E-12",
+    "lead.name": "Nombre",
+    "lead.email": "Correo",
+    "lead.phone": "Tel&eacute;fono",
+    "lead.send": "Enviar",
+    "player.close": "Cerrar"
+  };
+
+  window.__e12Lang = "en";
+  window.__e12T = function (en, es) { return (window.__e12Lang === "es" && es) ? es : en; };
+
+  var langBtn = document.getElementById("langBtn");
+  function applyLang(lang) {
+    window.__e12Lang = lang;
+    document.documentElement.lang = lang;
+    langBtn.textContent = lang === "es" ? "EN" : "ES";
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n");
+      if (!el.dataset.enSrc) el.dataset.enSrc = el.innerHTML;
+      el.innerHTML = (lang === "es" && I18N_ES[k]) ? I18N_ES[k] : el.dataset.enSrc;
+    });
+    document.dispatchEvent(new CustomEvent("e12lang", { detail: lang }));
+  }
+  var savedLang = null;
+  try {
+    savedLang = new URLSearchParams(location.search).get("lang") || localStorage.getItem("e12_lang");
+  } catch (e) {}
+  if (!savedLang) savedLang = (navigator.language || "").toLowerCase().indexOf("es") === 0 ? "es" : "en";
+  applyLang(savedLang === "es" ? "es" : "en");
+  langBtn.addEventListener("click", function () {
+    var next = window.__e12Lang === "es" ? "en" : "es";
+    try { localStorage.setItem("e12_lang", next); } catch (e) {}
+    applyLang(next);
+  });
+
+  /* ------------------------------------------------------------
+     SITE TOUR: opens automatically on a member's first sign-in,
+     reopenable any time from the footer.
+     ------------------------------------------------------------ */
+  var T = window.__e12T;
+  function tourSteps() {
+    return [
+      { t: T("Welcome to E-12", "Bienvenido a E-12"),
+        b: T("You are inside the members network. Here is a quick look at where everything lives.",
+             "Ya estás dentro de la red de miembros. Aquí tienes un recorrido rápido de dónde está todo.") },
+      { t: T("The Academy", "La Academia"),
+        b: T("Video trainings on travel, affiliate marketing, and bitcoin, under the Academy tab. Free previews are open to everyone; the full library comes with membership.",
+             "Videos sobre viajes, marketing de afiliados y bitcoin, en la pestaña Academia. Las vistas previas son gratis; la biblioteca completa viene con la membresía.") },
+      { t: T("The Gates", "Las Puertas"),
+        b: T("On the Business tab you will find our partner offers. Travel runs on Traverex; E-12 guides you there through the gate buttons.",
+             "En la pestaña Negocio están las ofertas de nuestros socios. Los viajes corren por Traverex; E-12 te guía hasta allá con los botones de cada puerta.") },
+      { t: T("Your Path", "Tu Camino"),
+        b: T("Join, learn, then build with us through partner programs, at your pace. The Progress tab shows the full route. Questions? Use Contact in the footer.",
+             "Únete, aprende y luego construye con nosotros a través de los programas de socios, a tu ritmo. La pestaña Progreso muestra la ruta completa. ¿Preguntas? Usa Contacto abajo.") }
+    ];
+  }
+  var tourModal = document.getElementById("tourModal"), tourIdx = 0;
+  function renderTour() {
+    var steps = tourSteps();
+    document.getElementById("tourStep").textContent = (tourIdx + 1) + " / " + steps.length;
+    document.getElementById("tourTitle").textContent = steps[tourIdx].t;
+    document.getElementById("tourBody").textContent = steps[tourIdx].b;
+    document.getElementById("tourBack").style.visibility = tourIdx === 0 ? "hidden" : "visible";
+    document.getElementById("tourBack").textContent = T("Back", "Atrás");
+    document.getElementById("tourNext").textContent = tourIdx === steps.length - 1 ? T("Done", "¡Listo!") : T("Next", "Siguiente");
+  }
+  function openTour() { tourIdx = 0; renderTour(); tourModal.classList.add("open"); }
+  function closeTour() {
+    tourModal.classList.remove("open");
+    try { localStorage.setItem("e12_tour_done", "1"); } catch (e) {}
+  }
+  window.__e12OpenTour = openTour;
+  document.getElementById("tourClose").addEventListener("click", closeTour);
+  tourModal.addEventListener("click", function (ev) { if (ev.target === tourModal) closeTour(); });
+  document.getElementById("tourBack").addEventListener("click", function () { if (tourIdx > 0) { tourIdx--; renderTour(); } });
+  document.getElementById("tourNext").addEventListener("click", function () {
+    if (tourIdx < tourSteps().length - 1) { tourIdx++; renderTour(); } else { closeTour(); }
+  });
+  document.getElementById("tourLink").addEventListener("click", function (ev) { ev.preventDefault(); openTour(); });
+  document.addEventListener("e12lang", function () { if (tourModal.classList.contains("open")) renderTour(); });
+
   /* theme: dark is the house default; choice remembered per device */
   var themeBtn = document.getElementById("themeBtn");
   function applyTheme(t) {
@@ -747,7 +903,7 @@ var LINKS = {
       var url = LINKS[key];
       if (!url || url === "#") {
         ev.preventDefault();
-        toast("This link goes live soon.");
+        toast(window.__e12T("This link goes live soon.", "Este enlace estará activo pronto."));
       } else {
         ev.preventDefault();
         window.open(url, "_blank", "noopener");
@@ -790,6 +946,7 @@ var LINKS = {
   var vplayer = $("vplayer"), vvideo = $("vplayerVideo");
   var toastEl = $("toast"), tTimer = null;
   var session = null, role = null, signupMode = false, trainingsCache = [];
+  var T = window.__e12T;
 
   function toast(m) {
     toastEl.textContent = m; toastEl.classList.add("show");
@@ -805,22 +962,27 @@ var LINKS = {
   authBtn.hidden = false;
 
   function setAuthUI() {
-    authBtn.textContent = session ? "Sign out" : "Sign in";
+    authBtn.textContent = session ? T("Sign out", "Salir") : T("Sign in", "Entrar");
     ownerLink.hidden = role !== "admin";
   }
   function setMode(signup) {
     signupMode = signup;
-    authTitle.textContent = signup ? "Create account" : "Sign in";
-    authSubmit.textContent = signup ? "Create account" : "Sign in";
+    authTitle.textContent = signup ? T("Create account", "Crear cuenta") : T("Sign in", "Entrar");
+    authSubmit.textContent = signup ? T("Create account", "Crear cuenta") : T("Sign in", "Entrar");
     $("authSwitch").innerHTML = signup
-      ? 'Already a member? <a id="authToggle">Sign in</a>'
-      : 'New here? <a id="authToggle">Create an account</a>';
+      ? T("Already a member?", "&iquest;Ya eres miembro?") + ' <a id="authToggle">' + T("Sign in", "Entrar") + "</a>"
+      : T("New here?", "&iquest;Nuevo por aqu&iacute;?") + ' <a id="authToggle">' + T("Create an account", "Crea una cuenta") + "</a>";
   }
+  document.addEventListener("e12lang", function () {
+    setMode(signupMode);
+    setAuthUI();
+    renderAcademy();
+  });
   function openModal() { modal.classList.add("open"); msg(""); setTimeout(function () { $("authEmail").focus(); }, 60); }
   function closeModal() { modal.classList.remove("open"); }
 
   authBtn.addEventListener("click", function () {
-    if (session) { sb.auth.signOut(); toast("Signed out."); } else { openModal(); }
+    if (session) { sb.auth.signOut(); toast(T("Signed out.", "Sesión cerrada.")); } else { openModal(); }
   });
   $("authClose").addEventListener("click", closeModal);
   modal.addEventListener("click", function (ev) { if (ev.target === modal) closeModal(); });
@@ -829,21 +991,23 @@ var LINKS = {
   });
   authSubmit.addEventListener("click", async function () {
     var email = $("authEmail").value.trim(), pass = $("authPass").value;
-    if (!email || !pass) { msg("Email and password, please.", "err"); return; }
-    authSubmit.disabled = true; msg(signupMode ? "Creating account..." : "Signing in...");
+    if (!email || !pass) { msg(T("Email and password, please.", "Correo y contraseña, por favor."), "err"); return; }
+    authSubmit.disabled = true; msg(signupMode ? T("Creating account...", "Creando cuenta...") : T("Signing in...", "Entrando..."));
     try {
       if (signupMode) {
         var r = await sb.auth.signUp({ email: email, password: pass });
         if (r.error) throw r.error;
-        msg("Account created. Check your email for a confirmation link.", "ok");
+        msg(T("Account created. Check your email for a confirmation link.", "Cuenta creada. Revisa tu correo para el enlace de confirmación."), "ok");
         closeModal();
-        openLead("signup", email, "Welcome to E-12", "One more step: tell us who you are so we can guide your onboarding.");
+        openLead("signup", email,
+          T("Welcome to E-12", "Bienvenido a E-12"),
+          T("One more step: tell us who you are so we can guide your onboarding.", "Un paso más: cuéntanos quién eres para guiar tu incorporación."));
       } else {
         var r2 = await sb.auth.signInWithPassword({ email: email, password: pass });
         if (r2.error) throw r2.error;
-        closeModal(); toast("Welcome back.");
+        closeModal(); toast(T("Welcome back.", "Bienvenido de vuelta."));
       }
-    } catch (e) { msg(e.message || "Something went wrong.", "err"); }
+    } catch (e) { msg(e.message || T("Something went wrong.", "Algo salió mal."), "err"); }
     authSubmit.disabled = false;
   });
   $("authPass").addEventListener("keydown", function (ev) { if (ev.key === "Enter") authSubmit.click(); });
@@ -867,12 +1031,12 @@ var LINKS = {
   leadModal.addEventListener("click", function (ev) { if (ev.target === leadModal) closeLead(); });
   $("leadSubmit").addEventListener("click", async function () {
     var name = $("leadName").value.trim(), email = $("leadEmail").value.trim(), phone = $("leadPhone").value.trim();
-    if (!name || !email) { leadMsgSet("Name and email, please.", "err"); return; }
-    $("leadSubmit").disabled = true; leadMsgSet("Sending...");
+    if (!name || !email) { leadMsgSet(T("Name and email, please.", "Nombre y correo, por favor."), "err"); return; }
+    $("leadSubmit").disabled = true; leadMsgSet(T("Sending...", "Enviando..."));
     var r = await sb.from("leads").insert({ name: name, email: email, phone: phone, source: leadSource });
     $("leadSubmit").disabled = false;
-    if (r.error) { leadMsgSet("Could not send. Try again in a moment.", "err"); return; }
-    leadMsgSet("You are on the list. We will guide you from here.", "ok");
+    if (r.error) { leadMsgSet(T("Could not send. Try again in a moment.", "No se pudo enviar. Intenta de nuevo en un momento."), "err"); return; }
+    leadMsgSet(T("You are on the list. We will guide you from here.", "Estás en la lista. Te guiamos desde aquí."), "ok");
     setTimeout(closeLead, 1800);
   });
   /* membership CTAs open the invite flow when no signup URL is configured */
@@ -882,7 +1046,9 @@ var LINKS = {
     var url = LINKS.membership;
     if (!url || url === "#") {
       ev.preventDefault(); ev.stopPropagation();
-      openLead("membership", session ? session.user.email : "", "Request an invite", "Leave your details and we will guide you from here.");
+      openLead("membership", session ? session.user.email : "",
+        T("Request an invite", "Solicita una invitación"),
+        T("Leave your details and we will guide you from here.", "Déjanos tus datos y te guiamos desde aquí."));
     }
   }, true);
 
@@ -911,8 +1077,8 @@ var LINKS = {
   var vframe = $("vplayerFrame");
   async function playTraining(t) {
     var src = t.video_url || "";
-    if (!src) { toast("Video coming soon."); return; }
-    if (t.badge === "members" && !session) { openModal(); toast("Members only. Sign in to watch."); return; }
+    if (!src) { toast(T("Video coming soon.", "Video disponible pronto.")); return; }
+    if (t.badge === "members" && !session) { openModal(); toast(T("Members only. Sign in to watch.", "Solo miembros. Entra para ver.")); return; }
     var embed = embedUrlFor(src);
     if (embed) {
       vvideo.hidden = true; vframe.hidden = false;
@@ -924,7 +1090,7 @@ var LINKS = {
       var parts = src.slice(5).split("/");
       var bucket = parts.shift(), path = parts.join("/");
       var r = await sb.storage.from(bucket).createSignedUrl(path, 3600);
-      if (r.error || !r.data) { toast("Could not load the video. Try signing in again."); return; }
+      if (r.error || !r.data) { toast(T("Could not load the video. Try signing in again.", "No se pudo cargar el video. Intenta entrar de nuevo.")); return; }
       src = r.data.signedUrl;
     }
     vframe.hidden = true; vframe.innerHTML = "";
@@ -945,8 +1111,8 @@ var LINKS = {
     if (!shelf) return;
     shelf.innerHTML = r.data.map(function (t) {
       var badge = t.badge === "free"
-        ? '<span class="badge free">Free preview</span>'
-        : '<span class="badge">Members</span>';
+        ? '<span class="badge free">' + T("Free preview", "Vista gratis") + "</span>"
+        : '<span class="badge">' + T("Members", "Miembros") + "</span>";
       var img = t.image_url || "img/academy-travel.jpg";
       return '<article class="lesson" data-training-id="' + esc(t.id) + '" tabindex="0" role="button" aria-label="' + esc(t.title) + '">' +
         '<div class="ph"><img src="' + esc(img) + '" alt="' + esc(t.title) + '"></div>' +
@@ -986,8 +1152,15 @@ var LINKS = {
   }
 
   sb.auth.onAuthStateChange(function (_ev, s) {
+    var wasOut = !session;
     session = s;
     loadRole().then(renderAcademy);
+    /* first sign-in on this device: open the site tour */
+    if (s && wasOut) {
+      var toured = null;
+      try { toured = localStorage.getItem("e12_tour_done"); } catch (e) {}
+      if (!toured && window.__e12OpenTour) setTimeout(window.__e12OpenTour, 600);
+    }
   });
   sb.auth.getSession().then(function (r) {
     session = r.data.session;
