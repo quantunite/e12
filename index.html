@@ -638,6 +638,7 @@ footer a { color: var(--ink-dim); }
       <button class="btn" id="authSubmit">Sign in</button>
     </div>
     <div class="switch-mode" id="authSwitch">New here? <a id="authToggle">Create an account</a></div>
+    <div class="switch-mode"><a id="forgotLink" data-i18n="auth.forgot">Forgot password?</a></div>
   </div>
 </div>
 
@@ -763,6 +764,7 @@ var LINKS = {
     "foot.contact": "Contacto",
     "foot.disclosure": "E-12 es una gu&iacute;a, no un proveedor: las ofertas de viaje las provee Traverex y E-12 te lleva hasta all&aacute;. Algunos enlaces de este sitio son enlaces de socios. E-12 puede ganar una comisi&oacute;n cuando reservas o te unes a trav&eacute;s de ellos, sin costo extra para ti. E-12 no garantiza ingresos de ning&uacute;n tipo. &copy; 2026 E-12. Todos los derechos reservados.",
     "auth.tag": "Miembros E-12",
+    "auth.forgot": "&iquest;Olvidaste tu contrase&ntilde;a?",
     "auth.email": "Correo",
     "auth.pass": "Contrase&ntilde;a",
     "lead.tag": "Membres&iacute;a E-12",
@@ -1011,6 +1013,14 @@ var LINKS = {
     authSubmit.disabled = false;
   });
   $("authPass").addEventListener("keydown", function (ev) { if (ev.key === "Enter") authSubmit.click(); });
+  $("forgotLink").addEventListener("click", async function () {
+    var email = $("authEmail").value.trim();
+    if (!email) { msg(T("Enter your email above first.", "Escribe tu correo arriba primero."), "err"); return; }
+    msg(T("Sending reset link...", "Enviando enlace..."));
+    var r = await sb.auth.resetPasswordForEmail(email, { redirectTo: "https://e1212.com/admin.html" });
+    if (r.error) { msg(r.error.message, "err"); return; }
+    msg(T("Reset link sent. Check your email.", "Enlace enviado. Revisa tu correo."), "ok");
+  });
 
   /* ---- lead capture / onboarding ---- */
   var leadModal = $("leadModal"), leadSource = "membership";
