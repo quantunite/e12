@@ -75,6 +75,11 @@ td { padding: 10px; border-bottom: 1px solid var(--line-soft); vertical-align: m
 .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 14px; }
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
 .pill { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; color: var(--ink-dim); }
+.pill.new { color: #14100a; background: var(--brass-hi); border-color: var(--brass-hi); }
+.count { font-family: var(--font-mono); font-size: 10px; color: inherit; opacity: 0.85; }
+.count.fresh { color: #14100a; background: var(--brass-hi); border-radius: 999px; padding: 2px 8px; opacity: 1; }
+tr.fresh td { background: rgba(236, 211, 154, 0.07); }
+tr.fresh td:first-child { box-shadow: inset 3px 0 0 var(--brass); }
 .pill.free { color: #14100a; background: var(--live); border-color: var(--live); }
 .pill.admin { color: #14100a; background: var(--brass); border-color: var(--brass); }
 .thumb { width: 74px; height: 44px; object-fit: cover; border-radius: 6px; border: 1px solid var(--line-soft); }
@@ -115,8 +120,8 @@ td { padding: 10px; border-bottom: 1px solid var(--line-soft); vertical-align: m
     <div class="tabs">
       <button class="tab-btn on" data-p="trainings">Trainings</button>
       <button class="tab-btn" data-p="links">Links</button>
-      <button class="tab-btn" data-p="leads">Leads</button>
-      <button class="tab-btn" data-p="members">Members</button>
+      <button class="tab-btn" data-p="leads">Leads <span class="count" id="leadsBadge"></span></button>
+      <button class="tab-btn" data-p="members">Members <span class="count" id="membersBadge"></span></button>
       <button class="tab-btn" data-p="admins">Admins</button>
     </div>
 
@@ -284,8 +289,24 @@ td { padding: 10px; border-bottom: 1px solid var(--line-soft); vertical-align: m
     b.addEventListener("click", function () {
       document.querySelectorAll(".tabs .tab-btn").forEach(function (x) { x.classList.toggle("on", x === b); });
       document.querySelectorAll(".panel").forEach(function (p) { p.classList.toggle("on", p.id === "p-" + b.getAttribute("data-p")); });
+      var key = b.getAttribute("data-p");
+      if (key === "leads" || key === "members") markSeen(key);
     });
   });
+
+  /* ---- new-activity tracking (per device, no emails needed) ---- */
+  function lastSeen(key) { return localStorage.getItem("e12_seen_" + key) || "1970-01-01T00:00:00Z"; }
+  function markSeen(key) {
+    localStorage.setItem("e12_seen_" + key, new Date().toISOString());
+    var badge = $(key + "Badge");
+    if (badge) badge.classList.remove("fresh");
+  }
+  function setBadge(key, total, freshCount) {
+    var badge = $(key + "Badge");
+    if (!badge) return;
+    badge.textContent = freshCount > 0 ? total + " (" + freshCount + " new)" : String(total);
+    badge.classList.toggle("fresh", freshCount > 0);
+  }
 
   /* ---- trainings ---- */
   async function loadTrainings() {
@@ -405,16 +426,19 @@ td { padding: 10px; border-bottom: 1px solid var(--line-soft); vertical-align: m
     var r = await sb.from("leads").select("*").order("created_at", { ascending: false });
     leadsCache = r.data || [];
     $("leadCount").textContent = leadsCache.length + " lead" + (leadsCache.length === 1 ? "" : "s");
+    var seen = lastSeen("leads");
     var tb = $("leadTable").querySelector("tbody");
     tb.innerHTML = leadsCache.map(function (l) {
-      return "<tr>" +
-        '<td class="muted">' + esc(fmtDate(l.created_at)) + "</td>" +
+      var fresh = l.created_at > seen;
+      return '<tr class="' + (fresh ? "fresh" : "") + '">' +
+        '<td class="muted">' + esc(fmtDate(l.created_at)) + (fresh ? ' <span class="pill new">new</span>' : "") + "</td>" +
         "<td>" + esc(l.name) + "</td>" +
         '<td><a href="mailto:' + esc(l.email) + '">' + esc(l.email) + "</a></td>" +
         "<td>" + esc(l.phone) + "</td>" +
         '<td><span class="pill">' + esc(l.source) + "</span></td>" +
         '<td><button class="btn danger small" data-dlead="' + l.id + '">Delete</button></td></tr>';
     }).join("");
+    setBadge("leads", leadsCache.length, leadsCache.filter(function (l) { return l.created_at > seen; }).length);
   }
   $("leadTable").addEventListener("click", async function (ev) {
     var id = ev.target.getAttribute("data-dlead");
@@ -439,17 +463,23 @@ td { padding: 10px; border-bottom: 1px solid var(--line-soft); vertical-align: m
   /* ---- members ---- */
   async function loadMembers() {
     var r = await sb.from("profiles").select("*").order("created_at");
+    var seen = lastSeen("members");
     var tb = $("mTable").querySelector("tbody");
     tb.innerHTML = (r.data || []).map(function (m) {
       var self = session && m.id === session.user.id;
-      return "<tr>" +
-        "<td>" + esc(m.email) + (self ? ' <span class="muted">(you)</span>' : "") + "</td>" +
+      var fresh = !self && m.created_at > seen;
+      return '<tr class="' + (fresh ? "fresh" : "") + '">' +
+        "<td>" + esc(m.email) + (self ? ' <span class="muted">(you)</span>' : "") + (fresh ? ' <span class="pill new">new</span>' : "") + "</td>" +
         '<td><span class="pill ' + (m.role === "admin" ? "admin" : "") + '">' + esc(m.role) + "</span></td>" +
         '<td class="muted">' + esc(fmtDate(m.created_at)) + "</td>" +
         "<td>" + (self ? "" :
           '<button class="btn ghost small" data-role="' + (m.role === "admin" ? "member" : "admin") + '" data-uid="' + m.id + '">' +
           (m.role === "admin" ? "Make member" : "Make admin") + "</button>") + "</td></tr>";
     }).join("");
+    var rows = r.data || [];
+    setBadge("members", rows.length, rows.filter(function (m) {
+      return m.created_at > seen && !(session && m.id === session.user.id);
+    }).length);
   }
   $("mTable").addEventListener("click", async function (ev) {
     var uid = ev.target.getAttribute("data-uid");
