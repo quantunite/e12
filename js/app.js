@@ -1,10 +1,17 @@
 /* ==========================================================================
-   LyfestyleX - backend wiring.
-   Reuses the E-12 Supabase project and tables (auth, site_links, trainings,
-   leads, site_events) so the owner panel keeps working unchanged.
+   Shared backend wiring for the E-12 network (the umbrella page and every
+   gate site under it). Uses the one Supabase project and its existing tables
+   - auth, site_links, trainings, leads, site_events - so the owner panel
+   keeps working unchanged.
+
+   Each page sets window.LYX_BASE ("" at the root, "../" one level down) and
+   window.LYX_PAGE (the analytics label) before loading this file.
    ========================================================================== */
 (function () {
   if (!window.supabase || !window.E12_CONFIG) return;
+
+  var BASE = window.LYX_BASE || "";
+  var PAGE = window.LYX_PAGE || "home";
 
   var sb = window.supabase.createClient(window.E12_CONFIG.url, window.E12_CONFIG.key);
   var $ = function (id) { return document.getElementById(id); };
@@ -19,13 +26,13 @@
     });
   }
 
-  /* Image paths in the trainings table were written relative to the site root
-     (e.g. "img/academy-travel.jpg"). This page lives one level down, so bare
-     relative paths need lifting or they 404. */
+  /* Image paths in the trainings table are written relative to the site root
+     (e.g. "img/academy-travel.jpg"). Gate pages live a level down, so bare
+     relative paths need lifting by LYX_BASE or they 404. */
   function assetUrl(u) {
     if (!u) return "";
     if (/^(https?:)?\/\//i.test(u) || u.charAt(0) === "/" || u.indexOf("../") === 0) return u;
-    return "../" + u.replace(/^\.\//, "");
+    return BASE + u.replace(/^\.\//, "");
   }
 
   /* ---------------------------------------------------------------- links */
@@ -126,7 +133,7 @@
       var pill = free
         ? '<span class="pill pill-free">' + T("Free to watch", "Gratis") + "</span>"
         : '<span class="pill pill-members">' + T("Members only", "Solo miembros") + "</span>";
-      var img = assetUrl(t.image_url) || "../img/academy-travel.jpg";
+      var img = assetUrl(t.image_url) || (BASE + "img/academy-travel.jpg");
       return '<article class="card" data-training-id="' + esc(t.id) + '" tabindex="0" role="button" ' +
         'aria-label="' + esc(t.title) + '">' +
         '<div class="card-img"><img src="' + esc(img) + '" alt="" loading="lazy">' +
@@ -277,7 +284,7 @@
 
   window.__lyxTrackClick = function (key) {
     if (!isProd) return;
-    try { sb.from("site_events").insert({ type: "click", path: "lifestyle:" + key, referrer: "" }).then(function () {}); }
+    try { sb.from("site_events").insert({ type: "click", path: PAGE + ":" + key, referrer: "" }).then(function () {}); }
     catch (e) {}
   };
 
@@ -285,7 +292,7 @@
     try {
       sb.from("site_events").insert({
         type: "view",
-        path: "lifestyle",
+        path: PAGE,
         referrer: (document.referrer || "").slice(0, 300)
       }).then(function () {});
     } catch (e) {}
