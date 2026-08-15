@@ -1,0 +1,809 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>LyfestyleX - Travel for less, earn while you do</title>
+<meta name="description" content="LyfestyleX is how Lawrence travels. Member prices on flights, hotels and cruises, plus a way to earn by sharing it.">
+<style>
+/* ==========================================================================
+   LyfestyleX - travel page (Gate 01 of the E-12 / e1212.com umbrella)
+   Layout + palette after lawrenceredevelopmentauthority.org (navy + gold,
+   white ground, two-tone serif headings).
+   Imagery after xullu.com (bright, full-bleed, rounded, generous space).
+   Built for an older, less tech-comfortable, bilingual Lawrence audience:
+   nothing hidden behind a menu, nothing under 15px, every target >= 48px.
+   Self-contained: no external requests of any kind.
+   ========================================================================== */
+:root {
+  --navy:       #1F2E4D;   /* primary text, headline line 1 */
+  --navy-deep:  #16223A;
+  --navy-soft:  #4A5B7C;   /* secondary text - 6.4:1 on white */
+  --gold:       #B0872F;   /* LARGE display text only - 3.3:1 */
+  --gold-text:  #8A6A24;   /* small text + button fills - 5.0:1 */
+  --gold-hi:    #D6A845;   /* bright accent, used on dark only */
+  --gold-tint:  #F6EEDC;
+  --paper:      #FFFFFF;
+  --paper-2:    #F7F5F0;
+  --line:       #E3DED2;
+  --focus:      #1F6FEB;
+  --ok:         #2F6B3A;
+  --font-display: "Georgia Pro", Georgia, "Times New Roman", serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --radius: 14px;
+  --shadow: 0 2px 10px rgba(31, 46, 77, 0.07), 0 10px 30px rgba(31, 46, 77, 0.06);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+[hidden] { display: none !important; }
+html { scroll-behavior: smooth; scroll-padding-top: 148px; }
+body {
+  background: var(--paper);
+  color: var(--navy);
+  font-family: var(--font-body);
+  font-size: 19px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: var(--gold-text); }
+
+/* One visible focus style everywhere. Never removed. */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* ============================== TYPE ============================== */
+h1, h2, h3 { font-family: var(--font-display); font-weight: 700; line-height: 1.12; }
+h1 { font-size: clamp(38px, 6.4vw, 76px); letter-spacing: -0.015em; }
+h2 { font-size: clamp(30px, 4vw, 46px); color: var(--navy); }
+h3 { font-size: 21px; line-height: 1.3; }
+/* LRA's signature: heading stacks navy over gold */
+.h2-gold { display: block; color: var(--gold); }
+.lead { font-size: clamp(18px, 2vw, 22px); color: var(--navy-soft); max-width: 62ch; }
+.eyebrow {
+  font-size: 15px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--gold-text); margin-bottom: 10px;
+}
+
+/* ============================== BUTTONS ============================== */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 56px; padding: 14px 30px;
+  font-family: var(--font-body); font-size: 18px; font-weight: 700;
+  border: 2px solid transparent; border-radius: 999px;
+  cursor: pointer; text-decoration: none; text-align: center;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+.btn-gold { background: var(--gold-text); color: #fff; }
+.btn-gold:hover { background: #6E5320; }
+.btn-navy { background: var(--navy); color: #fff; }
+.btn-navy:hover { background: var(--navy-deep); }
+.btn-ghost { background: transparent; color: var(--navy); border-color: var(--navy); }
+.btn-ghost:hover { background: var(--navy); color: #fff; }
+.btn-lg { min-height: 64px; font-size: 20px; padding: 16px 40px; }
+.btn-sm { min-height: 48px; font-size: 16px; padding: 10px 22px; }
+.cta-row { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+
+/* ============================== NAV ============================== */
+header.nav {
+  position: sticky; top: 0; z-index: 50;
+  background: var(--paper);
+  border-bottom: 1px solid var(--line);
+}
+.nav-in {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 14px 24px; max-width: 1180px; margin: 0 auto;
+}
+.wordmark {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 27px; letter-spacing: 0.01em; color: var(--navy);
+  text-decoration: none; white-space: nowrap;
+}
+/* the emphasised X */
+.wordmark .x {
+  color: var(--gold); font-size: 1.24em; line-height: 0;
+  position: relative; top: 0.05em; margin-left: 0.02em;
+}
+.nav-right { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.linkbtn {
+  min-height: 48px; padding: 8px 16px; font-size: 16px; font-weight: 600;
+  background: none; border: 1px solid var(--line); border-radius: 999px;
+  color: var(--navy); cursor: pointer; font-family: var(--font-body);
+}
+.linkbtn:hover { border-color: var(--navy); }
+
+/* Row 2: the four big labelled tabs. Never a hamburger, never a dropdown. */
+.tabs {
+  display: flex; gap: 10px; flex-wrap: wrap;
+  padding: 0 24px 14px; max-width: 1180px; margin: 0 auto;
+}
+.tab {
+  flex: 1 1 auto; min-width: 130px;
+  display: flex; align-items: center; justify-content: center;
+  min-height: 52px; padding: 10px 18px;
+  font-size: 17px; font-weight: 700; letter-spacing: 0.04em;
+  text-transform: uppercase; text-decoration: none;
+  color: var(--navy); background: var(--paper);
+  border: 2px solid var(--line); border-radius: 999px;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+.tab:hover { border-color: var(--navy); }
+.tab[aria-current="true"] { background: var(--navy); border-color: var(--navy); color: #fff; }
+
+/* ============================== HERO ============================== */
+.hero { position: relative; min-height: min(78vh, 720px); display: flex; align-items: center; }
+.hero-img { position: absolute; inset: 0; overflow: hidden; }
+.hero-img img { width: 100%; height: 100%; object-fit: cover; object-position: center 42%; }
+/* scrim so white type stays legible on a bright daylight photo */
+.hero-img::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(180deg, rgba(12,20,36,0.62) 0%, rgba(12,20,36,0.40) 42%, rgba(12,20,36,0.78) 100%);
+}
+.hero-in { position: relative; z-index: 2; width: 100%; padding: 72px 0; text-align: center; }
+.hero h1 { color: #fff; text-wrap: balance; }
+.hero h1 .gold { color: var(--gold-hi); display: block; }
+.hero .lead { color: #EFEAE0; margin: 22px auto 0; text-align: center; }
+.hero .cta-row { justify-content: center; margin-top: 34px; }
+/* the quieter customer path */
+.cust-link {
+  display: inline-block; margin-top: 22px;
+  color: #F0E6CF; font-size: 17px; font-weight: 600;
+  text-decoration: underline; text-underline-offset: 4px;
+  min-height: 48px; padding: 12px 4px;
+}
+.cust-link:hover { color: #fff; }
+
+/* ============================== SECTIONS ============================== */
+section { padding: 84px 0; }
+.band { background: var(--paper-2); }
+.sec-head { max-width: 62ch; margin-bottom: 44px; }
+.sec-head .lead { margin-top: 16px; }
+
+/* ---- Xullu-style icon tiles ---- */
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.tile {
+  background: var(--gold-tint); border-radius: var(--radius);
+  padding: 30px 24px; text-align: center;
+}
+.tile svg { width: 52px; height: 52px; margin: 0 auto 16px; display: block; color: var(--navy); }
+.tile h3 { color: var(--navy); margin-bottom: 8px; font-size: 20px; }
+.tile p { font-size: 16.5px; color: var(--navy-soft); line-height: 1.5; }
+
+/* ---- card grid: wraps, never scrolls sideways, no arrows ---- */
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+.card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--radius); overflow: hidden;
+  box-shadow: var(--shadow); cursor: pointer;
+  display: flex; flex-direction: column;
+  transition: transform .15s, box-shadow .15s;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 6px 16px rgba(31,46,77,.12), 0 18px 44px rgba(31,46,77,.10); }
+.card-img { position: relative; aspect-ratio: 16 / 9; background: var(--paper-2); }
+.card-img img { width: 100%; height: 100%; object-fit: cover; }
+.card-play {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 62px; height: 62px; border-radius: 50%;
+  background: rgba(255,255,255,0.94); box-shadow: 0 4px 14px rgba(0,0,0,.28);
+  display: flex; align-items: center; justify-content: center;
+}
+.card-play::after {
+  content: ""; margin-left: 4px;
+  border-left: 19px solid var(--navy);
+  border-top: 12px solid transparent; border-bottom: 12px solid transparent;
+}
+.card-body { padding: 20px 22px 24px; }
+.pill {
+  display: inline-block; margin-bottom: 10px;
+  font-size: 14.5px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+  padding: 5px 13px; border-radius: 999px;
+}
+.pill-members { background: var(--navy); color: #fff; }
+.pill-free { background: var(--gold-tint); color: var(--gold-text); }
+.card h3 { color: var(--navy); }
+
+/* ---- membership list ---- */
+.benefits { list-style: none; display: grid; gap: 20px; margin-bottom: 34px; }
+.benefits li { display: flex; gap: 16px; align-items: flex-start; font-size: 18.5px; }
+.benefits .n {
+  flex: 0 0 auto; width: 36px; height: 36px; border-radius: 50%;
+  background: var(--gold-tint); color: var(--gold-text);
+  font-weight: 700; font-size: 16px;
+  display: flex; align-items: center; justify-content: center;
+}
+.split { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 56px; align-items: center; }
+.split img { border-radius: var(--radius); box-shadow: var(--shadow); }
+
+/* ---- help / faq ---- */
+.faq { display: grid; gap: 14px; max-width: 860px; }
+.qa { border: 1px solid var(--line); border-radius: var(--radius); background: var(--paper); }
+.qa summary {
+  cursor: pointer; list-style: none; padding: 20px 24px;
+  font-size: 19px; font-weight: 700; color: var(--navy);
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  min-height: 64px;
+}
+.qa summary::-webkit-details-marker { display: none; }
+.qa summary::after { content: "+"; font-size: 28px; color: var(--gold-text); line-height: 1; }
+.qa[open] summary::after { content: "\2212"; }
+.qa p { padding: 0 24px 22px; color: var(--navy-soft); font-size: 17.5px; }
+
+/* ---- video ---- */
+.video-frame {
+  position: relative; aspect-ratio: 16 / 9; max-width: 940px; margin: 0 auto;
+  border-radius: var(--radius); overflow: hidden;
+  background: var(--navy-deep); box-shadow: var(--shadow);
+}
+.video-frame iframe, .video-frame video { width: 100%; height: 100%; border: 0; display: block; }
+
+/* ============================== FOOTER ============================== */
+footer { background: var(--navy-deep); color: #D8DEE9; padding: 56px 0 44px; font-size: 16px; }
+footer .wordmark { color: #fff; font-size: 24px; }
+footer .wordmark .x { color: var(--gold-hi); }
+.foot-top {
+  display: flex; justify-content: space-between; gap: 26px;
+  flex-wrap: wrap; align-items: flex-start; margin-bottom: 30px;
+}
+.foot-links { display: flex; gap: 22px; flex-wrap: wrap; }
+.foot-links a { color: #D8DEE9; text-decoration: underline; text-underline-offset: 4px; min-height: 48px; display: inline-flex; align-items: center; }
+.foot-links a:hover { color: #fff; }
+.disclosure { color: #9FAABC; font-size: 15px; line-height: 1.65; max-width: 90ch; }
+.disclosure a { color: #B9C4D4; }
+.credit { color: #7F8B9E; font-size: 14.5px; margin-top: 14px; }
+
+/* ============================== MODALS ============================== */
+.modal-wrap {
+  position: fixed; inset: 0; z-index: 100; display: none;
+  align-items: center; justify-content: center; padding: 20px;
+  background: rgba(12, 20, 36, 0.62);
+}
+.modal-wrap.open { display: flex; }
+.modal {
+  position: relative; width: 100%; max-width: 470px;
+  background: var(--paper); border-radius: var(--radius);
+  padding: 34px 30px 30px; box-shadow: 0 24px 70px rgba(0,0,0,.35);
+  max-height: 92vh; overflow-y: auto;
+}
+.modal h3 { font-size: 27px; margin-bottom: 6px; }
+.close-x {
+  position: absolute; top: 12px; right: 12px;
+  width: 48px; height: 48px; border: 0; border-radius: 50%;
+  background: none; font-size: 30px; line-height: 1; color: var(--navy-soft); cursor: pointer;
+}
+.close-x:hover { background: var(--paper-2); color: var(--navy); }
+.field { margin-top: 18px; }
+.field label { display: block; font-size: 16px; font-weight: 600; margin-bottom: 7px; }
+.field input {
+  width: 100%; min-height: 54px; padding: 12px 15px;
+  font-size: 18px; font-family: var(--font-body); color: var(--navy);
+  background: var(--paper); border: 2px solid var(--line); border-radius: 10px;
+}
+.field input:focus { border-color: var(--navy); outline: none; }
+.field input:focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+.msg { margin-top: 14px; font-size: 16.5px; min-height: 24px; color: var(--navy-soft); }
+.msg.err { color: #B3261E; }
+.msg.ok { color: var(--ok); }
+.modal .btn { width: 100%; margin-top: 20px; }
+.switch-mode { margin-top: 16px; font-size: 16.5px; color: var(--navy-soft); text-align: center; }
+.switch-mode a { cursor: pointer; font-weight: 600; }
+
+.vplayer {
+  position: fixed; inset: 0; z-index: 110; display: none;
+  align-items: center; justify-content: center; padding: 22px;
+  background: rgba(8, 13, 24, 0.94);
+}
+.vplayer.open { display: flex; }
+.vplayer video, .vplayer .frame { width: min(1080px, 100%); aspect-ratio: 16/9; border-radius: 10px; background: #000; }
+.vplayer .frame iframe { width: 100%; height: 100%; border: 0; border-radius: 10px; }
+.close-v {
+  position: absolute; top: 18px; right: 18px;
+  min-height: 52px; padding: 12px 24px; font-size: 17px; font-weight: 700;
+  background: #fff; color: var(--navy); border: 0; border-radius: 999px; cursor: pointer;
+}
+
+.toast {
+  position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%) translateY(20px);
+  background: var(--navy-deep); color: #fff; padding: 16px 26px;
+  border-radius: 999px; font-size: 17px; font-weight: 600;
+  box-shadow: 0 12px 34px rgba(0,0,0,.3);
+  opacity: 0; pointer-events: none; transition: opacity .2s, transform .2s; z-index: 120;
+  max-width: calc(100vw - 40px); text-align: center;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ============================== RESPONSIVE ============================== */
+@media (max-width: 980px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+  .split { grid-template-columns: 1fr; gap: 34px; }
+}
+@media (max-width: 680px) {
+  html { scroll-padding-top: 190px; }
+  body { font-size: 18px; }
+  section { padding: 56px 0; }
+  .nav-in { padding: 12px 18px; flex-wrap: wrap; }
+  .wordmark { font-size: 24px; }
+  .tabs { padding: 0 18px 12px; }
+  /* four tabs wrap to a 2 x 2 block - still all visible, still no menu */
+  .tab { flex: 1 1 calc(50% - 5px); min-width: 0; font-size: 16px; }
+  .wrap { padding: 0 18px; }
+  .grid { grid-template-columns: 1fr; }
+  .hero-in { padding: 56px 0; }
+  .hero .cta-row .btn { width: 100%; }
+}
+@media (max-width: 420px) {
+  .tiles { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+}
+</style>
+</head>
+<body id="top">
+
+<header class="nav">
+  <div class="nav-in">
+    <a class="wordmark" href="#top" aria-label="LyfestyleX home">Lyfestyle<span class="x">X</span></a>
+    <div class="nav-right">
+      <button class="linkbtn" id="langBtn" aria-label="Switch language / Cambiar idioma">Espa&ntilde;ol</button>
+      <button class="linkbtn" id="authBtn">Sign in</button>
+      <a class="linkbtn owner-link" id="ownerLink" href="../admin.html" hidden>Owner panel</a>
+      <a class="btn btn-gold btn-sm" href="#" data-link="joinBusiness" data-i18n="nav.join">Join</a>
+    </div>
+  </div>
+  <nav class="tabs" aria-label="Sections">
+    <a class="tab" href="#travel"  data-i18n="tab.travel">Travel</a>
+    <a class="tab" href="#watch"   data-i18n="tab.watch" hidden>Watch</a>
+    <a class="tab" href="#academy" data-i18n="tab.academy">Academy</a>
+    <a class="tab" href="#help"    data-i18n="tab.help">Help</a>
+  </nav>
+</header>
+
+<main>
+
+<!-- ============================ HERO / TRAVEL ============================ -->
+<section class="hero" id="travel">
+  <div class="hero-img">
+    <img src="../img/lawrence-hero.jpg"
+         srcset="../img/lawrence-hero-sm.jpg 1280w, ../img/lawrence-hero.jpg 1920w"
+         sizes="100vw"
+         alt="An aerial view of downtown Lawrence, Massachusetts on a clear summer morning, with the brick mill buildings and the Merrimack River"
+         fetchpriority="high">
+  </div>
+  <div class="hero-in">
+    <div class="wrap">
+      <h1 data-i18n="hero.h1">Travel for less.<span class="gold">Earn while you do.</span></h1>
+      <p class="lead" data-i18n="hero.lead">LyfestyleX is how Lawrence travels. Member prices on flights, hotels,
+        cruises and resorts, plus a way to earn by sharing it with the people you know.</p>
+      <div class="cta-row">
+        <a class="btn btn-gold btn-lg" href="#" data-link="joinBusiness" data-i18n="hero.cta">Join now</a>
+      </div>
+      <a class="cust-link" href="#" data-link="joinCustomer" data-i18n="hero.cust">Just want to book a trip? Shop as a customer</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WHAT YOU GET ============================ -->
+<section class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="tiles.eyebrow">What you get</span>
+      <h2 data-i18n="tiles.h2">Four reasons people join.</h2>
+    </div>
+    <div class="tiles">
+      <div class="tile">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M25.4 5.5H40a2.5 2.5 0 0 1 2.5 2.5v14.6a2.5 2.5 0 0 1-.73 1.77L23.9 42.24a2.5 2.5 0 0 1-3.54 0L5.76 27.64a2.5 2.5 0 0 1 0-3.54L23.63 6.23a2.5 2.5 0 0 1 1.77-.73Z"/>
+          <circle cx="33.5" cy="14.5" r="3.2"/>
+        </svg>
+        <h3 data-i18n="tile1.h">Member prices</h3>
+        <p data-i18n="tile1.p">Flights, hotels, cruises and resorts at rates the public does not see.</p>
+      </div>
+      <div class="tile">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="12" cy="14" r="5.5"/><circle cx="36" cy="10" r="4.5"/><circle cx="34" cy="35" r="4.5"/>
+          <path d="M16.6 11.4 31.6 11.8M16.3 17.6 30.2 32.1"/>
+        </svg>
+        <h3 data-i18n="tile2.h">Earn by sharing</h3>
+        <p data-i18n="tile2.p">Get paid when the people you refer book their travel through you.</p>
+      </div>
+      <div class="tile">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="5" y="9" width="38" height="27" rx="3.5"/>
+          <path d="M20 17.5v10l9-5-9-5Z"/><path d="M16 42h16"/>
+        </svg>
+        <h3 data-i18n="tile3.h">Learn as you go</h3>
+        <p data-i18n="tile3.p">Short video lessons in plain language. You can start from zero.</p>
+      </div>
+      <div class="tile">
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M41 27.5c0 5.8-6.9 10.5-15.5 10.5a20 20 0 0 1-4.6-.53L11 41.5l2.4-6.4C9.4 33 7 30.5 7 27.5 7 21.7 13.9 17 22.5 17S41 21.7 41 27.5Z"/>
+          <path d="M17.5 26.5h12M17.5 31h7"/>
+        </svg>
+        <h3 data-i18n="tile4.h">Real people</h3>
+        <p data-i18n="tile4.p">Questions answered by someone local, in English or Spanish.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ WATCH ============================
+     Hidden entirely until an intro video exists. No empty player. -->
+<section id="watch" hidden>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="watch.eyebrow">Watch first</span>
+      <h2 data-i18n="watch.h2">See how it works.<span class="h2-gold" data-i18n="watch.h2b">Five minutes, start to finish.</span></h2>
+    </div>
+    <div class="video-frame" id="introFrame"></div>
+    <div class="cta-row" style="margin-top: 38px; justify-content: center;">
+      <a class="btn btn-gold btn-lg" href="#" data-link="joinBusiness" data-i18n="watch.cta">Join now</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ACADEMY ============================ -->
+<section id="academy" class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="acad.eyebrow">The Academy</span>
+      <h2 data-i18n="acad.h2">Learn the travel side.<span class="h2-gold" data-i18n="acad.h2b">One short video at a time.</span></h2>
+      <p class="lead" data-i18n="acad.lead">Plain-language lessons on points, booking, and how the earning side works.
+        Some are open to everyone. The rest come with membership.</p>
+    </div>
+    <div class="grid" id="academyGrid">
+      <!-- filled from Supabase; this is the empty-state fallback -->
+      <p class="lead" id="academyEmpty" data-i18n="acad.empty">Lessons are being added. Check back shortly.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ MEMBERSHIP ============================ -->
+<section id="join">
+  <div class="wrap">
+    <div class="split">
+      <div>
+        <span class="eyebrow" data-i18n="join.eyebrow">Membership</span>
+        <h2 data-i18n="join.h2">One membership.<span class="h2-gold" data-i18n="join.h2b">Everything above.</span></h2>
+        <p class="lead" style="margin: 16px 0 34px;" data-i18n="join.lead">Joining takes a few minutes and you can do it from your phone.</p>
+        <ul class="benefits">
+          <li><span class="n">1</span><span data-i18n="join.li1">Member pricing on flights, hotels, cruises and resorts.</span></li>
+          <li><span class="n">2</span><span data-i18n="join.li2">Your own link, so you earn when people you refer book travel.</span></li>
+          <li><span class="n">3</span><span data-i18n="join.li3">The full video academy, in English and Spanish.</span></li>
+          <li><span class="n">4</span><span data-i18n="join.li4">Someone local to ask when you get stuck.</span></li>
+        </ul>
+        <div class="cta-row">
+          <a class="btn btn-gold btn-lg" href="#" data-link="joinBusiness" data-i18n="join.cta">Join now</a>
+          <a class="btn btn-ghost" href="#" data-link="joinCustomer" data-i18n="join.cta2">Book as a customer</a>
+        </div>
+      </div>
+      <div>
+        <img src="../img/travel-amalfi.jpg" alt="A coastal town at golden hour seen from the water" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ HELP ============================ -->
+<section id="help" class="band">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow" data-i18n="help.eyebrow">Help</span>
+      <h2 data-i18n="help.h2">Stuck on something?<span class="h2-gold" data-i18n="help.h2b">Start here.</span></h2>
+    </div>
+    <div class="faq">
+      <details class="qa">
+        <summary data-i18n="faq1.q">How do I join?</summary>
+        <p data-i18n="faq1.a">Press any gold "Join now" button on this page. It opens the Traverex enrolment
+          form in a new tab. Fill it in and you are a member. If you would rather just book a trip without
+          joining, use the "Book as a customer" link instead.</p>
+      </details>
+      <details class="qa">
+        <summary data-i18n="faq2.q">What is the difference between joining and booking as a customer?</summary>
+        <p data-i18n="faq2.a">Booking as a customer means you buy travel at member prices. Joining means you
+          also get your own link, so you earn when other people book through you. Most people join.</p>
+      </details>
+      <details class="qa">
+        <summary data-i18n="faq3.q">How do I watch a video?</summary>
+        <p data-i18n="faq3.a">Press anywhere on the picture of the lesson you want. It opens straight away.
+          To close it, press the Close button in the corner.</p>
+      </details>
+      <details class="qa">
+        <summary data-i18n="faq4.q">I forgot my password.</summary>
+        <p data-i18n="faq4.a">Press Sign in at the top of the page, then use the reset option. If it does not
+          arrive within a few minutes, check your spam folder, then contact us below.</p>
+      </details>
+      <details class="qa">
+        <summary data-i18n="faq5.q">Can I do all of this in Spanish?</summary>
+        <p data-i18n="faq5.a">Yes. Press "Espa&ntilde;ol" at the top of the page and the whole site changes.
+          Press "English" to change it back.</p>
+      </details>
+    </div>
+    <div class="cta-row" style="margin-top: 34px;">
+      <a class="btn btn-ghost" href="#" data-link="contact" data-i18n="help.contact">Contact us</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <span class="wordmark">Lyfestyle<span class="x">X</span></span>
+        <div style="margin-top: 8px; color: #9FAABC; font-size: 15px;" data-i18n="foot.part">Part of the E-12 network</div>
+      </div>
+      <div class="foot-links">
+        <a href="#" data-link="contact" data-i18n="foot.contact">Contact</a>
+        <a href="../" data-i18n="foot.e12">E-12 home</a>
+      </div>
+    </div>
+    <p class="disclosure" data-i18n="foot.disclosure">LyfestyleX is a guide, not a travel provider. Travel is
+      sold and delivered by Traverex, and LyfestyleX routes you there. The enrolment and booking links on this
+      page are partner links: LyfestyleX may earn a commission when you join or book through them, at no extra
+      cost to you. Earnings depend entirely on your own effort and results, and LyfestyleX makes no income
+      guarantees of any kind. &copy; 2026 LyfestyleX. All rights reserved.</p>
+    <p class="credit">Photograph of Lawrence, Massachusetts by Quintin Soloviev, used under
+      <a href="https://creativecommons.org/licenses/by/4.0/" rel="license noopener" target="_blank">CC BY 4.0</a>.</p>
+  </div>
+</footer>
+
+<!-- ============================ MODALS ============================ -->
+<div class="modal-wrap" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <div class="modal">
+    <button class="close-x" id="authClose" aria-label="Close">&times;</button>
+    <span class="eyebrow" data-i18n="auth.tag">LyfestyleX members</span>
+    <h3 id="authTitle">Sign in</h3>
+    <div class="field">
+      <label for="authEmail" data-i18n="auth.email">Email</label>
+      <input id="authEmail" type="email" autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="authPass" data-i18n="auth.pass">Password</label>
+      <input id="authPass" type="password" autocomplete="current-password">
+    </div>
+    <div class="msg" id="authMsg"></div>
+    <button class="btn btn-navy" id="authSubmit">Sign in</button>
+    <div class="switch-mode" id="authSwitch">New here? <a id="authToggle" tabindex="0" role="button">Create an account</a></div>
+  </div>
+</div>
+
+<div class="modal-wrap" id="leadModal" role="dialog" aria-modal="true" aria-labelledby="leadTitle">
+  <div class="modal">
+    <button class="close-x" id="leadClose" aria-label="Close">&times;</button>
+    <span class="eyebrow" data-i18n="lead.tag">LyfestyleX</span>
+    <h3 id="leadTitle" data-i18n="lead.title">Talk to someone</h3>
+    <p style="color: var(--navy-soft); font-size: 17px; margin-top: 8px;" data-i18n="lead.intro">Leave your details and
+      someone will get back to you.</p>
+    <div class="field">
+      <label for="leadName" data-i18n="lead.name">Name</label>
+      <input id="leadName" type="text" autocomplete="name">
+    </div>
+    <div class="field">
+      <label for="leadEmail" data-i18n="lead.email">Email</label>
+      <input id="leadEmail" type="email" autocomplete="email">
+    </div>
+    <div class="field">
+      <label for="leadPhone" data-i18n="lead.phone">Phone</label>
+      <input id="leadPhone" type="tel" autocomplete="tel">
+    </div>
+    <div class="msg" id="leadMsg"></div>
+    <button class="btn btn-gold" id="leadSubmit" data-i18n="lead.send">Send</button>
+  </div>
+</div>
+
+<div class="vplayer" id="vplayer">
+  <button class="close-v" id="vplayerClose" data-i18n="player.close">Close</button>
+  <video id="vplayerVideo" controls playsinline></video>
+  <div class="frame" id="vplayerFrame" hidden></div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../js/supabase.js"></script>
+<script src="../js/config.js"></script>
+<script>
+/* ==========================================================================
+   PARTNER LINKS
+   Defaults are the real, verified Traverex enrolment URLs. Anything set in
+   the site_links table overrides them, so Jose can change either from the
+   owner panel without a code change.
+   ========================================================================== */
+var LINKS = {
+  joinBusiness: "https://traverexlifestyle.com/nexlevelnetwork", /* PRIMARY: business enrolment */
+  joinCustomer: "https://traverex.com/nexlevelnetwork",          /* secondary: customer enrolment */
+  introVideo:   "",                                              /* unset -> Watch section stays hidden */
+  contact:      ""                                               /* unset -> opens the lead form */
+};
+
+/* ==========================================================================
+   LANGUAGE (EN / ES)
+   English lives in the markup. Spanish lives in I18N_ES. Dynamic strings go
+   through window.__lyxT(en, es).
+   ========================================================================== */
+(function () {
+  var I18N_ES = {
+    "nav.join": "Únete",
+    "tab.travel": "Viajes", "tab.watch": "Ver", "tab.academy": "Academia", "tab.help": "Ayuda",
+
+    "hero.h1": 'Viaja por menos.<span class="gold">Y gana mientras viajas.</span>',
+    "hero.lead": "LyfestyleX es la manera en que Lawrence viaja. Precios de miembro en vuelos, hoteles, " +
+      "cruceros y resorts, y una forma de ganar compartiéndolo con la gente que ya conoces.",
+    "hero.cta": "Únete ahora",
+    "hero.cust": "¿Solo quieres viajar? Compra como cliente",
+
+    "tiles.eyebrow": "Lo que recibes", "tiles.h2": "Cuatro razones para unirte.",
+    "tile1.h": "Precios de miembro",
+    "tile1.p": "Vuelos, hoteles, cruceros y resorts a precios que el público no ve.",
+    "tile2.h": "Gana compartiendo",
+    "tile2.p": "Te pagan cuando las personas que refieres reservan sus viajes contigo.",
+    "tile3.h": "Aprende sobre la marcha",
+    "tile3.p": "Videos cortos en lenguaje sencillo. Puedes empezar desde cero.",
+    "tile4.h": "Gente de verdad",
+    "tile4.p": "Preguntas contestadas por alguien local, en inglés o español.",
+
+    "watch.eyebrow": "Míralo primero", "watch.h2": "Mira cómo funciona.",
+    "watch.h2b": "Cinco minutos, de principio a fin.", "watch.cta": "Únete ahora",
+
+    "acad.eyebrow": "La Academia", "acad.h2": "Aprende el lado de los viajes.",
+    "acad.h2b": "Un video corto a la vez.",
+    "acad.lead": "Lecciones en lenguaje sencillo sobre puntos, reservaciones y cómo funciona la parte de " +
+      "ganancias. Algunas son para todos. El resto viene con la membresía.",
+    "acad.empty": "Estamos agregando las lecciones. Vuelve pronto.",
+
+    "join.eyebrow": "Membresía", "join.h2": "Una membresía.", "join.h2b": "Todo lo de arriba.",
+    "join.lead": "Unirte toma unos minutos y lo puedes hacer desde tu teléfono.",
+    "join.li1": "Precios de miembro en vuelos, hoteles, cruceros y resorts.",
+    "join.li2": "Tu propio enlace, para que ganes cuando la gente que refieres reserve.",
+    "join.li3": "La academia completa de videos, en inglés y español.",
+    "join.li4": "Alguien local a quien preguntarle cuando te trabes.",
+    "join.cta": "Únete ahora", "join.cta2": "Reservar como cliente",
+
+    "help.eyebrow": "Ayuda", "help.h2": "¿Algo no te queda claro?", "help.h2b": "Empieza aquí.",
+    "faq1.q": "¿Cómo me uno?",
+    "faq1.a": 'Presiona cualquier botón dorado que diga "Únete ahora" en esta página. Se abre el formulario ' +
+      'de inscripción de Traverex en una pestaña nueva. Llénalo y ya eres miembro. Si prefieres solo reservar ' +
+      'un viaje sin unirte, usa el enlace "Reservar como cliente".',
+    "faq2.q": "¿Cuál es la diferencia entre unirme y comprar como cliente?",
+    "faq2.a": "Comprar como cliente significa que compras viajes a precio de miembro. Unirte significa que " +
+      "además recibes tu propio enlace, para ganar cuando otras personas reserven contigo. La mayoría se une.",
+    "faq3.q": "¿Cómo veo un video?",
+    "faq3.a": "Presiona en cualquier parte de la imagen de la lección que quieres. Se abre de inmediato. " +
+      "Para cerrarla, presiona el botón Cerrar en la esquina.",
+    "faq4.q": "Olvidé mi contraseña.",
+    "faq4.a": "Presiona Entrar arriba en la página y usa la opción de restablecer. Si no llega en unos " +
+      "minutos, revisa tu carpeta de spam y luego contáctanos abajo.",
+    "faq5.q": "¿Puedo hacer todo esto en español?",
+    "faq5.a": 'Sí. Presiona "Español" arriba en la página y todo el sitio cambia. Presiona "English" para ' +
+      'regresarlo.',
+    "help.contact": "Contáctanos",
+
+    "foot.part": "Parte de la red E-12", "foot.contact": "Contacto", "foot.e12": "Inicio E-12",
+    "foot.disclosure": "LyfestyleX es una guía, no un proveedor de viajes. Los viajes los vende y entrega " +
+      "Traverex, y LyfestyleX te dirige allá. Los enlaces de inscripción y reservación en esta página son " +
+      "enlaces de socio: LyfestyleX puede ganar una comisión cuando te unes o reservas a través de ellos, sin " +
+      "costo adicional para ti. Las ganancias dependen completamente de tu propio esfuerzo y resultados, y " +
+      "LyfestyleX no garantiza ingresos de ningún tipo. © 2026 LyfestyleX. Todos los derechos reservados.",
+
+    "auth.tag": "Miembros LyfestyleX", "auth.email": "Correo", "auth.pass": "Contraseña",
+    "lead.tag": "LyfestyleX", "lead.title": "Habla con alguien",
+    "lead.intro": "Déjanos tus datos y alguien te contactará.",
+    "lead.name": "Nombre", "lead.email": "Correo", "lead.phone": "Teléfono", "lead.send": "Enviar",
+    "player.close": "Cerrar"
+  };
+
+  window.__lyxT = function (en, es) { return (window.__lyxLang === "es" && es) ? es : en; };
+
+  var langBtn = document.getElementById("langBtn");
+
+  function applyLang(lang) {
+    window.__lyxLang = lang;
+    document.documentElement.lang = lang;
+    langBtn.textContent = lang === "es" ? "English" : "Español";
+    document.querySelectorAll("[data-i18n]").forEach(function (el) {
+      var k = el.getAttribute("data-i18n");
+      if (!el.dataset.enSrc) el.dataset.enSrc = el.innerHTML;
+      el.innerHTML = (lang === "es" && I18N_ES[k]) ? I18N_ES[k] : el.dataset.enSrc;
+    });
+    try { localStorage.setItem("lyx_lang", lang); } catch (e) {}
+    document.dispatchEvent(new CustomEvent("lyxlang"));
+  }
+
+  var saved = "en";
+  try {
+    saved = new URLSearchParams(location.search).get("lang") || localStorage.getItem("lyx_lang") ||
+      ((navigator.language || "").toLowerCase().indexOf("es") === 0 ? "es" : "en");
+  } catch (e) {}
+  applyLang(saved === "es" ? "es" : "en");
+
+  langBtn.addEventListener("click", function () {
+    applyLang(window.__lyxLang === "es" ? "en" : "es");
+  });
+})();
+
+/* ==========================================================================
+   SITE CHROME: toast, tab highlighting, partner-link routing
+   ========================================================================== */
+(function () {
+  var toastEl = document.getElementById("toast"), toastTimer;
+  window.__lyxToast = function (m) {
+    toastEl.textContent = m;
+    toastEl.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function () { toastEl.classList.remove("show"); }, 3200);
+  };
+
+  /* Highlight whichever section is on screen so "where am I" is always answered. */
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".tab"));
+  var sections = tabs
+    .map(function (t) { return document.querySelector(t.getAttribute("href")); })
+    .filter(Boolean);
+
+  function markCurrent() {
+    var best = null, bestTop = Infinity;
+    sections.forEach(function (s) {
+      if (s.hasAttribute("hidden")) return;
+      var top = Math.abs(s.getBoundingClientRect().top - 160);
+      if (top < bestTop) { bestTop = top; best = s; }
+    });
+    tabs.forEach(function (t) {
+      var on = best && t.getAttribute("href") === "#" + best.id;
+      if (on) { t.setAttribute("aria-current", "true"); } else { t.removeAttribute("aria-current"); }
+    });
+  }
+  markCurrent();
+  var ticking = false;
+  window.addEventListener("scroll", function () {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { markCurrent(); ticking = false; });
+  }, { passive: true });
+
+  /* Only ever hand http(s) to window.open. site_links is admin-writable, so a
+     stray javascript: or data: value must not become an executable click. */
+  window.__lyxSafeUrl = function (u) {
+    try {
+      var p = new URL(u, location.href);
+      return (p.protocol === "http:" || p.protocol === "https:") ? p.href : null;
+    } catch (e) { return null; }
+  };
+
+  /* Partner links. Anything still unset shows a plain notice instead of a dead click. */
+  document.addEventListener("click", function (ev) {
+    var el = ev.target.closest("[data-link]");
+    if (!el) return;
+    var key = el.getAttribute("data-link");
+    if (!(key in LINKS)) return;
+    ev.preventDefault();
+
+    if (key === "contact") {
+      var url = LINKS.contact;
+      if (!url) { window.__lyxOpenLead && window.__lyxOpenLead("contact"); return; }
+      if (/^mailto:/i.test(url)) { location.href = url; return; }
+      var safeContact = window.__lyxSafeUrl(url);
+      if (safeContact) window.open(safeContact, "_blank", "noopener");
+      else window.__lyxOpenLead && window.__lyxOpenLead("contact");
+      return;
+    }
+    var safe = LINKS[key] ? window.__lyxSafeUrl(LINKS[key]) : null;
+    if (!safe) {
+      window.__lyxToast(window.__lyxT("This link goes live soon.", "Este enlace estará activo pronto."));
+      return;
+    }
+    window.__lyxTrackClick && window.__lyxTrackClick(key);
+    window.open(safe, "_blank", "noopener");
+  });
+})();
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>

@@ -14,7 +14,9 @@ const types = {
 const server = createServer(async (req, res) => {
   try {
     let path = decodeURIComponent(new URL(req.url, "http://x").pathname);
-    if (path === "/") path = "/index.html";
+    // Directory requests serve their index.html, the way GitHub Pages does.
+    if (path.endsWith("/")) path += "index.html";
+    else if (!extname(path)) path += "/index.html";
     const file = normalize(join(root, path));
     if (!file.startsWith(normalize(root))) { res.writeHead(403); res.end(); return; }
     const data = await readFile(file);
