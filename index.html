@@ -4,36 +4,28 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>E-12 - A private members network</title>
-<meta name="description" content="E-12 is a private members network. Each gate opens a different way to live better and earn more, starting with travel.">
+<meta name="description" content="E-12 is a private members network of separate clubs. Each club has its own membership. Travel is open now through LyfestyleX.">
 <link rel="stylesheet" href="css/lyx.css">
 <style>
-/* ---- umbrella-only styles: the navy hero and the gate cards ---- */
-.hero-navy {
-  background:
-    radial-gradient(120% 90% at 50% -10%, rgba(214, 168, 69, 0.16), transparent 62%),
-    linear-gradient(180deg, #1F2E4D 0%, #16223A 100%);
-  padding: 96px 0 104px; text-align: center;
-}
-.hero-navy .eyebrow { color: var(--gold-hi); display: block; margin-bottom: 18px; }
-.hero-navy h1 { color: #fff; text-wrap: balance; }
-.hero-navy h1 em { font-style: italic; color: var(--gold-hi); }
-.hero-navy .lead { color: #C9D2E0; margin: 24px auto 0; max-width: 66ch; }
-.hero-navy .cta-row { justify-content: center; margin-top: 38px; }
-.hero-navy .btn-ghost { color: #fff; border-color: rgba(255,255,255,.55); }
-.hero-navy .btn-ghost:hover { background: #fff; color: var(--navy); border-color: #fff; }
+/* ---- umbrella-only styles: the club cards ----
+   No hero, by design. Marketing traffic lands here and the clubs are what
+   convert, so they are the first thing on the page. ---- */
+.clubs-intro { padding: 40px 0 26px; }
+.clubs-intro h2 { margin-top: 4px; }
+.clubs-intro .lead { margin-top: 14px; }
 
-/* the live gate gets the full width and the photo */
-.gate-feature {
+/* the live club gets the full width and the photo */
+.club-feature {
   display: grid; grid-template-columns: 1.1fr 1fr; gap: 0;
   border: 1px solid var(--line); border-radius: var(--radius);
   overflow: hidden; background: var(--paper); box-shadow: var(--shadow);
   margin-bottom: 26px;
 }
-.gate-feature .art { position: relative; min-height: 340px; }
-.gate-feature .art img { width: 100%; height: 100%; object-fit: cover; }
-.gate-feature .body { padding: 44px 46px; display: flex; flex-direction: column; justify-content: center; }
-.gate-feature h3 { font-size: 34px; margin: 10px 0 12px; }
-.gate-feature p { color: var(--navy-soft); font-size: 18px; margin-bottom: 26px; }
+.club-feature .art { position: relative; min-height: 360px; }
+.club-feature .art img { width: 100%; height: 100%; object-fit: cover; }
+.club-feature .body { padding: 44px 46px; display: flex; flex-direction: column; justify-content: center; }
+.club-feature h3 { font-size: 36px; margin: 10px 0 12px; }
+.club-feature p { color: var(--navy-soft); font-size: 18px; margin-bottom: 26px; }
 
 .badge-live, .badge-soon {
   display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
@@ -44,25 +36,25 @@
 .badge-live::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--ok); }
 .badge-soon { background: var(--paper-2); color: var(--navy-soft); border: 1px solid var(--line); }
 
-/* the gates still to open */
-.gates-soon { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
-.gate-soon {
+/* the clubs still to open */
+.clubs-soon { display: grid; grid-template-columns: repeat(2, 1fr); gap: 26px; }
+.club-soon {
   border: 1px dashed var(--line); border-radius: var(--radius);
   padding: 34px 32px; background: var(--paper);
 }
-.gate-soon h3 { font-size: 26px; margin: 12px 0 10px; color: var(--navy); }
-.gate-soon p { color: var(--navy-soft); font-size: 17px; }
+.club-soon h3 { font-size: 26px; margin: 12px 0 10px; color: var(--navy); }
+.club-soon p { color: var(--navy-soft); font-size: 17px; }
 
 @media (max-width: 980px) {
-  .gate-feature { grid-template-columns: 1fr; }
-  .gate-feature .art { min-height: 230px; }
-  .gate-feature .body { padding: 34px 28px; }
-  .gates-soon { grid-template-columns: 1fr; }
+  .club-feature { grid-template-columns: 1fr; }
+  .club-feature .art { min-height: 240px; }
+  .club-feature .body { padding: 34px 28px; }
+  .clubs-soon { grid-template-columns: 1fr; }
 }
 @media (max-width: 680px) {
-  .hero-navy { padding: 62px 0 68px; }
-  .hero-navy .cta-row .btn { width: 100%; }
-  .gate-feature h3 { font-size: 29px; }
+  .clubs-intro { padding: 28px 0 20px; }
+  .club-feature h3 { font-size: 29px; }
+  .club-feature .cta-row .btn { width: 100%; }
 }
 </style>
 </head>
@@ -77,12 +69,12 @@
         <button class="linkbtn" id="langBtn" aria-label="Switch language / Cambiar idioma">Espa&ntilde;ol</button>
         <button class="linkbtn" id="authBtn">Sign in</button>
         <a class="linkbtn owner-link" id="ownerLink" href="admin.html" hidden>Owner panel</a>
-        <a class="btn btn-gold btn-sm" href="#" data-link="joinBusiness" data-i18n="nav.join">Join</a>
+        <a class="btn btn-gold btn-sm" href="lifestyle/" data-i18n="nav.join">Join</a>
       </div>
     </div>
   </div>
   <nav class="tabs" aria-label="Sections">
-    <a class="tab" href="#gates"      data-i18n="tab.gates">Gates</a>
+    <a class="tab" href="#clubs"      data-i18n="tab.clubs">Clubs</a>
     <a class="tab" href="#academy"    data-i18n="tab.academy">Academy</a>
     <a class="tab" href="#membership" data-i18n="tab.membership">Membership</a>
     <a class="tab" href="#help"       data-i18n="tab.help">Help</a>
@@ -91,59 +83,50 @@
 
 <main>
 
-<!-- ============================ HERO ============================ -->
-<section class="hero-navy">
+<!-- ============================ CLUBS ============================
+     First thing on the page. No hero: marketing lands here and the clubs
+     are what convert, so they go straight in front of the visitor. -->
+<section id="clubs" class="clubs-intro">
   <div class="wrap">
-    <span class="eyebrow" data-i18n="hero.eyebrow">Members only &middot; A private network</span>
-    <h1 data-i18n="hero.h1">Every next level<br>has a <em>gate</em>.</h1>
-    <p class="lead" data-i18n="hero.lead">E-12 is a private members network. Each gate opens a different way to
-      live better and earn more, and the first one is travel. One membership gets you every gate we open.</p>
-    <div class="cta-row">
-      <a class="btn btn-gold btn-lg" href="lifestyle/" data-i18n="hero.cta">Enter the travel gate</a>
-      <a class="btn btn-ghost btn-lg" href="#" data-link="joinBusiness" data-i18n="hero.cta2">Become a member</a>
-    </div>
+    <span class="eyebrow" data-i18n="clubs.eyebrow">Members only &middot; A private network</span>
+    <h2 data-i18n="clubs.h2">Choose your club.<span class="h2-gold" data-i18n="clubs.h2b">More open as the network grows.</span></h2>
+    <p class="lead" data-i18n="clubs.lead">Every club is private and separate, with its own members and its own
+      membership. Join the ones that fit you.</p>
   </div>
 </section>
 
-<!-- ============================ GATES ============================ -->
-<section id="gates">
+<section style="padding-top: 0;">
   <div class="wrap">
-    <div class="sec-head">
-      <span class="eyebrow" data-i18n="gates.eyebrow">The gates</span>
-      <h2 data-i18n="gates.h2">Choose your gate.<span class="h2-gold" data-i18n="gates.h2b">More open as the club grows.</span></h2>
-      <p class="lead" data-i18n="gates.lead">Every gate is its own private club with its own members. Your E-12
-        membership is the key to all of them.</p>
-    </div>
 
-    <!-- Gate 01: live -->
-    <article class="gate-feature">
+    <!-- Club 01: live -->
+    <article class="club-feature">
       <div class="art">
-        <img src="img/beach-hero-sm.jpg" alt="A sunlit tropical beach with turquoise water, golden sand and palm trees" loading="lazy">
+        <img src="img/beach-hero-sm.jpg" alt="A sunlit tropical beach with turquoise water, golden sand and palm trees" fetchpriority="high">
       </div>
       <div class="body">
-        <span class="badge-live" data-i18n="gate1.badge">Open now</span>
-        <h3 data-i18n="gate1.h">Gate 01 &middot; Travel</h3>
-        <p data-i18n="gate1.p">LyfestyleX, our private travel club. Member prices on flights, hotels, cruises and
+        <span class="badge-live" data-i18n="club1.badge">Open now</span>
+        <h3 data-i18n="club1.h">Club 01 &middot; Travel</h3>
+        <p data-i18n="club1.p">LyfestyleX, our private travel club. Member prices on flights, hotels, cruises and
           resorts worldwide that the public never sees, plus a way to earn when the people you know book
           through you.</p>
         <div class="cta-row">
-          <a class="btn btn-gold" href="lifestyle/" data-i18n="gate1.cta">Enter LyfestyleX</a>
+          <a class="btn btn-gold btn-lg" href="lifestyle/" data-i18n="club1.cta">Enter LyfestyleX</a>
         </div>
       </div>
     </article>
 
-    <!-- Gates still to open -->
-    <div class="gates-soon">
-      <article class="gate-soon">
-        <span class="badge-soon" data-i18n="gate2.badge">Coming soon</span>
-        <h3 data-i18n="gate2.h">Gate 02 &middot; Wealth</h3>
-        <p data-i18n="gate2.p">Bitcoin and long-term thinking, taught plainly. Understand what you own, and why,
+    <!-- Clubs still to open -->
+    <div class="clubs-soon">
+      <article class="club-soon">
+        <span class="badge-soon" data-i18n="club2.badge">Coming soon</span>
+        <h3 data-i18n="club2.h">Club 02 &middot; Wealth</h3>
+        <p data-i18n="club2.p">Bitcoin and long-term thinking, taught plainly. Understand what you own, and why,
           before you put a dollar anywhere.</p>
       </article>
-      <article class="gate-soon">
-        <span class="badge-soon" data-i18n="gate3.badge">Coming soon</span>
-        <h3 data-i18n="gate3.h">Gate 03 &middot; Your turn</h3>
-        <p data-i18n="gate3.p">Members decide what opens next. Tell us which door you want and it moves up the
+      <article class="club-soon">
+        <span class="badge-soon" data-i18n="club3.badge">Coming soon</span>
+        <h3 data-i18n="club3.h">Club 03 &middot; Your turn</h3>
+        <p data-i18n="club3.p">Members decide what opens next. Tell us which club you want and it moves up the
           list.</p>
       </article>
     </div>
@@ -170,18 +153,18 @@
   <div class="wrap">
     <div class="split">
       <div>
-        <span class="eyebrow" data-i18n="mem.eyebrow">Membership</span>
-        <h2 data-i18n="mem.h2">One membership.<span class="h2-gold" data-i18n="mem.h2b">Every gate.</span></h2>
+        <span class="eyebrow" data-i18n="mem.eyebrow">How membership works</span>
+        <h2 data-i18n="mem.h2">Each club, its own membership.<span class="h2-gold" data-i18n="mem.h2b">Join only what you want.</span></h2>
         <p class="lead" style="margin: 16px 0 34px;" data-i18n="mem.lead">Joining takes a few minutes and you can
           do it from your phone.</p>
         <ul class="benefits">
-          <li><span class="n">1</span><span data-i18n="mem.li1">Every gate we open, starting with the LyfestyleX travel club.</span></li>
-          <li><span class="n">2</span><span data-i18n="mem.li2">The full members-only video academy, in English and Spanish.</span></li>
-          <li><span class="n">3</span><span data-i18n="mem.li3">Your own link, so you earn when people you refer join or book.</span></li>
+          <li><span class="n">1</span><span data-i18n="mem.li1">Every club is separate. You subscribe to the ones that fit you, and nothing else.</span></li>
+          <li><span class="n">2</span><span data-i18n="mem.li2">Members-only pricing inside every club you join.</span></li>
+          <li><span class="n">3</span><span data-i18n="mem.li3">Your own link, so you earn when the people you refer join or book.</span></li>
           <li><span class="n">4</span><span data-i18n="mem.li4">Real people to ask when you get stuck, in English or Spanish.</span></li>
         </ul>
         <div class="cta-row">
-          <a class="btn btn-gold btn-lg" href="#" data-link="joinBusiness" data-i18n="mem.cta">Become a member</a>
+          <a class="btn btn-gold btn-lg" href="lifestyle/" data-i18n="mem.cta">Join the travel club</a>
         </div>
       </div>
       <div>
@@ -201,18 +184,18 @@
     <div class="faq">
       <details class="qa">
         <summary data-i18n="faq1.q">What exactly is E-12?</summary>
-        <p data-i18n="faq1.a">A private members network. Each gate is a different club with its own benefits.
-          Travel is open now, through LyfestyleX. More gates open over time, and your membership covers all of
-          them.</p>
+        <p data-i18n="faq1.a">A private members network. Each club is separate, with its own membership and its
+          own benefits. Travel is open now, through LyfestyleX. More clubs open over time, and you join the
+          ones you want.</p>
       </details>
       <details class="qa">
         <summary data-i18n="faq2.q">How do I join?</summary>
-        <p data-i18n="faq2.a">Press any gold button that says Join or Become a member. It opens the enrolment
-          form in a new tab. Fill it in and you are a member.</p>
+        <p data-i18n="faq2.a">Open the club you want, then press its gold Join button. That opens the enrolment
+          form in a new tab. Fill it in and you are a member of that club.</p>
       </details>
       <details class="qa">
         <summary data-i18n="faq3.q">Do I have to join to book travel?</summary>
-        <p data-i18n="faq3.a">No. Go into the travel gate and use the customer link there if you only want to
+        <p data-i18n="faq3.a">No. Go into the travel club and use the customer link there if you only want to
           book a trip. Members get better pricing and the ability to earn.</p>
       </details>
       <details class="qa">
@@ -237,7 +220,7 @@
         <div style="margin-top: 8px; color: #9FAABC; font-size: 15px;">e1212.com</div>
       </div>
       <div class="foot-links">
-        <a href="lifestyle/" data-i18n="foot.travel">Travel gate</a>
+        <a href="lifestyle/" data-i18n="foot.travel">Travel club</a>
         <a href="#" data-link="contact" data-i18n="foot.contact">Contact</a>
       </div>
     </div>
@@ -308,10 +291,13 @@
 window.LYX_BASE = "";
 window.LYX_PAGE = "home";
 
-/* PARTNER LINKS. Defaults are the real Traverex enrolment URLs; anything set
-   in site_links overrides them, so Jose can change them from the panel. */
+/* PARTNER LINKS.
+   joinBusiness goes straight to the Traverex enrolment FORM, sponsor in the
+   path, so nobody has to press join twice. joinCustomer must stay on the
+   sponsor landing page: linking direct to customer_registration.php sets
+   RU_Sponsor to a default house sponsor and the referral credit is lost. */
 window.LINKS = {
-  joinBusiness: "https://traverexlifestyle.com/nexlevelnetwork",
+  joinBusiness: "https://traverexlifestyle.com/joinus/nexlevelnetwork",
   joinCustomer: "https://traverex.com/nexlevelnetwork",
   introVideo:   "",
   contact:      ""
@@ -320,31 +306,25 @@ window.LINKS = {
 /* Spanish. English lives in the markup. */
 window.LYX_I18N = {
   "nav.join": "Únete", "nav.powered": "Con la tecnología de Traverex",
-  "tab.gates": "Puertas", "tab.academy": "Academia", "tab.membership": "Membresía", "tab.help": "Ayuda",
+  "tab.clubs": "Clubes", "tab.academy": "Academia", "tab.membership": "Membresía", "tab.help": "Ayuda",
   "card.soon": "Próximamente",
 
-  "hero.eyebrow": "Solo para miembros &middot; Una red privada",
-  "hero.h1": "Cada nuevo nivel<br>tiene una <em>puerta</em>.",
-  "hero.lead": "E-12 es una red privada de miembros. Cada puerta abre una manera distinta de vivir mejor y " +
-    "ganar más, y la primera es viajes. Una sola membresía te da todas las puertas que abramos.",
-  "hero.cta": "Entra a la puerta de viajes", "hero.cta2": "Hazte miembro",
+  "clubs.eyebrow": "Solo para miembros &middot; Una red privada",
+  "clubs.h2": "Escoge tu club.", "clubs.h2b": "Se abren más mientras crece la red.",
+  "clubs.lead": "Cada club es privado e independiente, con sus propios miembros y su propia membresía. Únete " +
+    "a los que van contigo.",
 
-  "gates.eyebrow": "Las puertas", "gates.h2": "Escoge tu puerta.",
-  "gates.h2b": "Se abren más mientras crece el club.",
-  "gates.lead": "Cada puerta es su propio club privado con sus propios miembros. Tu membresía E-12 es la llave " +
-    "de todas.",
-
-  "gate1.badge": "Abierta ahora", "gate1.h": "Puerta 01 &middot; Viajes",
-  "gate1.p": "LyfestyleX, nuestro club privado de viajes. Precios de miembro en vuelos, hoteles, cruceros y " +
+  "club1.badge": "Abierto ahora", "club1.h": "Club 01 &middot; Viajes",
+  "club1.p": "LyfestyleX, nuestro club privado de viajes. Precios de miembro en vuelos, hoteles, cruceros y " +
     "resorts en todo el mundo que el público nunca ve, y una forma de ganar cuando la gente que conoces " +
     "reserva contigo.",
-  "gate1.cta": "Entrar a LyfestyleX",
+  "club1.cta": "Entrar a LyfestyleX",
 
-  "gate2.badge": "Próximamente", "gate2.h": "Puerta 02 &middot; Riqueza",
-  "gate2.p": "Bitcoin y pensamiento a largo plazo, explicado con claridad. Entiende qué tienes, y por qué, " +
+  "club2.badge": "Próximamente", "club2.h": "Club 02 &middot; Riqueza",
+  "club2.p": "Bitcoin y pensamiento a largo plazo, explicado con claridad. Entiende qué tienes, y por qué, " +
     "antes de poner un dólar en cualquier lado.",
-  "gate3.badge": "Próximamente", "gate3.h": "Puerta 03 &middot; Tú decides",
-  "gate3.p": "Los miembros deciden qué se abre después. Dinos qué puerta quieres y sube en la lista.",
+  "club3.badge": "Próximamente", "club3.h": "Club 03 &middot; Tú decides",
+  "club3.p": "Los miembros deciden qué se abre después. Dinos qué club quieres y sube en la lista.",
 
   "acad.eyebrow": "La Academia", "acad.h2": "Aquí aprenden los miembros.",
   "acad.h2b": "Un video corto a la vez.",
@@ -352,30 +332,32 @@ window.LYX_I18N = {
     "El resto son solo para miembros.",
   "acad.empty": "Estamos agregando las lecciones. Vuelve pronto.",
 
-  "mem.eyebrow": "Membresía", "mem.h2": "Una membresía.", "mem.h2b": "Todas las puertas.",
+  "mem.eyebrow": "Cómo funciona la membresía",
+  "mem.h2": "Cada club, su propia membresía.", "mem.h2b": "Únete solo a lo que quieras.",
   "mem.lead": "Hacerte miembro toma unos minutos y lo puedes hacer desde tu teléfono.",
-  "mem.li1": "Todas las puertas que abramos, empezando por el club de viajes LyfestyleX.",
-  "mem.li2": "La academia completa de videos, solo para miembros, en inglés y español.",
+  "mem.li1": "Cada club es independiente. Te suscribes a los que van contigo, y a nada más.",
+  "mem.li2": "Precios solo para miembros dentro de cada club al que te unes.",
   "mem.li3": "Tu propio enlace, para que ganes cuando la gente que refieres se une o reserva.",
   "mem.li4": "Personas de verdad a quienes preguntarles cuando te trabes, en inglés o español.",
-  "mem.cta": "Hazte miembro",
+  "mem.cta": "Únete al club de viajes",
 
   "help.eyebrow": "Ayuda", "help.h2": "¿Preguntas?", "help.h2b": "Empieza aquí.",
   "faq1.q": "¿Qué es exactamente E-12?",
-  "faq1.a": "Una red privada de miembros. Cada puerta es un club distinto con sus propios beneficios. Viajes " +
-    "ya está abierta, a través de LyfestyleX. Se abren más con el tiempo, y tu membresía cubre todas.",
+  "faq1.a": "Una red privada de miembros. Cada club es independiente, con su propia membresía y sus propios " +
+    "beneficios. Viajes ya está abierto, a través de LyfestyleX. Se abren más con el tiempo, y tú te unes a " +
+    "los que quieras.",
   "faq2.q": "¿Cómo me hago miembro?",
-  "faq2.a": "Presiona cualquier botón dorado que diga Únete o Hazte miembro. Se abre el formulario de " +
-    "inscripción en una pestaña nueva. Llénalo y ya eres miembro.",
+  "faq2.a": "Entra al club que quieras y presiona su botón dorado Únete. Se abre el formulario de inscripción " +
+    "en una pestaña nueva. Llénalo y ya eres miembro de ese club.",
   "faq3.q": "¿Tengo que ser miembro para reservar viajes?",
-  "faq3.a": "No. Entra a la puerta de viajes y usa el enlace de cliente si solo quieres reservar un viaje. " +
+  "faq3.a": "No. Entra al club de viajes y usa el enlace de cliente si solo quieres reservar un viaje. " +
     "Los miembros reciben mejores precios y pueden ganar.",
   "faq4.q": "¿Puedo hacer todo esto en español?",
   "faq4.a": 'Sí. Presiona "Español" arriba en la página y todo el sitio cambia. Presiona "English" para ' +
     'regresarlo.',
   "help.contact": "Contáctanos",
 
-  "foot.travel": "Puerta de viajes", "foot.contact": "Contacto",
+  "foot.travel": "Club de viajes", "foot.contact": "Contacto",
   "foot.disclosure": "E-12 es una guía, no un proveedor. Los viajes los vende y entrega Traverex, y E-12 te " +
     "dirige allá. Algunos enlaces en este sitio son enlaces de socio: E-12 puede ganar una comisión cuando te " +
     "unes o reservas a través de ellos, sin costo adicional para ti. Las ganancias dependen completamente de " +
