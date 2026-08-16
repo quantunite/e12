@@ -62,24 +62,17 @@
   function renderIntro() {
     var sec = $("watch"), frame = $("introFrame");
     if (!sec || !frame) return;
-    /* A tab that scrolls to a hidden section is a dead end, so the tab comes
-       and goes with the section. */
-    var tab = document.querySelector('.tab[href="#watch"]');
-    function setVisible(on) {
-      if (on) { sec.removeAttribute("hidden"); } else { sec.setAttribute("hidden", ""); }
-      if (tab) tab.hidden = !on;
-    }
-
+    /* The section always shows. Without a video it keeps its Coming soon
+       panel, which is the promise; with one it swaps to the player. */
     var src = LINKS.introVideo;
-    if (!src) { setVisible(false); return; }
+    if (!src) return;
     var embed = embedUrlFor(src);
     var direct = embed ? null : window.__lyxSafeUrl(src);
-    if (!embed && !direct) { setVisible(false); return; }
+    if (!embed && !direct) return;
     frame.innerHTML = embed
-      ? '<iframe src="' + esc(embed) + '" title="LyfestyleX introduction" allow="accelerometer; autoplay; ' +
+      ? '<iframe src="' + esc(embed) + '" title="Members briefing" allow="accelerometer; autoplay; ' +
         'clipboard-write; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>'
       : '<video controls playsinline preload="metadata" src="' + esc(direct) + '"></video>';
-    setVisible(true);
   }
 
   var vplayer = $("vplayer"), vvideo = $("vplayerVideo"), vframe = $("vplayerFrame");
@@ -129,20 +122,26 @@
 
     trainingsCache = r.data;
     grid.innerHTML = r.data.map(function (t) {
-      var free = t.badge === "free";
-      var pill = free
-        ? '<span class="pill pill-free">' + T("Free to watch", "Gratis") + "</span>"
-        : '<span class="pill pill-members">' + T("Members only", "Solo miembros") + "</span>";
+      /* A lesson with no video yet is promised, not broken: it gets a
+         Coming soon tag and is not presented as playable. */
+      var soon = !t.video_url;
+      var pill = soon
+        ? '<span class="pill pill-soon">' + T("Coming soon", "Próximamente") + "</span>"
+        : t.badge === "free"
+          ? '<span class="pill pill-free">' + T("Free to watch", "Gratis") + "</span>"
+          : '<span class="pill pill-members">' + T("Members only", "Solo miembros") + "</span>";
       var img = assetUrl(t.image_url) || (BASE + "img/academy-travel.jpg");
-      return '<article class="card" data-training-id="' + esc(t.id) + '" tabindex="0" role="button" ' +
-        'aria-label="' + esc(t.title) + '">' +
+      var attrs = soon
+        ? 'class="card is-soon"'
+        : 'class="card" tabindex="0" role="button" aria-label="' + esc(t.title) + '"';
+      return "<article " + attrs + ' data-training-id="' + esc(t.id) + '">' +
         '<div class="card-img"><img src="' + esc(img) + '" alt="" loading="lazy">' +
         '<span class="card-play" aria-hidden="true"></span></div>' +
         '<div class="card-body">' + pill + "<h3>" + esc(t.title) + "</h3></div>" +
         "</article>";
     }).join("");
 
-    grid.querySelectorAll(".card").forEach(function (card) {
+    grid.querySelectorAll(".card:not(.is-soon)").forEach(function (card) {
       function go() {
         var t = trainingsCache.find(function (x) { return x.id === card.getAttribute("data-training-id"); });
         if (t) playTraining(t);

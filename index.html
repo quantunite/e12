@@ -71,11 +71,14 @@
 <header class="nav">
   <div class="nav-in">
     <a class="wordmark" href="#top" aria-label="E-12 home">E-1<span class="x">2</span></a>
-    <div class="nav-right">
-      <button class="linkbtn" id="langBtn" aria-label="Switch language / Cambiar idioma">Espa&ntilde;ol</button>
-      <button class="linkbtn" id="authBtn">Sign in</button>
-      <a class="linkbtn owner-link" id="ownerLink" href="admin.html" hidden>Owner panel</a>
-      <a class="btn btn-gold btn-sm" href="#" data-link="joinBusiness" data-i18n="nav.join">Join</a>
+    <div class="nav-stack">
+      <span class="powered" data-i18n="nav.powered">Powered by Traverex</span>
+      <div class="nav-right">
+        <button class="linkbtn" id="langBtn" aria-label="Switch language / Cambiar idioma">Espa&ntilde;ol</button>
+        <button class="linkbtn" id="authBtn">Sign in</button>
+        <a class="linkbtn owner-link" id="ownerLink" href="admin.html" hidden>Owner panel</a>
+        <a class="btn btn-gold btn-sm" href="#" data-link="joinBusiness" data-i18n="nav.join">Join</a>
+      </div>
     </div>
   </div>
   <nav class="tabs" aria-label="Sections">
@@ -115,13 +118,14 @@
     <!-- Gate 01: live -->
     <article class="gate-feature">
       <div class="art">
-        <img src="img/lawrence-hero-sm.jpg" alt="An aerial view of downtown Lawrence, Massachusetts on a clear summer morning" loading="lazy">
+        <img src="img/beach-hero-sm.jpg" alt="A sunlit tropical beach with turquoise water, golden sand and palm trees" loading="lazy">
       </div>
       <div class="body">
         <span class="badge-live" data-i18n="gate1.badge">Open now</span>
         <h3 data-i18n="gate1.h">Gate 01 &middot; Travel</h3>
         <p data-i18n="gate1.p">LyfestyleX, our private travel club. Member prices on flights, hotels, cruises and
-          resorts that the public never sees, plus a way to earn when the people you know book through you.</p>
+          resorts worldwide that the public never sees, plus a way to earn when the people you know book
+          through you.</p>
         <div class="cta-row">
           <a class="btn btn-gold" href="lifestyle/" data-i18n="gate1.cta">Enter LyfestyleX</a>
         </div>
@@ -174,7 +178,7 @@
           <li><span class="n">1</span><span data-i18n="mem.li1">Every gate we open, starting with the LyfestyleX travel club.</span></li>
           <li><span class="n">2</span><span data-i18n="mem.li2">The full members-only video academy, in English and Spanish.</span></li>
           <li><span class="n">3</span><span data-i18n="mem.li3">Your own link, so you earn when people you refer join or book.</span></li>
-          <li><span class="n">4</span><span data-i18n="mem.li4">Someone local to ask when you get stuck.</span></li>
+          <li><span class="n">4</span><span data-i18n="mem.li4">Real people to ask when you get stuck, in English or Spanish.</span></li>
         </ul>
         <div class="cta-row">
           <a class="btn btn-gold btn-lg" href="#" data-link="joinBusiness" data-i18n="mem.cta">Become a member</a>
@@ -242,8 +246,6 @@
       a commission when you join or book through them, at no extra cost to you. Earnings depend entirely on your
       own effort and results, and E-12 makes no income guarantees of any kind. &copy; 2026 E-12. All rights
       reserved.</p>
-    <p class="credit">Photograph of Lawrence, Massachusetts by Quintin Soloviev, used under
-      <a href="https://creativecommons.org/licenses/by/4.0/" rel="license noopener" target="_blank">CC BY 4.0</a>.</p>
   </div>
 </footer>
 
@@ -317,8 +319,9 @@ window.LINKS = {
 
 /* Spanish. English lives in the markup. */
 window.LYX_I18N = {
-  "nav.join": "Únete",
+  "nav.join": "Únete", "nav.powered": "Con la tecnología de Traverex",
   "tab.gates": "Puertas", "tab.academy": "Academia", "tab.membership": "Membresía", "tab.help": "Ayuda",
+  "card.soon": "Próximamente",
 
   "hero.eyebrow": "Solo para miembros &middot; Una red privada",
   "hero.h1": "Cada nuevo nivel<br>tiene una <em>puerta</em>.",
@@ -333,7 +336,8 @@ window.LYX_I18N = {
 
   "gate1.badge": "Abierta ahora", "gate1.h": "Puerta 01 &middot; Viajes",
   "gate1.p": "LyfestyleX, nuestro club privado de viajes. Precios de miembro en vuelos, hoteles, cruceros y " +
-    "resorts que el público nunca ve, y una forma de ganar cuando la gente que conoces reserva contigo.",
+    "resorts en todo el mundo que el público nunca ve, y una forma de ganar cuando la gente que conoces " +
+    "reserva contigo.",
   "gate1.cta": "Entrar a LyfestyleX",
 
   "gate2.badge": "Próximamente", "gate2.h": "Puerta 02 &middot; Riqueza",
@@ -353,7 +357,7 @@ window.LYX_I18N = {
   "mem.li1": "Todas las puertas que abramos, empezando por el club de viajes LyfestyleX.",
   "mem.li2": "La academia completa de videos, solo para miembros, en inglés y español.",
   "mem.li3": "Tu propio enlace, para que ganes cuando la gente que refieres se une o reserva.",
-  "mem.li4": "Alguien local a quien preguntarle cuando te trabes.",
+  "mem.li4": "Personas de verdad a quienes preguntarles cuando te trabes, en inglés o español.",
   "mem.cta": "Hazte miembro",
 
   "help.eyebrow": "Ayuda", "help.h2": "¿Preguntas?", "help.h2b": "Empieza aquí.",

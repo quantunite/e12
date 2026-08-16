@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>LyfestyleX - Travel for less, earn while you do</title>
-<meta name="description" content="LyfestyleX is how Lawrence travels. Member prices on flights, hotels and cruises, plus a way to earn by sharing it.">
+<meta name="description" content="LyfestyleX is a private members travel club. Member prices on flights, hotels, cruises and resorts worldwide, plus a way to earn by sharing it.">
 <link rel="stylesheet" href="../css/lyx.css">
 </head>
 <body id="top">
@@ -12,11 +12,14 @@
 <header class="nav">
   <div class="nav-in">
     <a class="wordmark" href="#top" aria-label="LyfestyleX home">Lyfestyle<span class="x">X</span></a>
-    <div class="nav-right">
-      <button class="linkbtn" id="langBtn" aria-label="Switch language / Cambiar idioma">Espa&ntilde;ol</button>
-      <button class="linkbtn" id="authBtn">Sign in</button>
-      <a class="linkbtn owner-link" id="ownerLink" href="../admin.html" hidden>Owner panel</a>
-      <a class="btn btn-gold btn-sm" href="#" data-link="joinBusiness" data-i18n="nav.join">Join</a>
+    <div class="nav-stack">
+      <span class="powered" data-i18n="nav.powered">Powered by Traverex</span>
+      <div class="nav-right">
+        <button class="linkbtn" id="langBtn" aria-label="Switch language / Cambiar idioma">Espa&ntilde;ol</button>
+        <button class="linkbtn" id="authBtn">Sign in</button>
+        <a class="linkbtn owner-link" id="ownerLink" href="../admin.html" hidden>Owner panel</a>
+        <a class="btn btn-gold btn-sm" href="#" data-link="joinBusiness" data-i18n="nav.join">Join</a>
+      </div>
     </div>
   </div>
   <nav class="tabs" aria-label="Sections">
@@ -41,14 +44,13 @@
   <div class="hero-in">
     <div class="wrap">
       <span class="eyebrow" data-i18n="hero.eyebrow">A private members club</span>
-      <h1 data-i18n="hero.h1">Live the beach lifestyle.<span class="gold">Members only.</span></h1>
+      <h1 data-i18n="hero.h1">Live the beach lifestyle.<span class="gold">Members only. Private club.</span></h1>
       <p class="lead" data-i18n="hero.lead">LyfestyleX is a private club for people who want more life out of the
-        same money. Member prices on flights, hotels, cruises and beach resorts the public never sees, and a way
-        to earn every time you share it.</p>
+        same money. Member prices on flights, hotels, cruises and beach resorts worldwide that the public never
+        sees, and a way to earn every time you share it.</p>
       <div class="cta-row">
         <a class="btn btn-gold btn-lg" href="#" data-link="joinBusiness" data-i18n="hero.cta">Join the club</a>
       </div>
-      <span class="powered" data-i18n="hero.powered">Powered by Traverex</span>
       <a class="cust-link" href="#" data-link="joinCustomer" data-i18n="hero.cust">Just want to book a trip? Shop as a customer</a>
     </div>
   </div>
@@ -68,7 +70,7 @@
           <circle cx="33.5" cy="14.5" r="3.2"/>
         </svg>
         <h3 data-i18n="tile1.h">Member prices</h3>
-        <p data-i18n="tile1.p">Flights, hotels, cruises and resorts at rates the public does not see.</p>
+        <p data-i18n="tile1.p">Flights, hotels, cruises and resorts worldwide, at rates the public does not see.</p>
       </div>
       <div class="tile">
         <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -92,42 +94,29 @@
           <path d="M17.5 26.5h12M17.5 31h7"/>
         </svg>
         <h3 data-i18n="tile4.h">Real people</h3>
-        <p data-i18n="tile4.p">Questions answered by someone local, in English or Spanish.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================ LOCAL ============================
-     The beach is the aspiration; Lawrence is the credibility. -->
-<section id="local">
-  <div class="wrap">
-    <div class="split">
-      <div>
-        <span class="eyebrow" data-i18n="local.eyebrow">From here</span>
-        <h2 data-i18n="local.h2">Built in Lawrence,<span class="h2-gold" data-i18n="local.h2b">for people from Lawrence.</span></h2>
-        <p class="lead" style="margin-top: 18px;" data-i18n="local.p">LyfestyleX started here, not in a corporate
-          office in another state. When you write in with a question, the person who answers knows your city, in
-          English or in Spanish.</p>
-      </div>
-      <div>
-        <img src="../img/lawrence-hero-sm.jpg" alt="An aerial view of downtown Lawrence, Massachusetts on a clear summer morning" loading="lazy">
+        <p data-i18n="tile4.p">Questions answered by real people, in English or Spanish.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- ============================ WATCH ============================
-     Hidden entirely until an intro video exists. No empty player. -->
-<section id="watch" hidden>
+     Shows a Coming soon panel until an intro video exists, rather than an
+     empty player. Swaps to the real video the moment one is set. -->
+<section id="watch">
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow" data-i18n="watch.eyebrow">Watch first</span>
       <h2 data-i18n="watch.h2">See how it works.<span class="h2-gold" data-i18n="watch.h2b">Five minutes, start to finish.</span></h2>
     </div>
-    <div class="video-frame" id="introFrame"></div>
+    <div class="video-frame" id="introFrame">
+      <div class="video-soon" id="introSoon">
+        <span class="badge-soon" data-i18n="watch.soon">Coming soon</span>
+        <p data-i18n="watch.soonp">The members briefing is being filmed. It appears here the moment it is ready.</p>
+      </div>
+    </div>
     <div class="cta-row" style="margin-top: 38px; justify-content: center;">
-      <a class="btn btn-gold btn-lg" href="#" data-link="joinBusiness" data-i18n="watch.cta">Join now</a>
+      <a class="btn btn-gold btn-lg" href="#" data-link="joinBusiness" data-i18n="watch.cta">Join the club</a>
     </div>
   </div>
 </section>
@@ -157,10 +146,10 @@
         <h2 data-i18n="join.h2">One membership.<span class="h2-gold" data-i18n="join.h2b">Everything above.</span></h2>
         <p class="lead" style="margin: 16px 0 34px;" data-i18n="join.lead">Joining takes a few minutes and you can do it from your phone.</p>
         <ul class="benefits">
-          <li><span class="n">1</span><span data-i18n="join.li1">Member pricing on flights, hotels, cruises and resorts.</span></li>
+          <li><span class="n">1</span><span data-i18n="join.li1">Member pricing on flights, hotels, cruises and resorts worldwide.</span></li>
           <li><span class="n">2</span><span data-i18n="join.li2">Your own link, so you earn when people you refer book travel.</span></li>
-          <li><span class="n">3</span><span data-i18n="join.li3">The full video academy, in English and Spanish.</span></li>
-          <li><span class="n">4</span><span data-i18n="join.li4">Someone local to ask when you get stuck.</span></li>
+          <li><span class="n">3</span><span data-i18n="join.li3">The full members-only video academy, in English and Spanish.</span></li>
+          <li><span class="n">4</span><span data-i18n="join.li4">Real people to ask when you get stuck, in English or Spanish.</span></li>
         </ul>
         <div class="cta-row">
           <a class="btn btn-gold btn-lg" href="#" data-link="joinBusiness" data-i18n="join.cta">Join now</a>
@@ -234,8 +223,6 @@
       page are partner links: LyfestyleX may earn a commission when you join or book through them, at no extra
       cost to you. Earnings depend entirely on your own effort and results, and LyfestyleX makes no income
       guarantees of any kind. &copy; 2026 LyfestyleX. All rights reserved.</p>
-    <p class="credit">Photograph of Lawrence, Massachusetts by Quintin Soloviev, used under
-      <a href="https://creativecommons.org/licenses/by/4.0/" rel="license noopener" target="_blank">CC BY 4.0</a>.</p>
   </div>
 </footer>
 
@@ -311,35 +298,31 @@ window.LINKS = {
 
 /* Spanish. English lives in the markup. */
 window.LYX_I18N = {
-  "nav.join": "Únete",
+  "nav.join": "Únete", "nav.powered": "Con la tecnología de Traverex",
   "tab.travel": "Viajes", "tab.watch": "Ver", "tab.academy": "Academia", "tab.help": "Ayuda",
 
   "hero.eyebrow": "Un club privado de miembros",
-  "hero.h1": 'Vive la vida de playa.<span class="gold">Solo para miembros.</span>',
+  "hero.h1": 'Vive la vida de playa.<span class="gold">Solo para miembros. Club privado.</span>',
   "hero.lead": "LyfestyleX es un club privado para quienes quieren más vida con el mismo dinero. Precios de " +
-    "miembro en vuelos, hoteles, cruceros y resorts de playa que el público nunca ve, y una forma de ganar " +
-    "cada vez que lo compartes.",
+    "miembro en vuelos, hoteles, cruceros y resorts de playa en todo el mundo que el público nunca ve, y una " +
+    "forma de ganar cada vez que lo compartes.",
   "hero.cta": "Únete al club",
-  "hero.powered": "Con la tecnología de Traverex",
   "hero.cust": "¿Solo quieres viajar? Compra como cliente",
 
   "tiles.eyebrow": "Lo que recibes", "tiles.h2": "Cuatro razones para unirte.",
   "tile1.h": "Precios de miembro",
-  "tile1.p": "Vuelos, hoteles, cruceros y resorts a precios que el público no ve.",
+  "tile1.p": "Vuelos, hoteles, cruceros y resorts en todo el mundo, a precios que el público no ve.",
   "tile2.h": "Gana compartiendo",
   "tile2.p": "Te pagan cuando las personas que refieres reservan sus viajes contigo.",
   "tile3.h": "Aprende sobre la marcha",
   "tile3.p": "Videos cortos en lenguaje sencillo. Puedes empezar desde cero.",
   "tile4.h": "Gente de verdad",
-  "tile4.p": "Preguntas contestadas por alguien local, en inglés o español.",
-
-  "local.eyebrow": "De aquí",
-  "local.h2": "Hecho en Lawrence,", "local.h2b": "para gente de Lawrence.",
-  "local.p": "LyfestyleX empezó aquí, no en una oficina corporativa en otro estado. Cuando escribes con una " +
-    "pregunta, te contesta alguien que conoce tu ciudad, en inglés o en español.",
+  "tile4.p": "Preguntas contestadas por personas de verdad, en inglés o español.",
 
   "watch.eyebrow": "Míralo primero", "watch.h2": "Mira cómo funciona.",
   "watch.h2b": "Cinco minutos, de principio a fin.", "watch.cta": "Únete al club",
+  "watch.soon": "Próximamente",
+  "watch.soonp": "La presentación para miembros se está grabando. Aparecerá aquí en cuanto esté lista.",
 
   "acad.eyebrow": "La Academia", "acad.h2": "Aprende el lado de los viajes.",
   "acad.h2b": "Un video corto a la vez.",
@@ -349,10 +332,11 @@ window.LYX_I18N = {
 
   "join.eyebrow": "Membresía", "join.h2": "Una membresía.", "join.h2b": "Todo lo de arriba.",
   "join.lead": "Unirte toma unos minutos y lo puedes hacer desde tu teléfono.",
-  "join.li1": "Precios de miembro en vuelos, hoteles, cruceros y resorts de playa.",
+  "join.li1": "Precios de miembro en vuelos, hoteles, cruceros y resorts en todo el mundo.",
   "join.li2": "Tu propio enlace, para que ganes cuando la gente que refieres reserve.",
-  "join.li3": "La academia completa de videos, en inglés y español.",
-  "join.li4": "Alguien local a quien preguntarle cuando te trabes.",
+  "join.li3": "La academia completa de videos, solo para miembros, en inglés y español.",
+  "join.li4": "Personas de verdad a quienes preguntarles cuando te trabes, en inglés o español.",
+  "card.soon": "Próximamente",
   "join.cta": "Únete al club", "join.cta2": "Reservar como cliente",
 
   "help.eyebrow": "Ayuda", "help.h2": "¿Algo no te queda claro?", "help.h2b": "Empieza aquí.",
